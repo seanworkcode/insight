@@ -17,7 +17,7 @@ var clientGroup = dataset.group('clients', function(d) {
 })
 .sum(['CurrentRevenue'])
 .cumulative(['CurrentRevenue.Sum'])
-.orderFunction(function(a, b) {
+.orderingFunction(function(a, b) {
     return b.value.CurrentRevenue.Sum - a.value.CurrentRevenue.Sum;
 });
             </code>
@@ -40,12 +40,12 @@ var aggregateFunction = function(clientGrouping)
 {
     var total = 0;
 
-    clientGrouping.getData()
+    clientGrouping.extractData()
         .forEach(function(client) {
             total += client.value.CurrentRevenue.Sum;
         });
 
-    clientGrouping.getData()
+    clientGrouping.extractData()
         .forEach(function(client) {
             client.value.Percentage = client.value.CurrentRevenue.SumCumulative / total;
         });

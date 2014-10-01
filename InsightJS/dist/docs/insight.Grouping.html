@@ -628,6 +628,39 @@
             </ul>
         </li>
     
+        <li class="item" data-name="insight.DataProvider">
+            <span class="title">
+                <a href="insight.DataProvider.html">insight.DataProvider</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="insight.DataProvider#self.extractData"><a href="insight.DataProvider.html##self.extractData">#self.extractData</a></li>
+            
+                <li data-name="insight.DataProvider#self.filterFunction"><a href="insight.DataProvider.html##self.filterFunction">#self.filterFunction</a></li>
+            
+                <li data-name="insight.DataProvider#self.filterFunction"><a href="insight.DataProvider.html##self.filterFunction">#self.filterFunction</a></li>
+            
+                <li data-name="insight.DataProvider#self.orderingFunction"><a href="insight.DataProvider.html##self.orderingFunction">#self.orderingFunction</a></li>
+            
+                <li data-name="insight.DataProvider#self.orderingFunction"><a href="insight.DataProvider.html##self.orderingFunction">#self.orderingFunction</a></li>
+            
+                <li data-name="insight.DataProvider#self.rawData"><a href="insight.DataProvider.html##self.rawData">#self.rawData</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
         <li class="item" data-name="insight.DataSet">
             <span class="title">
                 <a href="insight.DataSet.html">insight.DataSet</a>
@@ -643,15 +676,19 @@
             
             <span class="subtitle">Methods</span>
             
-                <li data-name="insight.DataSet#self.filterFunction"><a href="insight.DataSet.html##self.filterFunction">#self.filterFunction</a></li>
+                <li data-name="insight.DataSet#self.extractData"><a href="insight.DataSet.html##self.extractData">#self.extractData</a></li>
             
                 <li data-name="insight.DataSet#self.filterFunction"><a href="insight.DataSet.html##self.filterFunction">#self.filterFunction</a></li>
             
-                <li data-name="insight.DataSet#self.getData"><a href="insight.DataSet.html##self.getData">#self.getData</a></li>
+                <li data-name="insight.DataSet#self.filterFunction"><a href="insight.DataSet.html##self.filterFunction">#self.filterFunction</a></li>
+            
+                <li data-name="insight.DataSet#self.group"><a href="insight.DataSet.html##self.group">#self.group</a></li>
             
                 <li data-name="insight.DataSet#self.orderingFunction"><a href="insight.DataSet.html##self.orderingFunction">#self.orderingFunction</a></li>
             
                 <li data-name="insight.DataSet#self.orderingFunction"><a href="insight.DataSet.html##self.orderingFunction">#self.orderingFunction</a></li>
+            
+                <li data-name="insight.DataSet#self.rawData"><a href="insight.DataSet.html##self.rawData">#self.rawData</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -748,11 +785,11 @@
             
                 <li data-name="insight.Grouping#self.cumulative"><a href="insight.Grouping.html##self.cumulative">#self.cumulative</a></li>
             
-                <li data-name="insight.Grouping#self.filterFunction"><a href="insight.Grouping.html##self.filterFunction">#self.filterFunction</a></li>
+                <li data-name="insight.Grouping#self.extractData"><a href="insight.Grouping.html##self.extractData">#self.extractData</a></li>
             
                 <li data-name="insight.Grouping#self.filterFunction"><a href="insight.Grouping.html##self.filterFunction">#self.filterFunction</a></li>
             
-                <li data-name="insight.Grouping#self.getData"><a href="insight.Grouping.html##self.getData">#self.getData</a></li>
+                <li data-name="insight.Grouping#self.filterFunction"><a href="insight.Grouping.html##self.filterFunction">#self.filterFunction</a></li>
             
                 <li data-name="insight.Grouping#self.isOrdered"><a href="insight.Grouping.html##self.isOrdered">#self.isOrdered</a></li>
             
@@ -762,9 +799,11 @@
             
                 <li data-name="insight.Grouping#self.mean"><a href="insight.Grouping.html##self.mean">#self.mean</a></li>
             
-                <li data-name="insight.Grouping#self.orderFunction"><a href="insight.Grouping.html##self.orderFunction">#self.orderFunction</a></li>
+                <li data-name="insight.Grouping#self.orderingFunction"><a href="insight.Grouping.html##self.orderingFunction">#self.orderingFunction</a></li>
             
-                <li data-name="insight.Grouping#self.orderFunction"><a href="insight.Grouping.html##self.orderFunction">#self.orderFunction</a></li>
+                <li data-name="insight.Grouping#self.orderingFunction"><a href="insight.Grouping.html##self.orderingFunction">#self.orderingFunction</a></li>
+            
+                <li data-name="insight.Grouping#self.rawData"><a href="insight.Grouping.html##self.rawData">#self.rawData</a></li>
             
                 <li data-name="insight.Grouping#self.sum"><a href="insight.Grouping.html##self.sum">#self.sum</a></li>
             
@@ -1437,6 +1476,12 @@
     </div>
     
     
+        <h3 class="subsection-title">Extends</h3>
+        
+        <ul>
+            <li><a href="insight.DataProvider.html">insight.DataProvider</a></li>
+        </ul>
+    
     
     
     
@@ -1832,10 +1877,12 @@ The list of property names that will be cumulatively summed
         
             
 <dt>
-    <div class="nameContainer">
-        <h4 class="name" id="#self.filterFunction">
+    <div class="nameContainer inherited">
+        <h4 class="name" id="#self.extractData">
             
-            #self.filterFunction<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{function}</span>
+                <span class="inherited"><a href="insight.DataProvider.html##self.extractData">inherited</a></span>
+            
+            #self.extractData<span class="signature">(<span class="optional">orderFunc</span>, <span class="optional">top</span>)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Object[]}</span>
         </h4>
     </div>
 
@@ -1843,86 +1890,6 @@ The list of property names that will be cumulatively summed
 </dt>
 <dd>
     
-    
-    <div class="description">
-        The function used to filter the results returned by this grouping.
-The function returns true to keep the value, or false to remove it from the final result.
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-
-
-<h5>Returns:</h5>
-The function used to filter the results returned by this grouping.
-<br />
-
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="#self.filterFunction">
-            
-            #self.filterFunction<span class="signature">(filterFunc)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{this}</span>
-        </h4>
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Sets the function used to filter the results returned by this grouping.
-The function returns true to keep the value, or false to remove it from the final result.
-    </div>
     
 
     
@@ -1952,7 +1919,7 @@ The function returns true to keep the value, or false to remove it from the fina
 	
         <tr>
             
-                <td class="name"><code>filterFunc</code></td>
+                <td class="name"><code>orderFunc</code></td>
             
             
             <td class="type">
@@ -1968,7 +1935,44 @@ The function returns true to keep the value, or false to remove it from the fina
             
             <td class="description last">
                 
-                The function used to filter the results returned by this grouping.</td>
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                If provided then the data will be ordered using this function.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>top</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Integer</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                If provided then the number of objects returned will be limited to the top N.</td>
         </tr>
 	
 	
@@ -2023,10 +2027,12 @@ The function returns true to keep the value, or false to remove it from the fina
         
             
 <dt>
-    <div class="nameContainer">
-        <h4 class="name" id="#self.getData">
+    <div class="nameContainer inherited">
+        <h4 class="name" id="#self.filterFunction">
             
-            #self.getData<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Object[]}</span>
+                <span class="inherited"><a href="insight.DataProvider.html##self.filterFunction">inherited</a></span>
+            
+            #self.filterFunction<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{function}</span>
         </h4>
     </div>
 
@@ -2036,7 +2042,8 @@ The function returns true to keep the value, or false to remove it from the fina
     
     
     <div class="description">
-        Used to return the group's data, without ordering.  It checks if there is any filtering requested and applies the filter to the return array.
+        The function to use to filter an object from the data source.
+The function should return a boolean where false means the object is not included in the data source.
     </div>
     
 
@@ -2086,8 +2093,126 @@ The function returns true to keep the value, or false to remove it from the fina
 
 
 <h5>Returns:</h5>
-- The grouping's data in an object array, with an object per slice of the dimension.
+The function to use to filter an object from the data source.
 <br />
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="#self.filterFunction">
+            
+                <span class="inherited"><a href="insight.DataProvider.html##self.filterFunction">inherited</a></span>
+            
+            #self.filterFunction<span class="signature">(filterFunc)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{this}</span>
+        </h4>
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Sets the function to use to filter an object from the data source.
+The function should return a boolean where false means the object is not included in the data source.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>filterFunc</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                The new function to use to filter an object from the data source.</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+
 
     
     
@@ -2475,10 +2600,12 @@ The list of property names that will averaged
         
             
 <dt>
-    <div class="nameContainer">
-        <h4 class="name" id="#self.orderFunction">
+    <div class="nameContainer inherited">
+        <h4 class="name" id="#self.orderingFunction">
             
-            #self.orderFunction<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{function}</span>
+                <span class="inherited"><a href="insight.DataProvider.html##self.orderingFunction">inherited</a></span>
+            
+            #self.orderingFunction<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{function}</span>
         </h4>
     </div>
 
@@ -2488,7 +2615,7 @@ The list of property names that will averaged
     
     
     <div class="description">
-        The function used to compare the elements in this grouping if sorting is requested.
+        Gets the function used to order the data source values
     </div>
     
 
@@ -2538,8 +2665,7 @@ The list of property names that will averaged
 
 
 <h5>Returns:</h5>
-- The function used to compare two values when
-<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort">sort()</a> is called on an array
+The current ordering function
 <br />
 
     
@@ -2550,10 +2676,12 @@ The list of property names that will averaged
         
             
 <dt>
-    <div class="nameContainer">
-        <h4 class="name" id="#self.orderFunction">
+    <div class="nameContainer inherited">
+        <h4 class="name" id="#self.orderingFunction">
             
-            #self.orderFunction<span class="signature">(orderingFunction)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{this}</span>
+                <span class="inherited"><a href="insight.DataProvider.html##self.orderingFunction">inherited</a></span>
+            
+            #self.orderingFunction<span class="signature">(orderFunc)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{this}</span>
         </h4>
     </div>
 
@@ -2563,7 +2691,7 @@ The list of property names that will averaged
     
     
     <div class="description">
-        Sets the function used to compare the elements in this grouping if sorting is requested.
+        Sets the function used to order the data source values
     </div>
     
 
@@ -2594,7 +2722,7 @@ The list of property names that will averaged
 	
         <tr>
             
-                <td class="name"><code>orderingFunction</code></td>
+                <td class="name"><code>orderFunc</code></td>
             
             
             <td class="type">
@@ -2610,14 +2738,83 @@ The list of property names that will averaged
             
             <td class="description last">
                 
-                The comparison function to be used to sort the elements in this group.
-The function should take the form of a standard
-<a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/GlobalvalueObjects/Array/sort">Javascript comparison function</a>.</td>
+                The ordering function</td>
         </tr>
 	
 	
 	</tbody>
 </table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="#self.rawData">
+            
+            <span class="type-signature ">virtual</span>#self.rawData<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Object[]}</span>
+        </h4>
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Returns an object array containing one object per group in the data set. This array is produced using
+<a href="http://square.github.io/crossfilter/">crossfilter</a>.
+    </div>
+    
+
+    
+    
+    
+    
     
     
     

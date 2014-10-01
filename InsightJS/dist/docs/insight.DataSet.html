@@ -628,6 +628,39 @@
             </ul>
         </li>
     
+        <li class="item" data-name="insight.DataProvider">
+            <span class="title">
+                <a href="insight.DataProvider.html">insight.DataProvider</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="insight.DataProvider#self.extractData"><a href="insight.DataProvider.html##self.extractData">#self.extractData</a></li>
+            
+                <li data-name="insight.DataProvider#self.filterFunction"><a href="insight.DataProvider.html##self.filterFunction">#self.filterFunction</a></li>
+            
+                <li data-name="insight.DataProvider#self.filterFunction"><a href="insight.DataProvider.html##self.filterFunction">#self.filterFunction</a></li>
+            
+                <li data-name="insight.DataProvider#self.orderingFunction"><a href="insight.DataProvider.html##self.orderingFunction">#self.orderingFunction</a></li>
+            
+                <li data-name="insight.DataProvider#self.orderingFunction"><a href="insight.DataProvider.html##self.orderingFunction">#self.orderingFunction</a></li>
+            
+                <li data-name="insight.DataProvider#self.rawData"><a href="insight.DataProvider.html##self.rawData">#self.rawData</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
         <li class="item" data-name="insight.DataSet">
             <span class="title">
                 <a href="insight.DataSet.html">insight.DataSet</a>
@@ -643,15 +676,19 @@
             
             <span class="subtitle">Methods</span>
             
-                <li data-name="insight.DataSet#self.filterFunction"><a href="insight.DataSet.html##self.filterFunction">#self.filterFunction</a></li>
+                <li data-name="insight.DataSet#self.extractData"><a href="insight.DataSet.html##self.extractData">#self.extractData</a></li>
             
                 <li data-name="insight.DataSet#self.filterFunction"><a href="insight.DataSet.html##self.filterFunction">#self.filterFunction</a></li>
             
-                <li data-name="insight.DataSet#self.getData"><a href="insight.DataSet.html##self.getData">#self.getData</a></li>
+                <li data-name="insight.DataSet#self.filterFunction"><a href="insight.DataSet.html##self.filterFunction">#self.filterFunction</a></li>
+            
+                <li data-name="insight.DataSet#self.group"><a href="insight.DataSet.html##self.group">#self.group</a></li>
             
                 <li data-name="insight.DataSet#self.orderingFunction"><a href="insight.DataSet.html##self.orderingFunction">#self.orderingFunction</a></li>
             
                 <li data-name="insight.DataSet#self.orderingFunction"><a href="insight.DataSet.html##self.orderingFunction">#self.orderingFunction</a></li>
+            
+                <li data-name="insight.DataSet#self.rawData"><a href="insight.DataSet.html##self.rawData">#self.rawData</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -748,11 +785,11 @@
             
                 <li data-name="insight.Grouping#self.cumulative"><a href="insight.Grouping.html##self.cumulative">#self.cumulative</a></li>
             
-                <li data-name="insight.Grouping#self.filterFunction"><a href="insight.Grouping.html##self.filterFunction">#self.filterFunction</a></li>
+                <li data-name="insight.Grouping#self.extractData"><a href="insight.Grouping.html##self.extractData">#self.extractData</a></li>
             
                 <li data-name="insight.Grouping#self.filterFunction"><a href="insight.Grouping.html##self.filterFunction">#self.filterFunction</a></li>
             
-                <li data-name="insight.Grouping#self.getData"><a href="insight.Grouping.html##self.getData">#self.getData</a></li>
+                <li data-name="insight.Grouping#self.filterFunction"><a href="insight.Grouping.html##self.filterFunction">#self.filterFunction</a></li>
             
                 <li data-name="insight.Grouping#self.isOrdered"><a href="insight.Grouping.html##self.isOrdered">#self.isOrdered</a></li>
             
@@ -762,9 +799,11 @@
             
                 <li data-name="insight.Grouping#self.mean"><a href="insight.Grouping.html##self.mean">#self.mean</a></li>
             
-                <li data-name="insight.Grouping#self.orderFunction"><a href="insight.Grouping.html##self.orderFunction">#self.orderFunction</a></li>
+                <li data-name="insight.Grouping#self.orderingFunction"><a href="insight.Grouping.html##self.orderingFunction">#self.orderingFunction</a></li>
             
-                <li data-name="insight.Grouping#self.orderFunction"><a href="insight.Grouping.html##self.orderFunction">#self.orderFunction</a></li>
+                <li data-name="insight.Grouping#self.orderingFunction"><a href="insight.Grouping.html##self.orderingFunction">#self.orderingFunction</a></li>
+            
+                <li data-name="insight.Grouping#self.rawData"><a href="insight.Grouping.html##self.rawData">#self.rawData</a></li>
             
                 <li data-name="insight.Grouping#self.sum"><a href="insight.Grouping.html##self.sum">#self.sum</a></li>
             
@@ -1329,7 +1368,7 @@
     <div class="nameContainer">
         <h4 class="name" id="DataSet">
             
-            new insight.DataSet<span class="signature">(data)</span>
+            new insight.DataSet<span class="signature">(collection)</span>
         </h4>
     </div>
 
@@ -1339,8 +1378,7 @@
     
     
     <div class="description">
-        A DataSet is wrapper around a simple object array, but providing some functions that are required by charts to load and filter data.
-A DataSet should be used with an array of data that is to be charted without being used in a crossfilter or dimensional dataset.
+        DataSet allows insight..
     </div>
     
 
@@ -1371,7 +1409,7 @@ A DataSet should be used with an array of data that is to be charted without bei
 	
         <tr>
             
-                <td class="name"><code>data</code></td>
+                <td class="name"><code>collection</code></td>
             
             
             <td class="type">
@@ -1387,7 +1425,7 @@ A DataSet should be used with an array of data that is to be charted without bei
             
             <td class="description last">
                 
-                The data to be processed and represented by this DataSet.</td>
+                The data to be processed and represented by this DataProvider.</td>
         </tr>
 	
 	
@@ -1437,6 +1475,12 @@ A DataSet should be used with an array of data that is to be charted without bei
     
     </div>
     
+    
+        <h3 class="subsection-title">Extends</h3>
+        
+        <ul>
+            <li><a href="insight.DataProvider.html">insight.DataProvider</a></li>
+        </ul>
     
     
     
@@ -1455,10 +1499,12 @@ A DataSet should be used with an array of data that is to be charted without bei
         <dl>
             
 <dt>
-    <div class="nameContainer">
-        <h4 class="name" id="#self.filterFunction">
+    <div class="nameContainer inherited">
+        <h4 class="name" id="#self.extractData">
             
-            #self.filterFunction<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{function}</span>
+                <span class="inherited"><a href="insight.DataProvider.html##self.extractData">inherited</a></span>
+            
+            #self.extractData<span class="signature">(<span class="optional">orderFunc</span>, <span class="optional">top</span>)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Object[]}</span>
         </h4>
     </div>
 
@@ -1466,201 +1512,6 @@ A DataSet should be used with an array of data that is to be charted without bei
 </dt>
 <dd>
     
-    
-    <div class="description">
-        The function to use to filter an object from the dataset.
-The function should return a boolean where false means the object is not included in the dataset.
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-
-
-<h5>Returns:</h5>
-The function to use to filter an object from the dataset.
-<br />
-
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="#self.filterFunction">
-            
-            #self.filterFunction<span class="signature">(filterFunc)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{this}</span>
-        </h4>
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Sets the function to use to filter an object from the dataset.
-The function should return a boolean where false means the object is not included in the dataset.
-    </div>
-    
-
-    
-    
-    
-    
-    
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>filterFunc</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                The new function to use to filter an object from the dataset.</td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-
-
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="#self.getData">
-            
-            #self.getData<span class="signature">(<span class="optional">orderFunc</span>)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Object[]}</span>
-        </h4>
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Fetch all the data currently held in this dataset, filtered by the `filterFunction`.
-    </div>
     
 
     
@@ -1713,7 +1564,37 @@ The function should return a boolean where false means the object is not include
                         
                     
                 
-                If provided then the data will be returned ordered using this function.</td>
+                If provided then the data will be ordered using this function.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>top</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Integer</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                If provided then the number of objects returned will be limited to the top N.</td>
         </tr>
 	
 	
@@ -1760,8 +1641,81 @@ The function should return a boolean where false means the object is not include
     
 
 
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="#self.filterFunction">
+            
+                <span class="inherited"><a href="insight.DataProvider.html##self.filterFunction">inherited</a></span>
+            
+            #self.filterFunction<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{function}</span>
+        </h4>
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        The function to use to filter an object from the data source.
+The function should return a boolean where false means the object is not included in the data source.
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+
+
 <h5>Returns:</h5>
-All data currently held by the dataset.
+The function to use to filter an object from the data source.
 <br />
 
     
@@ -1772,8 +1726,290 @@ All data currently held by the dataset.
         
             
 <dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="#self.filterFunction">
+            
+                <span class="inherited"><a href="insight.DataProvider.html##self.filterFunction">inherited</a></span>
+            
+            #self.filterFunction<span class="signature">(filterFunc)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{this}</span>
+        </h4>
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Sets the function to use to filter an object from the data source.
+The function should return a boolean where false means the object is not included in the data source.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>filterFunc</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                The new function to use to filter an object from the data source.</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
     <div class="nameContainer">
+        <h4 class="name" id="#self.group">
+            
+            #self.group<span class="signature">(name, groupFunction, oneToMany)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="insight.Grouping.html">insight.Grouping</a>}</span>
+        </h4>
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Creates an <a href="insight.Grouping.html">insight.Grouping</a> for this data set.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                The name to give to the grouping.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>groupFunction</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                A function that returns a property value to use for grouping data.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>oneToMany</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                A one-to-many grouping should be used if the groupFunction returns an
+array property.</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
         <h4 class="name" id="#self.orderingFunction">
+            
+                <span class="inherited"><a href="insight.DataProvider.html##self.orderingFunction">inherited</a></span>
             
             #self.orderingFunction<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{function}</span>
         </h4>
@@ -1785,7 +2021,7 @@ All data currently held by the dataset.
     
     
     <div class="description">
-        Gets the function used to order the dataset values
+        Gets the function used to order the data source values
     </div>
     
 
@@ -1846,8 +2082,10 @@ The current ordering function
         
             
 <dt>
-    <div class="nameContainer">
+    <div class="nameContainer inherited">
         <h4 class="name" id="#self.orderingFunction">
+            
+                <span class="inherited"><a href="insight.DataProvider.html##self.orderingFunction">inherited</a></span>
             
             #self.orderingFunction<span class="signature">(orderFunc)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{this}</span>
         </h4>
@@ -1859,7 +2097,7 @@ The current ordering function
     
     
     <div class="description">
-        Sets the function used to order the dataset values
+        Sets the function used to order the data source values
     </div>
     
 
@@ -1912,6 +2150,78 @@ The current ordering function
 	
 	</tbody>
 </table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="#self.rawData">
+            
+                <span class="inherited"><a href="insight.DataProvider.html##self.rawData">inherited</a></span>
+            
+            <span class="type-signature ">virtual</span>#self.rawData<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Object[]}</span>
+        </h4>
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Returns an object array used as the starting point before sorting and filtering is applied.
+    </div>
+    
+
+    
+    
+    
+    
     
     
     
