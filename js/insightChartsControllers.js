@@ -152,8 +152,6 @@
 
                 grouping.initialize();
 
-                console.log(grouping.getData());
-
                 var chart = new Chart('Chart ' + $scope.chartId, "#chart" + $scope.chartId, dimension)
                     .width(400)
                     .height(350)
@@ -228,8 +226,6 @@
                     .average(measures);
 
                 grouping.initialize();
-
-                console.log(grouping.getData());
 
                 var bubbleX = new Scale(chart, measures[0], d3.scale.linear(), 'h', 'linear');
                 var bubbleY = new Scale(chart, measures[1], d3.scale.linear(), 'v', 'linear');

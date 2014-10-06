@@ -41,7 +41,7 @@ $(document)
                     return d.Client;
                 })
                 .sum(['CurrentRevenue'])
-                .orderFunction(function(a, b)
+                .orderingFunction(function(a, b)
                 {
                     return b.value.CurrentRevenue.Sum - a.value.CurrentRevenue.Sum;
                 });

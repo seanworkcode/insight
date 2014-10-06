@@ -52,7 +52,7 @@ $(document)
                 })
                 .sum(['CurrentRevenue'])
                 .cumulative(['CurrentRevenue.Sum'])
-                .orderFunction(function(a, b)
+                .orderingFunction(function(a, b)
                 {
                     return b.value.CurrentRevenue.Sum - a.value.CurrentRevenue.Sum;
                 });
@@ -64,13 +64,13 @@ $(document)
             {
                 var total = 0;
 
-                grouping.getData()
+                grouping.extractData()
                     .forEach(function(d)
                     {
                         total += d.value.CurrentRevenue.Sum;
                     });
 
-                grouping.getData()
+                grouping.extractData()
                     .forEach(function(d)
                     {
                         d.value.Percentage = d.value.CurrentRevenue.SumCumulative / total;

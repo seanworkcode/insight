@@ -27,15 +27,14 @@ $(document)
                 .height(400)
                 .margin(
                 {
-                    top: 10,
-                    left: 150,
+                    top: 50,
+                    left: 160,
                     right: 40,
                     bottom: 80
                 });
 
             var xAxis = new insight.Axis('Average Number of Ratings', insight.scales.linear)
-                .tickSize(2)
-                .tickLabelOrientation('tb');
+                .tickSize(2);
 
             var yAxis = new insight.Axis('Average Price', insight.scales.linear);
 
@@ -64,7 +63,7 @@ $(document)
 
             function buttonClick()
             {
-                var correlation = insight.correlation.fromDataSet(genres, scatter.keyFunction(), scatter.valueFunction());
+                var correlation = insight.correlation.fromDataProvider(genres, scatter.keyFunction(), scatter.valueFunction());
                 var coefficientDiv = document.getElementById('correlationCoefficient');
                 coefficientDiv.innerHTML = correlation.toFixed(3);
 
@@ -102,7 +101,7 @@ $(document)
                     {
                         return d.value.averageUserRating.Average;
                     });
-                    yAxis.label('Average Rating');
+                    yAxis.title('Average Rating');
 
                     selectButton('#yavgrating', ['#yavgratings', '#yavgprice']);
                 });
@@ -115,7 +114,7 @@ $(document)
                     {
                         return d.value.userRatingCount.Average;
                     });
-                    yAxis.title('Avg # Ratings');
+                    yAxis.title('Average # Ratings');
 
                     selectButton('#yavgratings', ['#yavgrating', '#yavgprice']);
                 });
