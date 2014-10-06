@@ -1382,7 +1382,7 @@
     
     
     <div class="description">
-        A Grouping is generated on a dimension, to reduce the items in the data set into groups along the provided dimension
+        A Grouping is generated on a dimension, to reduce the items in the data set into groups along the provided dimension.
     </div>
     
 
@@ -2022,6 +2022,10 @@ The list of property names that will be cumulatively summed
     
     
 
+
+<h5>Returns:</h5>
+An object array containing the data for this DataProvider.
+<br />
 
     
     
@@ -2810,8 +2814,9 @@ The current ordering function
     
     
     <div class="description">
-        Returns an object array containing one object per group in the data set. This array is produced using
-<a href="http://square.github.io/crossfilter/">crossfilter</a>.
+        Overrides insight.DataProvider.rawData by using
+<a href="http://square.github.io/crossfilter/">crossfilter</a> to create an object array containing one object
+per group in a data set.
     </div>
     
 
@@ -2859,6 +2864,10 @@ The current ordering function
     
     
 
+
+<h5>Returns:</h5>
+An object array containing one object per group in the data set.
+<br />
 
     
     
