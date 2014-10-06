@@ -98,31 +98,6 @@
         // Public functions -------------------------------------------------------------------------------------------
 
         /**
-         * The radius of each point, in pixels.
-         * @memberof! insight.PointSeries
-         * @instance
-         * @returns {Number} - The current radius of each point, in pixels.
-         * @deprecated Use radiusFunction instead.
-         *
-         * @also
-         *
-         * Sets the radius of each point, in pixels.
-         * @memberof! insight.PointSeries
-         * @instance
-         * @param {Function|Number} radius The new radius of each point, in pixels.
-         * @returns {this}
-         * @deprecated Use radiusFunction instead.
-         */
-        self.pointRadius = function(radius) {
-            if (!arguments.length) {
-                return radiusFunction();
-            }
-            radiusFunction = d3.functor(radius);
-
-            return self;
-        };
-
-        /**
          * Gets the function to extract the radius of each bubble from the data objects.
          * @memberof! insight.PointSeries
          * @instance

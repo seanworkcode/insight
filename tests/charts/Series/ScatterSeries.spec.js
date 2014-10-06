@@ -43,7 +43,9 @@ describe('ScatterSeries', function() {
 
     it('Radius of all points can be set', function () {
         //Given:
-        series.pointRadius(7);
+        series.radiusFunction(function (d) {
+            return 7;
+        });
 
         //When:
         var scatterData = series.pointData(series.dataset());
@@ -58,7 +60,9 @@ describe('ScatterSeries', function() {
 
     it('pointRadius of 0 gives zero radius to points', function () {
         //Given:
-        series.pointRadius(0);
+        series.radiusFunction(function (d) {
+            return 0;
+        });
 
         //When:
         var scatterData = series.pointData(series.dataset());
@@ -73,7 +77,9 @@ describe('ScatterSeries', function() {
 
     it('negative pointRadius gives zero radius to points', function () {
         //Given:
-        series.pointRadius(-1);
+        series.radiusFunction(function (d) {
+            return -1;
+        });
 
         //When:
         var scatterData = series.pointData(series.dataset());
