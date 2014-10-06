@@ -35,16 +35,15 @@
             axisStrategy = strategyForScale(scale),
             tickFrequency;
 
-        var rangeMinimum = function() {
-            return axisStrategy.domain(self)[0];
-        };
-
-        var rangeMaximum = function() {
-            var domain = axisStrategy.domain(self);
-            return domain[domain.length - 1];
-        };
-
         // Internal variables ---------------------------------------------------------------------------------------
+
+        self.rangeMinimum = function() {
+            return axisStrategy.findMin(self);
+        };
+
+        self.rangeMaximum = function() {
+            return axisStrategy.findMax(self);
+        };
 
         self.measureCanvas = document.createElement('canvas');
         self.scale = scale.scale();
@@ -191,13 +190,15 @@
 
             var tickLabelSizes = self.measureTickValues(self.tickValues());
 
-            var maxTickLabelWidth = d3.max(tickLabelSizes, function(d) {
-                return Math.abs(d.width);
-            });
+            var maxTickLabelWidth = tickLabelSizes.length === 0 ? 0 :
+                d3.max(tickLabelSizes, function(d) {
+                    return Math.abs(d.width);
+                });
 
-            var maxTickLabelHeight = d3.max(tickLabelSizes, function(d) {
-                return Math.abs(d.height);
-            });
+            var maxTickLabelHeight = tickLabelSizes.length === 0 ? 0 :
+                d3.max(tickLabelSizes, function(d) {
+                    return Math.abs(d.height);
+                });
 
             var axisTitleWidth = Math.ceil(textMeasurer.measureText(self.title(), self.axisTitleFont()).width);
 
@@ -240,9 +241,12 @@
                 return overhangs;
             }
 
-            var textMeasurer = new insight.TextMeasurer(self.measureCanvas);
-
             var domain = self.domain();
+            if (domain.length === 0) {
+                return overhangs;
+            }
+
+            var textMeasurer = new insight.TextMeasurer(self.measureCanvas);
 
             var firstTick = self.tickLabelFormat()(domain[0]);
             var lastTick = self.tickLabelFormat()(domain[domain.length - 1]);
@@ -995,9 +999,25 @@
             return self;
         };
 
+        /**
+         * Gets the start and end of the axis scale range.
+         * @memberof! insight.Axis
+         * @instance
+         * @returns {Object[]} - An array of 2 values: the lower and upper limits of the axis range.
+         *
+         * @also
+         *
+         * Sets the start and end of axis scale range. The specific type of rangeMin and rangeMax will
+         * depend on which of the [insight scales]{@link insight.scales} the axis is using.
+         * @memberof! insight.Axis
+         * @instance
+         * @param {Object} rangeMin The lower limit of the axis range
+         * @param {Object} rangeMax The upper limit of the axis range
+         * @returns {this}
+         */
         self.axisRange = function(rangeMin, rangeMax) {
             if (!arguments.length) {
-                return axisStrategy.axisRange(self, rangeMinimum(), rangeMaximum());
+                return axisStrategy.domain(self);
             }
 
             var minVal = d3.functor(rangeMin);
@@ -1006,8 +1026,10 @@
             //If max < min, we will need to swap the values to make the axisRange still be in ascending order.
             var shouldReverseValues = (maxVal() < minVal());
 
-            rangeMinimum = (!shouldReverseValues) ? minVal : maxVal;
-            rangeMaximum = (!shouldReverseValues) ? maxVal : minVal;
+            self.rangeMinimum = (!shouldReverseValues) ? minVal : maxVal;
+            self.rangeMaximum = (!shouldReverseValues) ? maxVal : minVal;
+
+            self.scale.domain(axisStrategy.axisRange(self, self.rangeMinimum(), self.rangeMaximum()));
 
             return self;
         };
