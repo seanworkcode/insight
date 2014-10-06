@@ -326,14 +326,14 @@
 
         /**
          * The text color to use for the table headings.
-         * @memberof! insight.Axis
+         * @memberof! insight.Table
          * @instance
          * @returns {Function} - A function that returns the color of the table headings.
          *
          * @also
          *
          * Sets the color to use for the table headings.
-         * @memberof! insight.Axis
+         * @memberof! insight.Table
          * @instance
          * @param {Function|Color} color Either a function that returns a color, or a color.
          * @returns {this}
@@ -370,14 +370,14 @@
 
         /**
          * The text color to use for the row headings.
-         * @memberof! insight.Axis
+         * @memberof! insight.Table
          * @instance
          * @returns {Function} - A function that returns the color of the row headings.
          *
          * @also
          *
          * Sets the color to use for the row headings.
-         * @memberof! insight.Axis
+         * @memberof! insight.Table
          * @instance
          * @param {Function|Color} color Either a function that returns a color, or a color.
          * @returns {this}
@@ -414,14 +414,14 @@
 
         /**
          * The text color to use for the cells.
-         * @memberof! insight.Axis
+         * @memberof! insight.Table
          * @instance
          * @returns {Function} - A function that returns the color of the cells.
          *
          * @also
          *
          * Sets the color to use for the cells.
-         * @memberof! insight.Axis
+         * @memberof! insight.Table
          * @instance
          * @param {Function|Color} color Either a function that returns a color, or a color.
          * @returns {this}
@@ -480,14 +480,14 @@
 
         /**
          * The background color to use for the table headings.
-         * @memberof! insight.Axis
+         * @memberof! insight.Table
          * @instance
          * @returns {Function} - A function that returns the background color of the table headings.
          *
          * @also
          *
          * Sets the background color to use for the table headings.
-         * @memberof! insight.Axis
+         * @memberof! insight.Table
          * @instance
          * @param {Function|Color} color Either a function that returns a color, or a color.
          * @returns {this}
@@ -502,14 +502,14 @@
 
         /**
          * The background color to use for the rows.
-         * @memberof! insight.Axis
+         * @memberof! insight.Table
          * @instance
          * @returns {Function} - A function that returns the background color of the rows.
          *
          * @also
          *
          * Sets the background color to use for the rows.
-         * @memberof! insight.Axis
+         * @memberof! insight.Table
          * @instance
          * @param {Function|Color} color Either a function that returns a color, or a color.
          * @returns {this}
@@ -525,7 +525,7 @@
         /**
          * The alternate background color to use for the rows, to appear on every other row.
          * If undefined, then the alternate row background color defaults to using the [rowBackgroundColor]{@link insight.Table#self.rowBackgroundColor}.
-         * @memberof! insight.Axis
+         * @memberof! insight.Table
          * @instance
          * @returns {Function} - A function that returns the alternate background color of the rows.
          *
@@ -533,7 +533,7 @@
          *
          * Sets the alternate background color to use for the rows.
          * If undefined, then the alternate row background color defaults to using the [rowBackgroundColor]{@link insight.Table#self.rowBackgroundColor}.
-         * @memberof! insight.Axis
+         * @memberof! insight.Table
          * @instance
          * @param {Function|Color} color Either a function that returns a color, or a color.
          * @returns {this}
