@@ -34,8 +34,7 @@ $(document)
                 });
 
             var xAxis = new insight.Axis('Average Number of Ratings', insight.scales.linear)
-                .tickSize(2)
-                .tickLabelOrientation('tb');
+                .tickSize(2);
 
             var yAxis = new insight.Axis('Average Price', insight.scales.linear);
 
@@ -64,7 +63,7 @@ $(document)
 
             function buttonClick()
             {
-                var correlation = insight.correlation.fromDataSet(genres, scatter.keyFunction(), scatter.valueFunction());
+                var correlation = insight.correlation.fromDataProvider(genres, scatter.keyFunction(), scatter.valueFunction());
                 var coefficientDiv = document.getElementById('correlationCoefficient');
                 coefficientDiv.innerHTML = correlation.toFixed(3);
 
