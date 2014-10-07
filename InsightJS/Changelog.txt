@@ -1,4 +1,4 @@
-=== Version X.X.X (XX-XXX-2014) ===
+=== Version 1.2.0 (07-Oct-2014) ===
 
 * Library changes:
   * Added Chart.titlePadding, to configure the distance between the chart title and plot area.
