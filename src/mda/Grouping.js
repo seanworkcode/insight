@@ -550,7 +550,7 @@
                         reduceAddToGroup,
                         reduceRemoveFromGroup,
                         reduceInitializeGroup
-                );
+                    );
 
 
             }
