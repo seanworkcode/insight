@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Class: Series</title>
+    <title>Class: Grouping</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -1334,7 +1334,7 @@
     </ul>
 </div>
     <div class="main">
-        <h1 class="page-title" data-filename="insight.Series.html">Class: Series</h1>
+        <h1 class="page-title" data-filename="insight.Grouping.html">Class: Grouping</h1>
         
 
 
@@ -1345,7 +1345,7 @@
     <h2>
         <span class="ancestors"><a href="insight.html">insight</a>.</span>
     
-    Series
+    Grouping
     </h2>
     
 </header>  
@@ -1358,9 +1358,9 @@
         
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="Series">
+        <h4 class="name" id="Grouping">
             
-            new insight.Series<span class="signature">(name, data, x, y)</span>
+            new insight.Grouping<span class="signature">(dimension)</span>
         </h4>
     </div>
 
@@ -1370,7 +1370,7 @@
     
     
     <div class="description">
-        The Series base class provides some base functions that are used by any specific types of series that derive from this class
+        A Grouping is generated on a dimension, to reduce the items in the data set into groups along the provided dimension.
     </div>
     
 
@@ -1401,13 +1401,13 @@
 	
         <tr>
             
-                <td class="name"><code>name</code></td>
+                <td class="name"><code>dimension</code></td>
             
             
             <td class="type">
             
                 
-<span class="param-type">String</span>
+<span class="param-type">Object</span>
 
 
             
@@ -1417,79 +1417,7 @@
             
             <td class="description last">
                 
-                A uniquely identifying name for this series</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>data</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type"><a href="insight.DataProvider.html">insight.DataProvider</a></span>
-|
-
-<span class="param-type">Array</span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                The object containing this series' data</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>x</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type"><a href="insight.Axis.html">insight.Axis</a></span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                The x axis</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>y</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type"><a href="insight.Axis.html">insight.Axis</a></span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                The y axis</td>
+                The dimension to group</td>
         </tr>
 	
 	
@@ -1539,6 +1467,12 @@
     
     </div>
     
+    
+        <h3 class="subsection-title">Extends</h3>
+        
+        <ul>
+            <li><a href="insight.DataProvider.html">insight.DataProvider</a></li>
+        </ul>
     
     
     
@@ -1558,9 +1492,9 @@
             
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="#self.dataset">
+        <h4 class="name" id="#self.count">
             
-            #self.dataset<span class="signature">(orderFunction)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Object[]}</span>
+            #self.count<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{String[]}</span>
         </h4>
     </div>
 
@@ -1570,7 +1504,81 @@
     
     
     <div class="description">
-        Returns the array of data objects used to plot this Series.
+        Returns the list of properties whose distinct value occurences will be counted during the reduction of this Grouping
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+
+
+<h5>Returns:</h5>
+The list of property names whose values will be counted
+<br />
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="#self.count">
+            
+            #self.count<span class="signature">(properties)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{this}</span>
+        </h4>
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Sets the array of properties whose distinct value occurences will be counted during the reduction of this Grouping
     </div>
     
 
@@ -1601,7 +1609,309 @@
 	
         <tr>
             
-                <td class="name"><code>orderFunction</code></td>
+                <td class="name"><code>properties</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String[]</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                An array of properties whose distinct value occurences will be counted during the reduction of this Grouping</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="#self.cumulative">
+            
+            #self.cumulative<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{String[]}</span>
+        </h4>
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Returns the list of properties that will be cumulatively summed over this Grouping
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+
+
+<h5>Returns:</h5>
+The list of property names that will be cumulatively summed
+<br />
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="#self.cumulative">
+            
+            #self.cumulative<span class="signature">(properties)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{this}</span>
+        </h4>
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Sets the list of properties that will be cumulatively summed over this Grouping
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>properties</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String[]</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                An array of property names to be cumulatively summed over slices in this Grouping.</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="#self.extractData">
+            
+                <span class="inherited"><a href="insight.DataProvider.html##self.extractData">inherited</a></span>
+            
+            #self.extractData<span class="signature">(<span class="optional">orderFunc</span>, <span class="optional">top</span>)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Object[]}</span>
+        </h4>
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>orderFunc</code></td>
             
             
             <td class="type">
@@ -1617,7 +1927,44 @@
             
             <td class="description last">
                 
-                The function used to compare objects in the dataset for ordering.</td>
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                If provided then the data will be ordered using this function.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>top</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Integer</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                If provided then the number of objects returned will be limited to the top N.</td>
         </tr>
 	
 	
@@ -1665,7 +2012,7 @@
 
 
 <h5>Returns:</h5>
-The data set to be used by the series
+An object array containing the data for this DataProvider.
 <br />
 
     
@@ -1676,8 +2023,10 @@ The data set to be used by the series
         
             
 <dt>
-    <div class="nameContainer">
+    <div class="nameContainer inherited">
         <h4 class="name" id="#self.filterFunction">
+            
+                <span class="inherited"><a href="insight.DataProvider.html##self.filterFunction">inherited</a></span>
             
             #self.filterFunction<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{function}</span>
         </h4>
@@ -1689,8 +2038,8 @@ The data set to be used by the series
     
     
     <div class="description">
-        The function to use to filter an object from the series.
-The function should return a boolean where false means the object is not included in the series.
+        The function to use to filter an object from the data source.
+The function should return a boolean where false means the object is not included in the data source.
     </div>
     
 
@@ -1740,7 +2089,7 @@ The function should return a boolean where false means the object is not include
 
 
 <h5>Returns:</h5>
-The function to use to filter an object from the series.
+The function to use to filter an object from the data source.
 <br />
 
     
@@ -1751,8 +2100,10 @@ The function to use to filter an object from the series.
         
             
 <dt>
-    <div class="nameContainer">
+    <div class="nameContainer inherited">
         <h4 class="name" id="#self.filterFunction">
+            
+                <span class="inherited"><a href="insight.DataProvider.html##self.filterFunction">inherited</a></span>
             
             #self.filterFunction<span class="signature">(filterFunc)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{this}</span>
         </h4>
@@ -1764,8 +2115,8 @@ The function to use to filter an object from the series.
     
     
     <div class="description">
-        Sets the function to use to filter an object from the series.
-The function should return a boolean where false means the object is not included in the series.
+        Sets the function to use to filter an object from the data source.
+The function should return a boolean where false means the object is not included in the data source.
     </div>
     
 
@@ -1812,7 +2163,7 @@ The function should return a boolean where false means the object is not include
             
             <td class="description last">
                 
-                The new function to use to filter an object from the series.</td>
+                The new function to use to filter an object from the data source.</td>
         </tr>
 	
 	
@@ -1868,9 +2219,9 @@ The function should return a boolean where false means the object is not include
             
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="#self.groupKeyFunction">
+        <h4 class="name" id="#self.isOrdered">
             
-            #self.groupKeyFunction<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{function}</span>
+            #self.isOrdered<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Boolean}</span>
         </h4>
     </div>
 
@@ -1880,7 +2231,7 @@ The function should return a boolean where false means the object is not include
     
     
     <div class="description">
-        Gets the function used to retrieve the grouping key from the data object to plot on a chart, used for cross filtering.
+        Whether the group's data is ordered.
     </div>
     
 
@@ -1930,7 +2281,7 @@ The function should return a boolean where false means the object is not include
 
 
 <h5>Returns:</h5>
-current function used to extract the grouping key.
+Whether the group's data is ordered.
 <br />
 
     
@@ -1942,9 +2293,9 @@ current function used to extract the grouping key.
             
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="#self.groupKeyFunction">
+        <h4 class="name" id="#self.isOrdered">
             
-            #self.groupKeyFunction<span class="signature">(keyFunc)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{this}</span>
+            #self.isOrdered<span class="signature">(ordered)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{this}</span>
         </h4>
     </div>
 
@@ -1954,7 +2305,7 @@ current function used to extract the grouping key.
     
     
     <div class="description">
-        Sets the function used to retrieve the grouping key from the data object to plot on a chart.
+        Sets if this Grouping will be ordered or not
     </div>
     
 
@@ -1985,7 +2336,389 @@ current function used to extract the grouping key.
 	
         <tr>
             
-                <td class="name"><code>keyFunc</code></td>
+                <td class="name"><code>ordered</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                Whether to order this Grouping or not</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="#self.mean">
+            
+            #self.mean<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{String[]}</span>
+        </h4>
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Returns the list of properties whose mean will be calculated after the map reduce of this Grouping.
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+
+
+<h5>Returns:</h5>
+The list of property names that will averaged
+<br />
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="#self.mean">
+            
+            #self.mean<span class="signature">(properties)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{this}</span>
+        </h4>
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Sets the array of properties whose mean will be calculated after the map reduce of this Grouping.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>properties</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String[]</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                An array of properties that will be averaged after the map reduce of this Grouping.</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="#self.orderingFunction">
+            
+                <span class="inherited"><a href="insight.DataProvider.html##self.orderingFunction">inherited</a></span>
+            
+            #self.orderingFunction<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{function}</span>
+        </h4>
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Gets the function used to order the data source values
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+
+
+<h5>Returns:</h5>
+The current ordering function
+<br />
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="#self.orderingFunction">
+            
+                <span class="inherited"><a href="insight.DataProvider.html##self.orderingFunction">inherited</a></span>
+            
+            #self.orderingFunction<span class="signature">(orderFunc)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{this}</span>
+        </h4>
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Sets the function used to order the data source values
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>orderFunc</code></td>
             
             
             <td class="type">
@@ -2001,7 +2734,7 @@ current function used to extract the grouping key.
             
             <td class="description last">
                 
-                The new function to use to extract the grouping key from a data object.</td>
+                The ordering function</td>
         </tr>
 	
 	
@@ -2057,9 +2790,9 @@ current function used to extract the grouping key.
             
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="#self.keyFunction">
+        <h4 class="name" id="#self.rawData">
             
-            #self.keyFunction<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{function}</span>
+            <span class="type-signature ">virtual</span>#self.rawData<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Object[]}</span>
         </h4>
     </div>
 
@@ -2069,7 +2802,9 @@ current function used to extract the grouping key.
     
     
     <div class="description">
-        Gets the function used to retrieve the x-value from the data object to plot on a chart.
+        Overrides insight.DataProvider.rawData by using
+<a href="http://square.github.io/crossfilter/">crossfilter</a> to create an object array containing one object
+per group in a data set.
     </div>
     
 
@@ -2119,7 +2854,7 @@ current function used to extract the grouping key.
 
 
 <h5>Returns:</h5>
-current function used to extract the x-value.
+An object array containing one object per group in the data set.
 <br />
 
     
@@ -2131,9 +2866,9 @@ current function used to extract the x-value.
             
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="#self.keyFunction">
+        <h4 class="name" id="#self.sum">
             
-            #self.keyFunction<span class="signature">(keyFunc)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{this}</span>
+            #self.sum<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{String[]}</span>
         </h4>
     </div>
 
@@ -2143,122 +2878,7 @@ current function used to extract the x-value.
     
     
     <div class="description">
-        Sets the function used to retrieve the x-value from the data object to plot on a chart.
-    </div>
-    
-
-    
-    
-    
-    
-    
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>keyFunc</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                The new key function to use to extract the x-value from a data object.</td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-
-
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="#self.tooltipFormat">
-            
-            #self.tooltipFormat<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{function}</span>
-        </h4>
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Gets the function that will be used to format the tooltip for this series' values.
+        Returns the list of properties to be summed on this Grouping
     </div>
     
 
@@ -2308,7 +2928,7 @@ current function used to extract the x-value.
 
 
 <h5>Returns:</h5>
-A function that accepts the value string and returns the formatted tooltip label.
+The list of property names that will be summed
 <br />
 
     
@@ -2320,9 +2940,9 @@ A function that accepts the value string and returns the formatted tooltip label
             
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="#self.tooltipFormat">
+        <h4 class="name" id="#self.sum">
             
-            #self.tooltipFormat<span class="signature">(formatFunc)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{this}</span>
+            #self.sum<span class="signature">(properties)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{this}</span>
         </h4>
     </div>
 
@@ -2332,7 +2952,7 @@ A function that accepts the value string and returns the formatted tooltip label
     
     
     <div class="description">
-        Sets the function that will be used to format the tooltip for this series' values.
+        Sets the list of property names that will be summed in this Grouping
     </div>
     
 
@@ -2363,13 +2983,13 @@ A function that accepts the value string and returns the formatted tooltip label
 	
         <tr>
             
-                <td class="name"><code>formatFunc</code></td>
+                <td class="name"><code>properties</code></td>
             
             
             <td class="type">
             
                 
-<span class="param-type">function</span>
+<span class="param-type">String[]</span>
 
 
             
@@ -2379,581 +2999,7 @@ A function that accepts the value string and returns the formatted tooltip label
             
             <td class="description last">
                 
-                A function that accepts the value string and returns the formatted tooltip label.</td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><a href="insight.formatters.html">insight.formatters</a> for pre-built examples.</li>
-        </ul>
-    </dd>
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-
-
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="#self.tooltipOffset">
-            
-            #self.tooltipOffset<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Object}</span>
-        </h4>
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        The distance to which move the tooltip for this series relative to its default point.
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-
-
-<h5>Returns:</h5>
-The {x,y} offset to place the tooltip from the point.
-<br />
-
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="#self.tooltipOffset">
-            
-            #self.tooltipOffset<span class="signature">(offset)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{this}</span>
-        </h4>
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Sets the distance to which move the tooltip for this series relative to its default point.
-    </div>
-    
-
-    
-    
-    
-    
-    
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>offset</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                The new distance to which move the tooltip for this series relative to its default point.</td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-
-
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="#self.top">
-            
-            #self.top<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Number}</span>
-        </h4>
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        The number of results to include. Used in conjunction with ordering of an Axis.
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-
-
-<h5>Returns:</h5>
-The number of results to include. Used in conjunction with ordering of an Axis.
-<br />
-
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="#self.top">
-            
-            #self.top<span class="signature">(topValues)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{this}</span>
-        </h4>
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Sets the number of results to include. Used in conjunction with ordering of an Axis.
-    </div>
-    
-
-    
-    
-    
-    
-    
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>topValues</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Number</span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                The number of results to include. Used in conjunction with ordering of an Axis.</td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-
-
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="#self.valueFunction">
-            
-            #self.valueFunction<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{function}</span>
-        </h4>
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Gets the y-value from the data object to plot on a chart.
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-
-
-<h5>Returns:</h5>
-current function used to extract the y-value.
-<br />
-
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="#self.valueFunction">
-            
-            #self.valueFunction<span class="signature">(valueFunc)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{this}</span>
-        </h4>
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Sets the function used to retrieve the y-value from the data object to plot on a chart.
-    </div>
-    
-
-    
-    
-    
-    
-    
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>valueFunc</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                The new key function to use to extract the y-value from a data object.</td>
+                An array of property names to be summed for slices in this Grouping.</td>
         </tr>
 	
 	

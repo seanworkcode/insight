@@ -23,13 +23,13 @@ $(document)
                 .height(350)
                 .title('Annual Average App Price');
 
-            var x = new insight.Axis('', insight.Scales.Ordinal)
+            var x = new insight.Axis('', insight.scales.ordinal)
                 .tickSize(5)
                 .tickPadding(5)
                 .tickLabelFormat(d3.time.format('%Y'));
 
-            var y = new insight.Axis('', insight.Scales.Linear)
-                .tickLabelFormat(insight.Formatters.currencyFormatter);
+            var y = new insight.Axis('', insight.scales.linear)
+                .tickLabelFormat(insight.formatters.currencyFormatter);
 
             chart.xAxis(x)
                 .yAxis(y);
@@ -39,7 +39,7 @@ $(document)
                 {
                     return d.value.price.Average;
                 })
-                .tooltipFormat(insight.Formatters.currencyFormatter);
+                .tooltipFormat(insight.formatters.currencyFormatter);
 
             chart.series([columns]);
 

@@ -9,10 +9,10 @@ $(document)
 
             var revenueChart = createEmptyChart();
 
-            var x = new insight.Axis('', insight.Scales.Ordinal)
+            var x = new insight.Axis('', insight.scales.ordinal)
                 .tickLabelOrientation('tb');
 
-            var y = new insight.Axis('', insight.Scales.Linear)
+            var y = new insight.Axis('', insight.scales.linear)
                 .tickLabelFormat(function(tickValue)
                 {
                     var thousands = (tickValue / 1000)
@@ -25,7 +25,7 @@ $(document)
                 {
                     return d.value.CurrentRevenue.Sum;
                 })
-                .tooltipFormat(insight.Formatters.currencyFormatter);
+                .tooltipFormat(insight.formatters.currencyFormatter);
 
             revenueChart.xAxis(x)
                 .yAxis(y)
@@ -41,7 +41,7 @@ $(document)
                     return d.Client;
                 })
                 .sum(['CurrentRevenue'])
-                .orderFunction(function(a, b)
+                .orderingFunction(function(a, b)
                 {
                     return b.value.CurrentRevenue.Sum - a.value.CurrentRevenue.Sum;
                 });

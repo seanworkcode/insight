@@ -152,8 +152,6 @@
 
                 grouping.initialize();
 
-                console.log(grouping.getData());
-
                 var chart = new Chart('Chart ' + $scope.chartId, "#chart" + $scope.chartId, dimension)
                     .width(400)
                     .height(350)
@@ -228,8 +226,6 @@
                     .average(measures);
 
                 grouping.initialize();
-
-                console.log(grouping.getData());
 
                 var bubbleX = new Scale(chart, measures[0], d3.scale.linear(), 'h', 'linear');
                 var bubbleY = new Scale(chart, measures[1], d3.scale.linear(), 'v', 'linear');
@@ -535,11 +531,11 @@ function createBubbleChart(chartGroup, bubbleData) {
         .width(300)
         .height(400);
 
-    var xAxis = new insight.Axis('Average Rating', insight.Scales.Linear)
+    var xAxis = new insight.Axis('Average Rating', insight.scales.linear)
         .tickFrequency(1);
 
-    var yAxis = new insight.Axis('', insight.Scales.Linear)
-        .tickLabelFormat(insight.Formatters.currencyFormatter);
+    var yAxis = new insight.Axis('', insight.scales.linear)
+        .tickLabelFormat(insight.formatters.currencyFormatter);
 
     bubbleChart
         .xAxis(xAxis)
@@ -571,12 +567,12 @@ function createGenreCountChart(chartGroup, genreData){
         .width(450)
         .height(400);
 
-    var y = new insight.Axis('', insight.Scales.Ordinal)
+    var y = new insight.Axis('', insight.scales.ordinal)
         .tickSize(0)
         .tickPadding(5)
         .isOrdered(true);
 
-    var x = new insight.Axis('', insight.Scales.Linear)
+    var x = new insight.Axis('', insight.scales.linear)
         .hasReversedPosition(true)
         .tickPadding(0)
         .tickSize(0)
@@ -600,10 +596,10 @@ function createLanguageChart(chartGroup, languages){
         .width(350)
         .height(400);
 
-    var x = new insight.Axis('Language', insight.Scales.Ordinal)
+    var x = new insight.Axis('Language', insight.scales.ordinal)
         .isOrdered(true);
 
-    var y = new insight.Axis('', insight.Scales.Linear);
+    var y = new insight.Axis('', insight.scales.linear);
 
     chart.xAxis(x)
         .yAxis(y)
