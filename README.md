@@ -3,28 +3,32 @@ InsightJS [![Travis Results](https://travis-ci.org/ScottLogic/insight.svg?branch
 
 InsightJS is a JavaScript data aggregation and visualization library that allows you to quickly load and find patterns in datasets.  Given a data set, InsightJS can group the records across the dimensions of the data to quickly aggregate and provide statistics on the data.
 
-### Version 1.1.1-Hotfix (23-Sep-2014)
+### Version 1.2.0 (07-Oct-2014)
 
-* Fixed issue with chart highlighting in IE 11.
+* Library changes:
+  * Added Chart.titlePadding, to configure the distance between the chart title and plot area.
+  * Added Axis.tickWidth and Axis.tickColor to configure the appearance of axis tick marks. Defaults are taken from the Theme.axisStyle.tickLineColor and Theme.axis.tickLineWidth respectively.
+  * Added BarSeries as a common base class between RowSeries and ColumnSeries. BarSeries should not be initialized directly, but contains methods used in both RowSeries and ColumnSeries.
+  * Added manual axis domains. Use Axis.axisRange(min, max) to set the axis range to a custom range.
+  * Renaming
+    * insight.Axis.axisLabelColor => insight.Axis.axisTitleColor
+    * insight.Axis.axisLabelFont => insight.Axis.axisTitleFont
+    * insight.Axis.label => insight.Axis.title
+    * insight.Theme.axisStyle.showGridlines => insight.Theme.axisStyle.shouldShowGridlines
+    * insight.Theme.axisStyle.axisLabelFont => insight.Theme.axisStyle.axisTitleFont
+    * insight.Theme.axisStyle.axisLabelColor => insight.Theme.axisStyle.axisTitleColor
+    * insight.Theme.seriesStyle.showPoints => insight.Theme.seriesStyle.shouldShowPoints
+    * insight.Formatters => insight.formatters.
+    * insight.Scales.Linear => insight.scales.linear
+    * insight.Scales.Ordinal => insight.scales.ordinal
+    * insight.Scales.Time => insight.scales.time
+    * insight.Constants => insight.constants
+    * insight.Utils => insight.utils
+    * insight.correlation.fromDataSet => insight.correlation.fromDataProvider
 
-### Version 1.1.1 (18-Sep-2014)
-
-* Library changes
-  * Sets default currency of currency formatter to USD.
-  * Merges common functionality in ScatterSeries and BubbleSeries into a common PointSeries.
-  * Deprecated “ScatterSeries.pointRadius”. Use “ScatterSeries.radiusFunction” instead.
-  * ChartGroup.filterByGrouping: allows a given grouping to be filtered by a given value.
-  * ChartGroup.clearFilters: allows all previously applied filters to be removed.
-
-* Issues fixed
-  * Horizontal axis tick labels were not anchored at the middle by default.
-  * Chart titles were not within the chart SVG bounds.
-  * Points were hidden when plotting multiple line series on a single chart.
-  * Calculated charts margins were too large or too small.
-  * Axis tick marks were obscured in bottom/right axis orientation.
-  * There were too many ticks appearing on small charts.
-  * Points on a scatter series were not transitioning when drawn.
-  * Axis line width and color were not being displayed as they were set.
+* Issues fixed:
+  * Date axis tick labels were jumping on interactive charts
+  * Charts were not able to be drawn with no data
 
 ### Getting Started
 
@@ -42,7 +46,7 @@ Load a dataset and start analyzing and creating charts!
 
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.7/crossfilter.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.min.js"></script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/insightjs/1.1.1/insight.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/insightjs/1.2.0/insight.min.js"></script>
 ```
 
 ```javascript
