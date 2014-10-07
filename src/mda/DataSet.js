@@ -23,23 +23,32 @@
          * array property.
          * @returns {insight.Grouping} - A grouping which allows aggregation of a data set into groups for analysis.
          * @example var dataSet = new insight.DataSet([
-         *    { Forename : 'Alan', Height : 133, Country : 'England' },
-         *    { Forename : 'Bob', Height : 169, Country : 'Scotland' },
-         *    { Forename : 'Mary', Height : 151, Country : 'Northern Ireland' }
-         *  ]):
+         *    { forename : 'Alan', height : 133, gender : 'Male' },
+         *    { forename : 'Bob', height : 169, gender : 'Male' },
+         *    { forename : 'Mary', height : 151, gender : 'Female' },
+         *    { forename : 'Sam', height : 160, gender : 'Female' },
+         *    { forename : 'Steve', height : 172, gender : 'Male' },
+         *    { forename : 'Harold', height : 160, gender : 'Male' }
+         *  ]);
          *
-         *  // Group on a single / one-to-one value, to aggregate the average height.
-         *  var countryGrouping = dataSet.group('Country', function(d) { return d.Country; })
-         *    .mean(['Height']);
+         *  // Group on a the gender property and take the mean height.
+         *  var genderGrouping = dataSet.group('gender', function(d) { return d.gender; })
+         *                              .mean(['height']);
+         *
+         *  // The mean height by gender can now be included in a chart using the following value function
+         *  var averageHeightValue = function(d) {
+         *      return d.value.height.Average;
+         *  };
+         *
          * @example var dataSet = new insight.DataSet([
          *    { Forename : 'Alan', Interests : [ 'Triathlon', 'Music', 'Mountain Biking' ] },
          *    { Forename : 'Bob', Interests : [ 'Ballet', 'Music', 'Climbing' ] },
          *    { Forename : 'Mary', Interests : [ 'Triathlon', 'Music', 'Kayaking' ] }
-         *  ]):
+         *  ]);
          *
          *  // Group on an array / one-to-many value, to aggregate the count of interests.
          *  var interestsGrouping = dataSet.group('Interests', function(d) { return d.Interests; }, true)
-         *    .count('Interests');
+         *    .count(['Interests']);
          */
         self.group = function(name, groupFunction, oneToMany) {
 
