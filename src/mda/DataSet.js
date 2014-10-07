@@ -23,21 +23,23 @@
          * array property.
          * @returns {insight.Grouping} - A grouping which allows aggregation of a data set into groups for analysis.
          * @example var dataSet = new insight.DataSet([
-         *    { Wpm : 33, Country : 'England' },
-         *    { Wpm : 69, Country : 'Scotland' },
-         *    { Wpm : 51, Country : 'Northern Ireland' }
+         *    { Forename : 'Alan', Height : 133, Country : 'England' },
+         *    { Forename : 'Bob', Height : 169, Country : 'Scotland' },
+         *    { Forename : 'Mary', Height : 151, Country : 'Northern Ireland' }
          *  ]):
          *
-         *  // Group on a single / one-to-one value
-         *  var countryGrouping = dataSet.group('Country', function(d) { return d.Country; });
+         *  // Group on a single / one-to-one value, to aggregate the average height.
+         *  var countryGrouping = dataSet.group('Country', function(d) { return d.Country; })
+         *    .mean(['Height']);
          * @example var dataSet = new insight.DataSet([
-         *    { Wpm : 33, Interests : [ 'Triathlon', 'Music', 'Mountain Biking' ] },
-         *    { Wpm : 69, Interests : [ 'Ballet', 'Music', 'Climbing' ] },
-         *    { Wpm : 51, Interests : [ 'Triathlon', 'Music', 'Kayaking' ] }
+         *    { Forename : 'Alan', Interests : [ 'Triathlon', 'Music', 'Mountain Biking' ] },
+         *    { Forename : 'Bob', Interests : [ 'Ballet', 'Music', 'Climbing' ] },
+         *    { Forename : 'Mary', Interests : [ 'Triathlon', 'Music', 'Kayaking' ] }
          *  ]):
          *
-         *  // Group on an array / one-to-many value
-         *  var interestsGrouping = dataSet.group('Interests', function(d) { return d.Interests; }, true);
+         *  // Group on an array / one-to-many value, to aggregate the count of interests.
+         *  var interestsGrouping = dataSet.group('Interests', function(d) { return d.Interests; }, true)
+         *    .count('Interests');
          */
         self.group = function(name, groupFunction, oneToMany) {
 
