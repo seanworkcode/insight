@@ -2,9 +2,10 @@
 
     /**
      * The Chart class is the element in which series and axes are drawn
-     * @class insight.Chart
-     * @param {string} name - A uniquely identifying name for this chart
-     * @param {string} element - The css selector identifying the div container that the chart will be drawn in. '#columnChart' for example.
+     * @constructor insight.Chart
+     * @param {String} name - A uniquely identifying name for this chart
+     * @param {String} element - The css selector identifying the div container that the chart will be drawn in.
+     * @example var myChart = new insight.Chart('My Chart', '#chart-div');
      */
     insight.Chart = function Chart(name, element) {
 
@@ -27,7 +28,8 @@
             zoomInitialized = false,
             initialized = false,
             zoomAxis = null,
-            highlightSelector = insight.Utils.highlightSelector();
+            titlePadding = 20,
+            highlightSelector = insight.utils.highlightSelector();
 
         var margin = {
             top: 0,
@@ -71,29 +73,29 @@
             self.container = d3.select(self.element).append('div');
 
             self.container
-                .attr('class', insight.Constants.ContainerClass)
+                .attr('class', insight.constants.ContainerClass)
                 .style('position', 'relative')
                 .style('display', 'inline-block');
 
             self.chartSVG = self.container
                 .append('svg')
-                .attr('class', insight.Constants.ChartSVG);
+                .attr('class', insight.constants.ChartSVG);
 
             self.plotArea = self.chartSVG.append('g')
-                .attr('class', insight.Constants.PlotArea);
+                .attr('class', insight.constants.PlotArea);
 
             // create the empty text element used by the text measuring process
             self.axisMeasurer = self.plotArea
                 .append('text')
-                .attr('class', insight.Constants.AxisTextClass);
+                .attr('class', insight.constants.AxisTextClass);
 
             self.labelMeasurer = self.container
                 .append('text')
-                .attr('class', insight.Constants.AxisLabelClass);
+                .attr('class', insight.constants.AxisLabelClass);
 
             self.titleContainer = self.container
                 .append('text')
-                .attr('class', insight.Constants.ChartTitleClass);
+                .attr('class', insight.constants.ChartTitleClass);
 
             self.addClipPath();
 
@@ -139,7 +141,7 @@
          * Calculates the plot area of this chart, taking into account the size and margins of the chart.
          * @memberof! insight.Axis
          * @instance
-         * @returns {int[]} - An array with two items, for the width and height of the axis, respectively.
+         * @returns {Number[]} - An array with two items, for the width and height of the axis, respectively.
          */
         self.calculatePlotAreaSize = function() {
             var bounds = [];
@@ -273,7 +275,7 @@
 
         self.clipPath = function() {
 
-            return insight.Utils.safeString(self.name) + 'clip';
+            return insight.utils.safeString(self.name) + 'clip';
         };
 
         /*
@@ -281,29 +283,21 @@
          * in response to a filtering event.
          * and something else is.
          * @memberof! insight.Chart
-         * @param {string} selector - a CSS selector matching a slice of a dimension. eg. an entry in a grouping by Country
+         * @param {String} selector - a CSS selector matching a slice of a dimension. eg. an entry in a grouping by Country
          would be 'in_England', which would match that dimensional value in any charts.
          */
         self.toggleHighlight = function(selector) {
             var clicked = self.plotArea.selectAll('.' + selector);
-            var alreadySelected = insight.Utils.arrayContains(self.selectedItems, selector);
+            var alreadySelected = insight.utils.arrayContains(self.selectedItems, selector);
 
             if (alreadySelected) {
                 clicked.classed('selected', false);
-                insight.Utils.removeItemFromArray(self.selectedItems, selector);
+                insight.utils.removeItemFromArray(self.selectedItems, selector);
             } else {
                 clicked.classed('selected', true)
                     .classed('notselected', false);
                 self.selectedItems.push(selector);
             }
-
-
-            // depending on if anything is selected, we have to update the rest as notselected so that they are coloured differently
-            var selected = self.plotArea.selectAll('.selected');
-            var notselected = self.plotArea.selectAll(highlightSelector);
-
-            // if nothing is selected anymore, clear the .notselected class from any elements (stop showing them as gray)
-            notselected.classed('notselected', selected[0].length > 0);
         };
 
         self.clearHighlight = function() {
@@ -371,6 +365,7 @@
         /**
          * Empty event handler that is overridden by any listeners who want to know when this Chart's series change
          * @memberof! insight.Chart
+         * @instance
          * @param {insight.Series[]} series - An array of insight.Series belonging to this Chart
          */
         self.seriesChanged = function(series) {
@@ -381,8 +376,8 @@
          * Enable zooming and panning for an axis on this chart
          * @memberof! insight.Chart
          * @instance
-         * @param axis The axis to enable zooming and panning for
-         * @returns {Chart} Returns this.
+         * @param {insight.Axis} axis The axis to enable zooming and panning for
+         * @returns {this}
          */
         self.setInteractiveAxis = function(axis) {
             zoomable = true;
@@ -395,14 +390,16 @@
          * The margins to use around the chart (top, bottom, left, right), each measured in pixels.
          * @memberof! insight.Chart
          * @instance
-         * @returns {object} - The current margins of the chart.
+         * @returns {Object} - The current margins of the chart.
+         * @example {top: 10, bottom: 20, left: 30, right: 40}
          *
          * @also
          *
          * Sets the margins to use around the chart (top, bottom, left, right), each measured in pixels.
          * @memberof! insight.Chart
          * @instance
-         * @param {object} margins The new margins to use around the chart.
+         * @param {Object} margins The new margins to use around the chart.
+         * @example self.margin({top: 10, bottom: 20, left: 30, right: 40})
          * @returns {this}
          */
         self.margin = function(newMargins) {
@@ -482,6 +479,29 @@
             }
 
             titleColor = d3.functor(chartTitleColor);
+            return self;
+        };
+
+        /**
+         * The spacing between the chart title and the plot area.
+         * @memberof! insight.Chart
+         * @instance
+         * @returns {Number} - The padding in pixels between the chart title and the plot area.
+         *
+         * @also
+         *
+         * Sets the spacing between the chart title and the plot area.
+         * @memberof! insight.Chart
+         * @instance
+         * @param {Number} newTitlePadding The padding in pixels between the chart title and the plot area.
+         * @returns {this}
+         */
+        self.titlePadding = function(newTitlePadding) {
+            if (!arguments.length) {
+                return titlePadding;
+            }
+
+            titlePadding = newTitlePadding;
             return self;
         };
 
@@ -587,14 +607,14 @@
          * The series to draw on this chart.
          * @memberof! insight.Chart
          * @instance
-         * @returns {Series[]} - The current series drawn on the chart.
+         * @returns {insight.Series[]} - The current series drawn on the chart.
          *
          * @also
          *
          * Sets the series to draw on this chart.
          * @memberof! insight.Chart
          * @instance
-         * @param {Series[]} newSeries The new series to draw on the chart.
+         * @param {insight.Series[]} newSeries The new series to draw on the chart.
          * @returns {this}
          */
         self.series = function(newSeries) {
@@ -612,14 +632,14 @@
          * The legend to draw on this chart.
          * @memberof! insight.Chart
          * @instance
-         * @returns {Legend} - The current legend drawn on the chart.
+         * @returns {insight.Legend} - The current legend drawn on the chart.
          *
          * @also
          *
          * Sets the legend to draw on this chart.
          * @memberof! insight.Chart
          * @instance
-         * @param {Legend} newLegend The new legend to draw on the chart.
+         * @param {insight.Legend} newLegend The new legend to draw on the chart.
          * @returns {this}
          */
         self.legend = function(newLegend) {
@@ -637,7 +657,7 @@
          *
          * @memberof! insight.Chart
          * @instance
-         * @param {Axis} [axis] The x-axis to add.
+         * @param {insight.Axis} axis The x-axis to add.
          * @returns {this}
          */
         self.addXAxis = function(axis) {
@@ -650,14 +670,14 @@
          * All of the x-axes on the chart.
          * @memberof! insight.Chart
          * @instance
-         * @returns {Axis[]} - The current x-axes of the chart.
+         * @returns {insight.Axis[]} - The current x-axes of the chart.
          *
          * @also
          *
          * Sets the x-axes on the chart.
          * @memberof! insight.Chart
          * @instance
-         * @param {Axis[]} newXAxes The new x-axes to draw on the chart.
+         * @param {insight.Axis[]} newXAxes The new x-axes to draw on the chart.
          * @returns {this}
          */
         self.xAxes = function(newXAxes) {
@@ -679,14 +699,14 @@
          * The primary x-axis on the chart.
          * @memberof! insight.Chart
          * @instance
-         * @returns {Axis} - The current primary x-axis of the chart.
+         * @returns {insight.Axis} - The current primary x-axis of the chart.
          *
          * @also
          *
          * Sets the primary x-axis on the chart.
          * @memberof! insight.Chart
          * @instance
-         * @param {Axis} xAxis The new primary x-axis of the chart.
+         * @param {insight.Axis} xAxis The new primary x-axis of the chart.
          * @returns {this}
          */
         self.xAxis = function(xAxis) {
@@ -704,7 +724,7 @@
          *
          * @memberof! insight.Chart
          * @instance
-         * @param {Axis} [axis] The y-axis to add.
+         * @param {insight.Axis} axis The y-axis to add.
          * @returns {this}
          */
         self.addYAxis = function(axis) {
@@ -717,14 +737,14 @@
          * All of the y-axes on the chart.
          * @memberof! insight.Chart
          * @instance
-         * @returns {Axis[]} - The current y-axes of the chart.
+         * @returns {insight.Axis[]} - The current y-axes of the chart.
          *
          * @also
          *
          * Sets the y-axes on the chart.
          * @memberof! insight.Chart
          * @instance
-         * @param {Axis[]} newYAxes The new y-axes to draw on the chart.
+         * @param {insight.Axis[]} newYAxes The new y-axes to draw on the chart.
          * @returns {this}
          */
         self.yAxes = function(newYAxes) {
@@ -746,14 +766,14 @@
          * The primary y-axis on the chart.
          * @memberof! insight.Chart
          * @instance
-         * @returns {Axis} - The current primary y-axis of the chart.
+         * @returns {insight.Axis} - The current primary y-axis of the chart.
          *
          * @also
          *
          * Sets the primary y-axis on the chart.
          * @memberof! insight.Chart
          * @instance
-         * @param {Axis} yAxis The new primary y-axis of the chart.
+         * @param {insight.Axis} yAxis The new primary y-axis of the chart.
          * @returns {this}
          */
         self.yAxis = function(yAxis) {
@@ -799,8 +819,8 @@
      * @instance
      * @param {DOMElement} measurer - A canvas HTML element to use by the measurer.  Specific to each chart as
      *                                each chart may have specific css rules
-     * @param {object} axisStyles - An associative map between css properties and values for the axis values
-     * @param {object} labelStyles - An associative map between css properties and values for the axis labels
+     * @param {Object} axisStyles - An associative map between css properties and values for the axis values
+     * @param {Object} labelStyles - An associative map between css properties and values for the axis labels
      */
     insight.Chart.prototype.calculateChartMargin = function() {
 
@@ -828,12 +848,10 @@
 
         });
 
-        var titlePadding = 20;
-
         //Adjust margins to fit the title
         if (this.title() && this.title().length > 0) {
             var textMeasurer = new insight.TextMeasurer(this.measureCanvas);
-            margin.top += textMeasurer.measureText(this.title(), this.titleFont()).height + titlePadding;
+            margin.top += textMeasurer.measureText(this.title(), this.titleFont()).height + this.titlePadding();
         }
 
         this.margin(margin);

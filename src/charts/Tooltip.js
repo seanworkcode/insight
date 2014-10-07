@@ -2,14 +2,14 @@
 
     /**
      * A tooltip, displaying values for a series or point when hovered over.
-     * @class insight.Tooltip
+     * @constructor
      */
     insight.Tooltip = function Tooltip() {
 
         // Private variables ------------------------------------------------------------------------------------------
 
         var self = this,
-            className = insight.Constants.Tooltip,
+            className = insight.constants.Tooltip,
             chartContainer = null,
             styles = {};
 
@@ -25,6 +25,8 @@
             'pointer-events': 'none',
             'box-sizing': 'border-box'
         };
+
+        // Private functions ------------------------------------------------------------------------------------------
 
         // Creates the tooltip element inside the defined container element.  It sets this.element.
         function createElement() {
@@ -48,7 +50,7 @@
         // It currently just returns the position centrally above the provided DOM element, however the coordinate system is in place to allow customization around the element.
         function getTooltipPosition(target) {
 
-            var boundingBox = insight.Utils.getSVGBoundingBox(target);
+            var boundingBox = insight.utils.getSVGBoundingBox(target);
 
             var offset = self.offset();
 
@@ -66,7 +68,7 @@
 
         /*
          * Given a coordinate {x,y} position, this method updates the position and visibility of the tooltip to display it.
-         * @param {object} point - an {x,y} coordinate, from the top left of the tooltip's container SVG.
+         * @param {Object} point - an {x,y} coordinate, from the top left of the tooltip's container SVG.
          */
         function drawTooltip(position) {
 
@@ -78,20 +80,20 @@
                 });
         }
 
-        // Public Methods
+        // Public functions ------------------------------------------------------------------------------------------
 
         /**
          * The distance to which move the tooltip for this series relative to its default point.
          * @memberof! insight.Tooltip
          * @instance
-         * @returns {object} - The {x,y} offset to place the tooltip from the point.
+         * @returns {Object} - The {x,y} offset to place the tooltip from the point.
          *
          * @also
          *
          * Sets the distance to which move the tooltip for this series relative to its default point.
          * @memberof! insight.Tooltip
          * @instance
-         * @param {object} offset The new distance to which move the tooltip for this series relative to its default point.
+         * @param {Object} offset The new distance to which move the tooltip for this series relative to its default point.
          * @returns {this}
          */
         self.offset = function(value) {
@@ -107,23 +109,27 @@
          * The current style for the tooltip.
          * @memberof! insight.Tooltip
          * @instance
-         * @returns {object} - The style of the tooltip, in standard {'name': 'value', ...} format of CSS values.
+         * @returns {Object} - The style of the tooltip, in standard {'name': 'value', ...} format of CSS values.
+         * @example {'text-align': 'left', ...}
          *
          * @also
          *
          * Sets the current style for the tooltip.
          * @memberof! insight.Tooltip
          * @instance
-         * @param {object} style The new style of the tooltip, in standard {'name': 'value', ...} format of CSS values.
+         * @param {Object} style The new style of the tooltip, in standard {'name': 'value', ...} format of CSS values.
+         * @example self.styles({'text-align': 'left', ...})
          * @returns {this}
          */
         self.styles = function(value) {
             if (!arguments.length) {
-                return insight.Utils.objectUnion(baseStyles, styles);
+                return insight.utils.objectUnion(baseStyles, styles);
             }
             styles = value;
             return self;
         };
+
+        // Internal functions ------------------------------------------------------------------------------------------
 
         // Gets or sets the DOM element that this tooltip will be created inside, usually a div.
         self.container = function(container) {
@@ -139,7 +145,7 @@
          * Display the tooltip, using the provided element and tooltipText parameters to control the context and position.
          * @memberof! insight.Tooltip
          * @instance
-         * @param {element} element The element to attach to.
+         * @param {DOMElement} element The element to attach to.
          * @param {String} tooltipText The text to display on the tooltip.
          */
         self.show = function(element, tooltipText) {

@@ -101,15 +101,15 @@ describe('Correlation', function() {
 
             // Given
             var notArray = {};
-            spyOn(insight.Utils, 'isArray').andCallThrough();
+            spyOn(insight.utils, 'isArray').andCallThrough();
 
             // When
             var r = insight.correlation.fromValues(notArray, yValues);
 
             // Then
             expect(r).not.toBeDefined();
-            expect(insight.Utils.isArray).toHaveBeenCalledWith(notArray);
-            expect(insight.Utils.isArray).not.toHaveBeenCalledWith(yValues);
+            expect(insight.utils.isArray).toHaveBeenCalledWith(notArray);
+            expect(insight.utils.isArray).not.toHaveBeenCalledWith(yValues);
 
         });
 
@@ -117,15 +117,15 @@ describe('Correlation', function() {
 
             // Given
             var notArray = {};
-            spyOn(insight.Utils, 'isArray').andCallThrough();
+            spyOn(insight.utils, 'isArray').andCallThrough();
 
             // When
             var r = insight.correlation.fromValues(xValues, notArray);
 
             // Then
             expect(r).not.toBeDefined();
-            expect(insight.Utils.isArray).toHaveBeenCalledWith(xValues);
-            expect(insight.Utils.isArray).toHaveBeenCalledWith(notArray);
+            expect(insight.utils.isArray).toHaveBeenCalledWith(xValues);
+            expect(insight.utils.isArray).toHaveBeenCalledWith(notArray);
 
         });
         
@@ -166,15 +166,15 @@ describe('Correlation', function() {
 
             // Given
             var notArray = {};
-            spyOn(insight.Utils, 'isArray').andCallThrough();
+            spyOn(insight.utils, 'isArray').andCallThrough();
 
             // When
             var r = insight.correlation.fromValues(notArray, yValues, errorContainer);
 
             // Then
             expect(r).not.toBeDefined();
-            expect(insight.Utils.isArray).toHaveBeenCalledWith(notArray);
-            expect(insight.Utils.isArray).not.toHaveBeenCalledWith(yValues);
+            expect(insight.utils.isArray).toHaveBeenCalledWith(notArray);
+            expect(insight.utils.isArray).not.toHaveBeenCalledWith(yValues);
             expectNonArrayError(errorContainer);
 
         });
@@ -183,15 +183,15 @@ describe('Correlation', function() {
 
             // Given
             var notArray = {};
-            spyOn(insight.Utils, 'isArray').andCallThrough();
+            spyOn(insight.utils, 'isArray').andCallThrough();
 
             // When
             var r = insight.correlation.fromValues(xValues, notArray, errorContainer);
 
             // Then
             expect(r).not.toBeDefined();
-            expect(insight.Utils.isArray).toHaveBeenCalledWith(xValues);
-            expect(insight.Utils.isArray).toHaveBeenCalledWith(notArray);
+            expect(insight.utils.isArray).toHaveBeenCalledWith(xValues);
+            expect(insight.utils.isArray).toHaveBeenCalledWith(notArray);
             expectNonArrayError(errorContainer);
 
         });
@@ -363,7 +363,7 @@ describe('Correlation', function() {
 
     });
 
-    describe('fromDataSet', function() {
+    describe('fromDataProvider', function() {
 
         var iqFunc = function(d) {
             return d.IQ;
@@ -376,7 +376,7 @@ describe('Correlation', function() {
         };
 
         beforeEach(function() {
-            spyOn(insight.Utils, 'isFunction').andCallThrough();
+            spyOn(insight.utils, 'isFunction').andCallThrough();
         });
 
         it('calculates correlation of given pairs given a DataSet', function() {
@@ -385,7 +385,7 @@ describe('Correlation', function() {
             var dataset = new insight.DataSet(sourceData);
 
             // When
-            var result = insight.correlation.fromDataSet(dataset, iqFunc, ageFunc);
+            var result = insight.correlation.fromDataProvider(dataset, iqFunc, ageFunc);
 
             // Then
             expect(result).toBeCloseTo(-0.1246);
@@ -398,7 +398,7 @@ describe('Correlation', function() {
             var arrayData = sourceData;
 
             // When
-            var result = insight.correlation.fromDataSet(arrayData, idFunc, ageFunc);
+            var result = insight.correlation.fromDataProvider(arrayData, idFunc, ageFunc);
 
             // Then
             expect(result).toBeCloseTo(0.0712);
@@ -414,7 +414,7 @@ describe('Correlation', function() {
             var result;
 
             // When
-            result = insight.correlation.fromDataSet(notDatasetOrArray, idFunc, ageFunc);
+            result = insight.correlation.fromDataProvider(notDatasetOrArray, idFunc, ageFunc);
 
             // Then
             expect(result).not.toBeDefined();
@@ -431,13 +431,13 @@ describe('Correlation', function() {
             var result;
 
             // When
-            result = insight.correlation.fromDataSet(notDatasetOrArray, idFunc, ageFunc, errorContainer);
+            result = insight.correlation.fromDataProvider(notDatasetOrArray, idFunc, ageFunc, errorContainer);
 
             // Then
             expect(result).not.toBeDefined();
             expect(errorContainer.state()).toBe(insight.ErrorContainer.State.error);
             expect(errorContainer.data()).toBeNull();
-            expect(errorContainer.message()).toBe(insight.ErrorMessages.invalidDataSetOrArrayParameterException);
+            expect(errorContainer.message()).toBe(insight.ErrorMessages.invalidDataProviderOrArrayParameterException);
 
         });
 
@@ -447,7 +447,7 @@ describe('Correlation', function() {
             var arrayData = sourceData;
 
             // When
-            var result = insight.correlation.fromDataSet(arrayData, idFunc, ageFunc, errorContainer);
+            var result = insight.correlation.fromDataProvider(arrayData, idFunc, ageFunc, errorContainer);
 
             // Then
             expect(errorContainer.message()).toBeNull();
@@ -463,11 +463,11 @@ describe('Correlation', function() {
             var notAFunction = ['An Array'];
 
             // When
-            var result = insight.correlation.fromDataSet(arrayData, notAFunction, ageFunc);
+            var result = insight.correlation.fromDataProvider(arrayData, notAFunction, ageFunc);
 
             // Then
             expect(result).not.toBeDefined();
-            expect(insight.Utils.isFunction).toHaveBeenCalledWith(notAFunction);
+            expect(insight.utils.isFunction).toHaveBeenCalledWith(notAFunction);
 
         });
 
@@ -480,11 +480,11 @@ describe('Correlation', function() {
             };
 
             // When
-            var result = insight.correlation.fromDataSet(arrayData, ageFunc, notAFunction);
+            var result = insight.correlation.fromDataProvider(arrayData, ageFunc, notAFunction);
 
             // Then
             expect(result).not.toBeDefined();
-            expect(insight.Utils.isFunction).toHaveBeenCalledWith(notAFunction);
+            expect(insight.utils.isFunction).toHaveBeenCalledWith(notAFunction);
 
         });
 
@@ -495,11 +495,11 @@ describe('Correlation', function() {
             var notAFunction = ['An Array'];
 
             // When
-            var result = insight.correlation.fromDataSet(arrayData, notAFunction, ageFunc, errorContainer);
+            var result = insight.correlation.fromDataProvider(arrayData, notAFunction, ageFunc, errorContainer);
 
             // Then
             expect(result).not.toBeDefined();
-            expect(insight.Utils.isFunction).toHaveBeenCalledWith(notAFunction);
+            expect(insight.utils.isFunction).toHaveBeenCalledWith(notAFunction);
             
             expect(errorContainer.message()).toBe(insight.ErrorMessages.invalidFunctionParameterException);
             expect(errorContainer.data()).toBeNull();
@@ -514,11 +514,11 @@ describe('Correlation', function() {
             var notAFunction = ['An Array'];
 
             // When
-            var result = insight.correlation.fromDataSet(arrayData, ageFunc, notAFunction, errorContainer);
+            var result = insight.correlation.fromDataProvider(arrayData, ageFunc, notAFunction, errorContainer);
 
             // Then
             expect(result).not.toBeDefined();
-            expect(insight.Utils.isFunction).toHaveBeenCalledWith(notAFunction);
+            expect(insight.utils.isFunction).toHaveBeenCalledWith(notAFunction);
             
             expect(errorContainer.message()).toBe(insight.ErrorMessages.invalidFunctionParameterException);
             expect(errorContainer.data()).toBeNull();

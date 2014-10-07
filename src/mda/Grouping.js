@@ -1,12 +1,13 @@
-/**
- * A Grouping is generated on a dimension, to reduce the items in the data set into groups along the provided dimension
- * @class insight.Grouping
- * @constructor
- * @param {dimension} dimension - The dimension to group
- */
 (function(insight) {
-
+    /**
+     * A Grouping is generated on a dimension, to reduce the items in the data set into groups along the provided dimension.
+     * @constructor
+     * @extends insight.DataProvider
+     * @param {Object} dimension - The dimension to group
+     */
     insight.Grouping = function Grouping(dimension) {
+
+        insight.DataProvider.call(this);
 
         // Private variables ------------------------------------------------------------------------------------------
 
@@ -17,15 +18,29 @@
             averageProperties = [],
             correlationPairProperties = [],
             allCorrelationProperties = [],
-            ordered = false,
-            filterFunction = null,
-            orderFunction;
+            ordered = false;
 
         // Internal variables -----------------------------------------------------------------------------------------
 
         self.dimension = dimension;
 
         // Private functions ------------------------------------------------------------------------------------------
+
+        function getOneToManyRawData() {
+
+            var data;
+
+            try {
+                data = self.data.value().values;
+            } catch (e) {
+                // There is a bug in crossfilter 1.3.7 that doesn't handle empty data
+                // This was reported and fixed: https://github.com/square/crossfilter/issues/122
+                // However, we are not yet able to upgrade to 1.3.9 since there are other issues with it.
+                data = [];
+            }
+
+            return data;
+        }
 
         // The default post aggregation step is blank, and can be overriden by users if they want to calculate additional values with this Grouping
         function postAggregation(grouping) {
@@ -35,8 +50,8 @@
         /*
          * Takes an object and a property name in the form of a string, traversing the object until it finds a property with that name and returning
          * a wrapped object with the immediate parent of the found property and the property's value.
-         * @param {object} - The object to search
-         * @param {string} propertyName - A string of the property to search, can include sub-properties using a dot notation. Eg. 'value.Revenue.Sum', which cannot be indexed directly in Javascript.
+         * @param {Object} - The object to search
+         * @param {String} propertyName - A string of the property to search, can include sub-properties using a dot notation. Eg. 'value.Revenue.Sum', which cannot be indexed directly in Javascript.
          */
         function getDescendant(obj, propertyName) {
             var arr = propertyName.split(".");
@@ -57,7 +72,7 @@
 
         /*
          * Takes a group object and calculates the mean for any properties configured.
-         * @param {object} group - A dimensional slice of a Grouping {key: 'X', value : {}}
+         * @param {Object} group - A dimensional slice of a Grouping {key: 'X', value : {}}
          */
         function calculateAverages(group) {
 
@@ -68,7 +83,7 @@
                 var propertyValue = group.value[propertyName];
                 var mean = propertyValue.Sum / propertyValue.Count;
 
-                mean = insight.Utils.isNumber(mean) && isFinite(mean) ? mean : undefined;
+                mean = insight.utils.isNumber(mean) && isFinite(mean) ? mean : undefined;
 
                 group.value[propertyName].Average = mean;
             }
@@ -76,8 +91,8 @@
 
         /*
          * Calculates running cumulative values for any properties defined in the cumulative() list.
-         * @param {object} group - The data group being added to the cumulative running totals list
-         * @param {object} totals - The map object of running totals for the defined properties
+         * @param {Object} group - The data group being added to the cumulative running totals list
+         * @param {Object} totals - The map object of running totals for the defined properties
          */
         function calculateCumulativeValues(group, totals) {
 
@@ -143,7 +158,7 @@
                         if (addingData.hasOwnProperty(propertyName)) {
 
                             // get this grouping from the global data
-                            var groupData = insight.Utils.takeWhere(globalData, 'key', self.dimension.aggregationFunction(addingData))[0].value;
+                            var groupData = insight.utils.takeWhere(globalData, 'key', self.dimension.aggregationFunction(addingData))[0].value;
 
                             // get the group mean from global data for this grouping
                             var groupMean = groupData[propertyName].Average;
@@ -173,8 +188,8 @@
 
                         var xName = pair[0],
                             yName = pair[1],
-                            xDeviation = insight.Utils.lastElement(workings[xName].deviation),
-                            yDeviation = insight.Utils.lastElement(workings[yName].deviation),
+                            xDeviation = insight.utils.lastElement(workings[xName].deviation),
+                            yDeviation = insight.utils.lastElement(workings[yName].deviation),
                             correlationName = deviationProductNameFunction(xName, yName);
 
                         if (!workings[correlationName]) {
@@ -249,7 +264,7 @@
 
             var totals = {};
 
-            var data = self.isOrdered() ? self.getData(self.orderFunction()) : self.getData();
+            var data = self.isOrdered() ? self.extractData(self.orderingFunction()) : self.extractData();
 
             data.forEach(function(d) {
 
@@ -271,9 +286,9 @@
 
         /*
          * Called by the map reduce process on a DataSet when an input object is being added to the aggregated group
-         * @returns {object} group - The group entry for this slice of the aggregated dataset, modified by the addition of the data object
-         * @param {object} group - The group entry for this slice of the aggregated dataset, prior to adding the input data object
-         * @param {object} data - The object being added from the aggregated group.
+         * @returns {Object} group - The group entry for this slice of the aggregated dataset, modified by the addition of the data object
+         * @param {Object} group - The group entry for this slice of the aggregated dataset, prior to adding the input data object
+         * @param {Object} data - The object being added from the aggregated group.
          */
         function reduceAddToGroup(group, data) {
 
@@ -304,7 +319,7 @@
                     var propertyValue = data[propertyName];
 
                     // If this property holds multiple values, increment the counts for each one.
-                    if (insight.Utils.isArray(propertyValue)) {
+                    if (insight.utils.isArray(propertyValue)) {
 
                         for (var subIndex in propertyValue) {
                             var subVal = propertyValue[subIndex];
@@ -324,9 +339,9 @@
 
         /*
          * Called by the map reduce process on a DataSet when an input object is being filtered out of the group
-         * @returns {object} group - The group entry for this slice of the aggregated dataset, modified by the removal of the data object
-         * @param {object} group - The group entry for this slice of the aggregated dataset, prior to removing the input data object
-         * @param {object} data - The object being removed from the aggregated group.
+         * @returns {Object} group - The group entry for this slice of the aggregated dataset, modified by the removal of the data object
+         * @param {Object} group - The group entry for this slice of the aggregated dataset, prior to removing the input data object
+         * @param {Object} data - The object being removed from the aggregated group.
          */
         function reduceRemoveFromGroup(group, data) {
 
@@ -352,7 +367,7 @@
 
                     var propertyValue = data[propertyName];
 
-                    if (insight.Utils.isArray(propertyValue)) {
+                    if (insight.utils.isArray(propertyValue)) {
 
                         for (var subIndex in propertyValue) {
                             var subVal = propertyValue[subIndex];
@@ -372,7 +387,7 @@
 
         /*
          * Called when a slice of an aggrgated DataSet is being initialized, creating initial values for certain properties
-         * @returns {object} return - The initialized slice of this aggreagted DataSet.  The returned object will be of the form {key: '
+         * @returns {Object} return - The initialized slice of this aggreagted DataSet.  The returned object will be of the form {key: '
          Distinct Key ', value: {}}
          */
         function reduceInitializeGroup() {
@@ -404,7 +419,7 @@
         /*
          * This aggregation method is tailored to dimensions that can hold multiple values (in an array), therefore they are counted differently.
          * For example: a property called supportedDevices : ['iPhone5 ', 'iPhone4 '] where the values inside the array are treated as dimensional slices
-         * @returns {object[]} return - the array of dimensional groupings resulting from this dimensional aggregation
+         * @returns {Object[]} return - the array of dimensional groupings resulting from this dimensional aggregation
          */
         function reduceMultidimension() {
 
@@ -472,7 +487,7 @@
             var data = self.dimension.crossfilterDimension.groupAll()
                 .reduce(reduceAdd, reduceRemove, reduceInitial);
 
-            self.orderFunction(function(a, b) {
+            self.orderingFunction(function(a, b) {
                 return b.value - a.value;
             });
 
@@ -486,13 +501,13 @@
          * function by default, and can be overriden by the setter.
          * @instance
          * @memberof! insight.Grouping
-         * @returns {function} - The function that will run after aggregation of this Grouping.
+         * @returns {Function} - The function that will run after aggregation of this Grouping.
          * @also
          * Sets the function that will run after any aggregation has been performed on this Grouping.
          * @instance
          * @memberof! insight.Grouping
          * @returns {this}
-         * @param {string[]} postAggregationFunc - A user defined function of the form function(grouping), that the Grouping will run post aggregation.
+         * @param {String[]} postAggregationFunc - A user defined function of the form function(grouping), that the Grouping will run post aggregation.
          */
         self.postAggregation = function(postAggregationFunc) {
             if (!arguments.length) {
@@ -516,7 +531,7 @@
         /*
          * Performs the aggregation of the underlying crossfilter dimension, calculating any additional properties during the map-reduce phase.
          * It must be run prior to a group being used
-         * @todo This should probably be run during the constructor? If not, lazily evaluated by getData() if it hasn't been run already.
+         * @todo This should probably be run during the constructor? If not, lazily evaluated by extractData() if it hasn't been run already.
          */
         self.initialize = function() {
 
@@ -553,7 +568,7 @@
          * Returns the list of properties to be summed on this Grouping
          * @instance
          * @memberof! insight.Grouping
-         * @returns {string[]} - The list of property names that will be summed
+         * @returns {String[]} - The list of property names that will be summed
          *
          * @also
          *
@@ -561,7 +576,7 @@
          * @instance
          * @memberof! insight.Grouping
          * @returns {this}
-         * @param {string[]} properties - An array of property names to be summed for slices in this Grouping.
+         * @param {String[]} properties - An array of property names to be summed for slices in this Grouping.
          */
         self.sum = function(properties) {
             if (!arguments.length) {
@@ -592,15 +607,15 @@
             correlationPairProperties = properties;
 
             for (var i = 0, len = properties.length; i < len; i++) {
-                insight.Utils.addToSet(allCorrelationProperties, properties[i][0]);
-                insight.Utils.addToSet(allCorrelationProperties, properties[i][1]);
+                insight.utils.addToSet(allCorrelationProperties, properties[i][0]);
+                insight.utils.addToSet(allCorrelationProperties, properties[i][1]);
             }
 
             // need mean for correlation
-            averageProperties = insight.Utils.arrayUnique(averageProperties.concat(allCorrelationProperties));
+            averageProperties = insight.utils.arrayUnique(averageProperties.concat(allCorrelationProperties));
 
             // need sum for mean so set that too
-            sumProperties = insight.Utils.arrayUnique(sumProperties.concat(allCorrelationProperties));
+            sumProperties = insight.utils.arrayUnique(sumProperties.concat(allCorrelationProperties));
 
             return self;
         };
@@ -609,7 +624,7 @@
          * Returns the list of properties that will be cumulatively summed over this Grouping
          * @instance
          * @memberof! insight.Grouping
-         * @returns {string[]} - The list of property names that will be cumulatively summed
+         * @returns {String[]} - The list of property names that will be cumulatively summed
          *
          * @also
          *
@@ -617,7 +632,7 @@
          * @instance
          * @memberof! insight.Grouping
          * @returns {this}
-         * @param {string[]} properties - An array of property names to be cumulatively summed over slices in this Grouping.
+         * @param {String[]} properties - An array of property names to be cumulatively summed over slices in this Grouping.
          */
         self.cumulative = function(properties) {
             if (!arguments.length) {
@@ -631,7 +646,7 @@
          * Returns the list of properties whose distinct value occurences will be counted during the reduction of this Grouping
          * @instance
          * @memberof! insight.Grouping
-         * @returns {string[]} - The list of property names whose values will be counted
+         * @returns {String[]} - The list of property names whose values will be counted
          *
          * @also
          *
@@ -639,7 +654,7 @@
          * @instance
          * @memberof! insight.Grouping
          * @returns {this}
-         * @param {string[]} properties - An array of properties whose distinct value occurences will be counted during the reduction of this Grouping
+         * @param {String[]} properties - An array of properties whose distinct value occurences will be counted during the reduction of this Grouping
          */
         self.count = function(properties) {
             if (!arguments.length) {
@@ -653,7 +668,7 @@
          * Returns the list of properties whose mean will be calculated after the map reduce of this Grouping.
          * @instance
          * @memberof! insight.Grouping
-         * @returns {string[]} - The list of property names that will averaged
+         * @returns {String[]} - The list of property names that will averaged
          *
          * @also
          *
@@ -661,7 +676,7 @@
          * @instance
          * @memberof! insight.Grouping
          * @returns {this}
-         * @param {string[]} properties - An array of properties that will be averaged after the map reduce of this Grouping.
+         * @param {String[]} properties - An array of properties that will be averaged after the map reduce of this Grouping.
          */
         self.mean = function(properties) {
             if (!arguments.length) {
@@ -669,32 +684,8 @@
             }
             averageProperties = properties;
 
-            sumProperties = insight.Utils.arrayUnique(sumProperties.concat(averageProperties));
+            sumProperties = insight.utils.arrayUnique(sumProperties.concat(averageProperties));
 
-            return self;
-        };
-
-        /**
-         * The function used to compare the elements in this grouping if sorting is requested.
-         * @instance
-         * @memberof! insight.Grouping
-         * @returns {Function} orderingFunction - The function used to compare two values when sort() is called on an array
-         *
-         * @also
-         *
-         * Sets the function used to compare the elements in this grouping if sorting is requested.
-         * @instance
-         * @memberof! insight.Grouping
-         * @returns {this}
-         * @param {Function} orderingFunction - The comparison function to be used to sort the elements in this group.
-         * The function should take the form of a standard
-         * {@link https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/GlobalvalueObjects/Array/sort|Javascript comparison function}.
-         */
-        self.orderFunction = function(orderingFunction) {
-            if (!arguments.length) {
-                return orderFunction;
-            }
-            orderFunction = orderingFunction;
             return self;
         };
 
@@ -702,7 +693,7 @@
          * Whether the group's data is ordered.
          * @instance
          * @memberof! insight.Grouping
-         * @returns {boolean} - Whether the group's data is ordered.
+         * @returns {Boolean} - Whether the group's data is ordered.
          *
          * @also
          *
@@ -710,7 +701,7 @@
          * @instance
          * @memberof! insight.Grouping
          * @returns {this}
-         * @param {boolean} ordered - Whether to order this Grouping or not
+         * @param {Boolean} ordered - Whether to order this Grouping or not
          */
         self.isOrdered = function(value) {
             if (!arguments.length) {
@@ -722,68 +713,35 @@
         };
 
         /**
-         * The function used to filter the results returned by this grouping.
-         * The function returns true to keep the value, or false to remove it from the final result.
-         * @instance
+         * Overrides {@link insight.DataProvider.rawData} by using
+         * [crossfilter]{@link http://square.github.io/crossfilter/} to create an object array containing one object
+         * per group in a data set.
+         * @virtual
          * @memberof! insight.Grouping
-         * @returns {Function} - The function used to filter the results returned by this grouping.
-         *
-         * @also
-         *
-         * Sets the function used to filter the results returned by this grouping.
-         * The function returns true to keep the value, or false to remove it from the final result.
          * @instance
-         * @memberof! insight.Grouping
-         * @param {Function} filterFunc - The function used to filter the results returned by this grouping.
-         * @returns {this}
-         */
-        self.filterFunction = function(filterFunc) {
-            if (!arguments.length) {
-                return filterFunction;
-            }
-            filterFunction = filterFunc;
-            return self;
-        };
+         * @returns {Object[]} - An object array containing one object per group in the data set.
+         * */
+        self.rawData = function() {
 
-        /**
-         * Used to return the group's data, without ordering.  It checks if there is any filtering requested and applies the filter to the return array.
-         * @memberof! insight.Grouping
-         * @instance
-         * @returns {object[]} return - The grouping's data in an object array, with an object per slice of the dimension.
-         */
-        self.getData = function(orderFunction, top) {
             var data;
-
-            // Set the provided order function if it has been given, otherwise use the inherent grouping order if one has been defined.
-            var orderFunc = orderFunction ? orderFunction : self.orderFunction();
 
             if (!self.data) {
                 self.initialize();
             }
 
             if (self.dimension.oneToMany) {
-                data = self.data.value().values;
+                data = getOneToManyRawData();
             } else {
                 data = self.data.all();
             }
 
-            // take a copy of the array to not alter the original dataset
-            data = data.slice(0);
+            return data.slice(0);
 
-            if (orderFunc) {
-                data = data.sort(orderFunc);
-            }
-            if (top) {
-                data = data.slice(0, top);
-            }
-
-            if (filterFunction) {
-                data = data.filter(filterFunction);
-            }
-
-            return data;
         };
 
     };
+
+    insight.Grouping.prototype = Object.create(insight.DataProvider.prototype);
+    insight.Grouping.prototype.constructor = insight.Grouping;
 
 })(insight);

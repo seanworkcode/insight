@@ -33,6 +33,45 @@ describe('Series', function(){
         xAxis,
         yAxis;
 
+    beforeEach(function() {
+        chart = new insight.Chart('Chart', '#chart');
+        xAxis = new insight.Axis('x-axis', insight.scales.linear, 'bottom');
+        yAxis = new insight.Axis('y-axis', insight.scales.linear, 'left');
+        chart.addXAxis(xAxis);
+        chart.addYAxis(yAxis);
+    });
+
+    describe('constructor', function() {
+
+        it('wraps array data in a DataProvider', function() {
+
+            // Given
+            var series = new insight.Series('someData', seriesDataSet, xAxis, yAxis);
+
+            // When
+            var result = series.data;
+
+            // Then
+            expect(result.constructor).toBe(insight.DataProvider);
+
+        });
+
+        it('doesn\'t wrap a DataProvider in a DataProvider', function() {
+
+            // Given
+            var dataProvider = new insight.DataProvider(seriesDataSet);
+            var series = new insight.Series('someData', dataProvider, xAxis, yAxis);
+
+            // When
+            var result = series.data;
+
+            // Then
+            expect(result).toBe(dataProvider);
+
+        });
+
+    });
+
     describe('dataset', function() {
 
         function naturalOrderFunction(a, b) {
@@ -44,11 +83,6 @@ describe('Series', function(){
         }
 
         beforeEach(function() {
-            chart = new insight.Chart('Chart', '#chart');
-            xAxis = new insight.Axis('x-axis', insight.Scales.Linear, 'bottom');
-            yAxis = new insight.Axis('y-axis', insight.Scales.Linear, 'left');
-            chart.addXAxis(xAxis);
-            chart.addYAxis(yAxis);
 
             data = new insight.DataSet([3, 1, 5, 1, 4, 6]);
             series = new insight.Series('Test series', data, xAxis, yAxis);
@@ -249,8 +283,8 @@ describe('Series', function(){
     it('Last value can be extracted', function(){
         //Given:
         var chart = new insight.Chart('Chart', '#chart');
-        var xAxis = new insight.Scale(chart, 'x-axis', 'h', insight.Scales.Linear);
-        var yAxis = new insight.Scale(chart, 'y-axis', 'v', insight.Scales.Linear);
+        var xAxis = new insight.Scale(chart, 'x-axis', 'h', insight.scales.linear);
+        var yAxis = new insight.Scale(chart, 'y-axis', 'v', insight.scales.linear);
 
         var data = new insight.DataSet([3, 1, 5, 1, 7, 6]);
         var series = new insight.Series('Test series', chart, data, xAxis, yAxis);
@@ -264,8 +298,8 @@ describe('Series', function(){
     it('Maximum value can be extracted', function(){
         //Given:
         var chart = new insight.Chart('Chart', '#chart');
-        var xAxis = new insight.Scale(chart, 'x-axis', 'h', insight.Scales.Linear);
-        var yAxis = new insight.Scale(chart, 'y-axis', 'v', insight.Scales.Linear);
+        var xAxis = new insight.Scale(chart, 'x-axis', 'h', insight.scales.linear);
+        var yAxis = new insight.Scale(chart, 'y-axis', 'v', insight.scales.linear);
 
         var data = new insight.DataSet([3, 1, 5, 1, 7, 6]);
         var series = new insight.Series('Test series', chart, data, xAxis, yAxis);
@@ -279,8 +313,8 @@ describe('Series', function(){
 
     it('Series does selection by group key value', function() {
         //Given:
-        var xScale = new insight.Axis('Country', insight.Scales.Ordinal);
-        var yScale = new insight.Axis('Stuff', insight.Scales.Linear);
+        var xScale = new insight.Axis('Country', insight.scales.ordinal);
+        var yScale = new insight.Axis('Stuff', insight.scales.linear);
         var series = new insight.Series('country', seriesDataSet, xScale, yScale)
             .groupKeyFunction(function(d) {
                 return d.Surname;
@@ -288,7 +322,7 @@ describe('Series', function(){
 
         //Then:
         var selectionClassName = series.itemClassName(seriesDataSet[0]);
-        expect(selectionClassName).toBe(series.seriesClassName() + ' ' + insight.Utils.keySelector('Watkins'));
+        expect(selectionClassName).toBe(series.seriesClassName() + ' ' + insight.utils.keySelector('Watkins'));
     });
     
 });

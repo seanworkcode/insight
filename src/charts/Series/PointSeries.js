@@ -1,14 +1,14 @@
 (function(insight) {
 
-    /*
+    /**
      * The PointSeries is an abstract base class for all Cartesian classes representing points (E.g. Scatter, Bubbles
      * and Lines).
-     * @class insight.PointSeries
+     * @constructor
      * @extends insight.Series
-     * @param {string} name - A uniquely identifying name for this chart
-     * @param {DataSet} data - The DataSet containing this series' data
-     * @param {insight.Scales.Scale} x - the x axis
-     * @param {insight.Scales.Scale} y - the y axis
+     * @param {String} name - A uniquely identifying name for this chart
+     * @param {insight.DataProvider | Object[]} data - An object which contains this series' data
+     * @param {insight.Axis} x - The x axis
+     * @param {insight.Axis} y - The y axis
      */
     insight.PointSeries = function PointSeries(name, data, x, y) {
 
@@ -35,7 +35,7 @@
 
         // Internal variables -----------------------------------------------------------------------------------------
 
-        self.cssClassName = d3.functor(insight.Constants.Point);
+        self.cssClassName = d3.functor(insight.constants.Point);
 
         self.classValues = [self.cssClassName()];
 
@@ -96,31 +96,6 @@
 
 
         // Public functions -------------------------------------------------------------------------------------------
-
-        /**
-         * The radius of each point, in pixels.
-         * @memberof! insight.PointSeries
-         * @instance
-         * @returns {Number} - The current radius of each point, in pixels.
-         * @deprecated Use radiusFunction instead.
-         *
-         * @also
-         *
-         * Sets the radius of each point, in pixels.
-         * @memberof! insight.PointSeries
-         * @instance
-         * @param {Function|Number} radius The new radius of each point, in pixels.
-         * @returns {this}
-         * @deprecated Use radiusFunction instead.
-         */
-        self.pointRadius = function(radius) {
-            if (!arguments.length) {
-                return radiusFunction();
-            }
-            radiusFunction = d3.functor(radius);
-
-            return self;
-        };
 
         /**
          * Gets the function to extract the radius of each bubble from the data objects.

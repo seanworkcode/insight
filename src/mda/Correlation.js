@@ -1,28 +1,27 @@
-/**
- * Module for calculating correlation coefficients on pairs of values.
- * @namespace insight.correlation
- */
-insight.correlation = (function(insight) {
+(function(insight) {
 
-    var correlation = {};
+    /**
+     * Module for calculating correlation coefficients on pairs of values.
+     * @namespace insight.correlation
+     */
+    insight.correlation = function() {};
 
     /**
      * Calculates the pearson correlation coefficient for two arrays of numbers.
      * The two arrays must be equal in length and must only contain numbers.
-     * @memberof! insight.correlation
      * @param {Array<Number>} x The x values
      * @param {Array<Number>} y The y values
      * @param {Object} [errorContainer] An object that will contain
      * information about any errors that were encountered with the operation.
      * @returns {Number} - The pearson correlation coefficient for two arrays of numbers
      */
-    correlation.fromValues = function(x, y, errorContainer) {
+    insight.correlation.fromValues = function(x, y, errorContainer) {
 
         if (!(errorContainer instanceof insight.ErrorContainer)) {
             errorContainer = new insight.ErrorContainer();
         }
 
-        if (!insight.Utils.isArray(x) || !insight.Utils.isArray(y)) {
+        if (!insight.utils.isArray(x) || !insight.utils.isArray(y)) {
 
             errorContainer.setError(insight.ErrorMessages.invalidArrayParameterException);
 
@@ -77,8 +76,7 @@ insight.correlation = (function(insight) {
 
     /**
      * Calculates the pearson correlation coefficients for a given property pair in the dataset.
-     * @memberof! insight.correlation
-     * @param {insight.DatSet|Object[]} dataset The insight.DataSet or array to calculate correlation coefficients for.
+     * @param {insight.DataProvider|Object[]} dataset The insight.DataProvider or array to calculate correlation coefficients for.
      * @param {Function} xFunction A function that will return a value from one element in the dataset.
      * The value that the function returns will be used in the correlation calculation.
      * @param {Function} yFunction A function that will return a value from one element in the dataset.
@@ -87,22 +85,22 @@ insight.correlation = (function(insight) {
      * information about any errors that were encountered with the operation.
      * @returns {Number} - The pearson correlation coefficient for the given property pair in the dataset.
      */
-    correlation.fromDataSet = function(dataset, xFunction, yFunction, errorContainer) {
+    insight.correlation.fromDataProvider = function(dataset, xFunction, yFunction, errorContainer) {
         if (!(errorContainer instanceof insight.ErrorContainer)) {
             errorContainer = new insight.ErrorContainer();
         }
 
         var dataArray = getArray(dataset);
 
-        if (!insight.Utils.isArray(dataArray)) {
+        if (!insight.utils.isArray(dataArray)) {
 
-            errorContainer.setError(insight.ErrorMessages.invalidDataSetOrArrayParameterException);
+            errorContainer.setError(insight.ErrorMessages.invalidDataProviderOrArrayParameterException);
 
             return undefined;
 
         }
 
-        if (!insight.Utils.isFunction(xFunction) || !insight.Utils.isFunction(yFunction)) {
+        if (!insight.utils.isFunction(xFunction) || !insight.utils.isFunction(yFunction)) {
 
             errorContainer.setError(insight.ErrorMessages.invalidFunctionParameterException);
 
@@ -119,12 +117,12 @@ insight.correlation = (function(insight) {
 
     /*
      * Returns an array based on the given object.
-     * If the object is an insight.DataSet or an insight.Grouping then its data is returned, otherwise the array id returned directly.
+     * If the object is an insight.DataProvider then its data is returned, otherwise the array id returned directly.
      */
     function getArray(obj) {
 
-        if (obj instanceof insight.DataSet || obj instanceof insight.Grouping) {
-            return obj.getData();
+        if (obj instanceof insight.DataProvider) {
+            return obj.extractData();
         }
 
         return obj;
@@ -149,7 +147,7 @@ insight.correlation = (function(insight) {
     }
 
     function isPairOfNumbers(element) {
-        var result = insight.Utils.isNumber(element.x) && insight.Utils.isNumber(element.y);
+        var result = insight.utils.isNumber(element.x) && insight.utils.isNumber(element.y);
 
         return result;
     }
@@ -209,7 +207,5 @@ insight.correlation = (function(insight) {
         });
 
     }
-
-    return correlation;
 
 })(insight);

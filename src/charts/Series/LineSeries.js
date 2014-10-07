@@ -2,12 +2,12 @@
 
     /**
      * The LineSeries class extends the Series class and draws horizontal bars on a Chart
-     * @class insight.LineSeries
+     * @constructor
      * @extends insight.Series
-     * @param {string} name - A uniquely identifying name for this series
-     * @param {DataSet} data - The DataSet containing this series' data
-     * @param {insight.Scales.Scale} x - the x axis
-     * @param {insight.Scales.Scale} y - the y axis
+     * @param {String} name - A uniquely identifying name for this series
+     * @param {insight.DataProvider | Object[]} data - An object which contains this series' data
+     * @param {insight.Axis} x - The x axis
+     * @param {insight.Axis} y - The y axis
      */
     insight.LineSeries = function LineSeries(name, data, x, y) {
 
@@ -21,7 +21,7 @@
 
         // Internal variables -----------------------------------------------------------------------------------------
 
-        self.classValues = [insight.Constants.LineClass];
+        self.classValues = [insight.constants.LineClass];
 
         // Private functions ------------------------------------------------------------------------------------------
 
@@ -77,8 +77,8 @@
 
             var data = self.dataset();
 
-            var classValue = self.name + 'line ' + insight.Constants.LineClass;
-            var classSelector = '.' + self.name + 'line.' + insight.Constants.LineClass;
+            var classValue = self.name + 'line ' + insight.constants.LineClass;
+            var classSelector = '.' + self.name + 'line.' + insight.constants.LineClass;
 
             var rangeIdentifier = "path" + classSelector;
 
@@ -103,8 +103,8 @@
                 .duration(duration)
                 .attr("d", transform);
 
-            var pointClassName = self.name + 'line' + insight.Constants.LinePoint;
-            pointClassName = insight.Utils.alphaNumericString(pointClassName);
+            var pointClassName = self.name + 'line' + insight.constants.LinePoint;
+            pointClassName = insight.utils.alphaNumericString(pointClassName);
 
             if (displayPoints) {
                 var circles = chart.plotArea.selectAll("circle." + pointClassName)
@@ -140,14 +140,14 @@
          * Whether or not to show circular points on top of the line for each datapoint.
          * @memberof! insight.LineSeries
          * @instance
-         * @returns {boolean} - Whether or not to show circular points on top of the line for each datapoint.
+         * @returns {Boolean} - Whether or not to show circular points on top of the line for each datapoint.
          *
          * @also
          *
          * Sets whether or not to show circular points on top of the line for each datapoint.
          * @memberof! insight.LineSeries
          * @instance
-         * @param {boolean} showPoints Whether or not to show circular points on top of the line for each datapoint.
+         * @param {Boolean} showPoints Whether or not to show circular points on top of the line for each datapoint.
          * @returns {this}
          */
         self.shouldShowPoints = function(showPoints) {
@@ -160,7 +160,7 @@
 
         /**
          * The line type that this lineSeries will draw. Defaults to 'linear'.
-         * See https://github.com/mbostock/d3/wiki/SVG-Shapes#line_interpolate for all options.
+         * @see [d3's shapes]{@link https://github.com/mbostock/d3/wiki/SVG-Shapes#line_interpolate} for all options.
          * @memberof! insight.LineSeries
          * @instance
          * @returns {String} - The line type that this lineSeries will draw.
@@ -168,6 +168,7 @@
          * @also
          *
          * Sets the line type that this lineSeries will draw..
+         * @see [d3's shapes]{@link https://github.com/mbostock/d3/wiki/SVG-Shapes#line_interpolate} for all options.
          * @memberof! insight.LineSeries
          * @instance
          * @param {String} newLineType The line type that this lineSeries will draw.
@@ -191,7 +192,7 @@
 
     insight.LineSeries.prototype.applyTheme = function(theme) {
         this.lineType(theme.seriesStyle.lineStyle);
-        this.shouldShowPoints(theme.seriesStyle.showPoints);
+        this.shouldShowPoints(theme.seriesStyle.shouldShowPoints);
 
         return this;
     };

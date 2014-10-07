@@ -2,12 +2,12 @@
 
     /**
      * The MarkerSeries class extends the Series class and draws markers/targets on a chart
-     * @class insight.MarkerSeries
+     * @constructor
      * @extends insight.Series
-     * @param {string} name - A uniquely identifying name for this series
-     * @param {DataSet} data - The DataSet containing this series' data
-     * @param {insight.Scales.Scale} x - the x axis
-     * @param {insight.Scales.Scale} y - the y axis
+     * @param {String} name - A uniquely identifying name for this series
+     * @param {insight.DataProvider | Object[]} data - An object which contains this series' data
+     * @param {insight.Axis} x - The x axis
+     * @param {insight.Axis} y - The y axis
      */
     insight.MarkerSeries = function MarkerSeries(name, data, x, y) {
 
@@ -119,12 +119,12 @@
             var d = self.dataset().forEach(reset);
 
             var groups = chart.plotArea
-                .selectAll('g.' + insight.Constants.BarGroupClass + "." + self.name)
+                .selectAll('g.' + insight.constants.BarGroupClass + "." + self.name)
                 .data(self.dataset(), self.keyAccessor);
 
             var newGroups = groups.enter()
                 .append('g')
-                .attr('class', insight.Constants.BarGroupClass + " " + self.name);
+                .attr('class', insight.constants.BarGroupClass + " " + self.name);
 
             var newBars = newGroups.selectAll('rect.bar');
 

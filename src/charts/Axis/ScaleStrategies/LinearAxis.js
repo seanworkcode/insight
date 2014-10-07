@@ -12,18 +12,6 @@
 
         // Internal functions -----------------------------------------------------------------------------------------
 
-        self.domain = function(axis) {
-            var scaleDomain = axis.scale.domain();
-
-            //If available (i.e. not just [0, 1]), use the smarter domain provided by d3 (responds to zoom/panning, etc.)
-            if (scaleDomain[0] !== 0 && scaleDomain[1] !== 1) {
-                return axis.scale.domain();
-            }
-
-            //Fall back to our own calculations
-            return [0, self.findMax(axis)];
-        };
-
         self.initialTickValue = function(axis, tickFrequency) {
             var domain = axis.domain();
 
@@ -71,6 +59,14 @@
             }
 
             return tickFrequency / 2;
+        };
+
+        /*
+         * Calculates the minimum value to be used in this axis.
+         * @returns {Object} - The smallest value in the datasets that use this axis
+         */
+        self.findMin = function(axis) {
+            return 0;
         };
 
     };

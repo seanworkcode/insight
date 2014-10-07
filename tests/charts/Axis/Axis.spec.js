@@ -1,9 +1,9 @@
 
 var data = [
     {key:'a', value:0, date: new Date(2014,0,1)},
-    {key:'b', value:3, date: new Date(2014,0,3)}, 
-    {key:'c', value:12, date: new Date(2014,0,2)}, 
-    {key:'d', value:20, date: new Date(2014,0,14)}, 
+    {key:'b', value:3, date: new Date(2014,0,3)},
+    {key:'c', value:12, date: new Date(2014,0,2)},
+    {key:'d', value:20, date: new Date(2014,0,14)},
     {key:'e', value:13, date: new Date(2013,4,15)}
 ];
 
@@ -11,15 +11,15 @@ var data = [
 describe('Axis', function() {
 
     describe('constructor', function() {
-        it('label getter works', function() {
+        it('title getter works', function() {
 
             //Given:
-            var axis = new insight.Axis('Value Axis', insight.Scales.Linear);
+            var axis = new insight.Axis('Value Axis', insight.scales.linear);
 
             //Then:
-            var observedLabel = axis.label();
-            var expectedLabel = 'Value Axis';
-            expect(observedLabel).toBe(expectedLabel);
+            var observedTitle = axis.title();
+            var expectedTitle = 'Value Axis';
+            expect(observedTitle).toBe(expectedTitle);
 
         });
     });
@@ -29,7 +29,7 @@ describe('Axis', function() {
         it('has initial value of 0', function() {
 
             // Given
-            var axis = new insight.Axis('SomeAxis', insight.Scales.Ordinal);
+            var axis = new insight.Axis('SomeAxis', insight.scales.ordinal);
 
             // When
             var result = axis.tickLabelRotation();
@@ -45,7 +45,7 @@ describe('Axis', function() {
 
         it('has initial value of 0.1', function() {
             //Given:
-            var axis = new insight.Axis('Value Axis', insight.Scales.Linear);
+            var axis = new insight.Axis('Value Axis', insight.scales.linear);
 
             //Then:
             expect(axis.barPadding()).toBe(0.1);
@@ -57,7 +57,7 @@ describe('Axis', function() {
         it('returns true for horizontal axis', function() {
 
             //Given:
-            var axis = new insight.Axis('Value Axis', insight.Scales.Linear);
+            var axis = new insight.Axis('Value Axis', insight.scales.linear);
             axis.direction = 'h';
 
             // When
@@ -71,7 +71,7 @@ describe('Axis', function() {
         it('returns false for vertical axis', function() {
 
             //Given:
-            var axis = new insight.Axis('Value Axis', insight.Scales.Linear);
+            var axis = new insight.Axis('Value Axis', insight.scales.linear);
             axis.direction = 'v';
 
             // When
@@ -86,7 +86,7 @@ describe('Axis', function() {
         it('returns true by default', function() {
 
             //Given:
-            var axis = new insight.Axis('Value Axis', insight.Scales.Linear);
+            var axis = new insight.Axis('Value Axis', insight.scales.linear);
 
             //Then:
             var observedResult = axis.shouldDisplay();
@@ -97,7 +97,7 @@ describe('Axis', function() {
         it('returns false when value set to false', function() {
 
             //Given:
-            var axis = new insight.Axis('Value Axis', insight.Scales.Linear)
+            var axis = new insight.Axis('Value Axis', insight.scales.linear)
                                   .shouldDisplay(false);
 
             //Then:
@@ -111,7 +111,7 @@ describe('Axis', function() {
         it('returns false by default', function () {
 
             //Given:
-            var axis = new insight.Axis('Value Axis', insight.Scales.Linear);
+            var axis = new insight.Axis('Value Axis', insight.scales.linear);
 
             //Then:
             var observedResult = axis.isOrdered();
@@ -123,7 +123,7 @@ describe('Axis', function() {
         it('returns true when value set to true', function () {
 
             //Given:
-            var axis = new insight.Axis('Value Axis', insight.Scales.Linear)
+            var axis = new insight.Axis('Value Axis', insight.scales.linear)
                 .isOrdered(true);
 
             //Then:
@@ -135,13 +135,13 @@ describe('Axis', function() {
 
     describe('domain', function() {
 
-        it('calculates min and max of linear domain', function () {
+        it('calculates min and max of linear axis', function () {
 
             //Given:
             var dataset = new insight.DataSet(data);
 
-            var x = new insight.Axis('Key Axis', insight.Scales.Ordinal);
-            var y = new insight.Axis('Value Axis', insight.Scales.Linear);
+            var x = new insight.Axis('Key Axis', insight.scales.ordinal);
+            var y = new insight.Axis('Value Axis', insight.scales.linear);
 
             var series = new insight.ColumnSeries('chart', dataset, x, y)
                 .valueFunction(function (d) {
@@ -155,13 +155,59 @@ describe('Axis', function() {
             expect(observedResult).toEqual(expectedResult);
         });
 
-        it('calculates values of ordinal domain', function () {
+        it('has default value for linear axis if series has no data', function () {
+
+            //Given:
+            var emptyData = [];
+
+            var x = new insight.Axis('Key Axis', insight.scales.ordinal);
+            var y = new insight.Axis('Value Axis', insight.scales.linear);
+
+            var series = new insight.ColumnSeries('chart', emptyData, x, y)
+                .valueFunction(function (d) {
+                    return d.value;
+                });
+
+            // When:
+            var observedResult = y.domain();
+
+            //Then:
+            expect(observedResult).toEqual([0, 1]);
+        });
+
+        it('has zero minimum value for linear axis when all values is above zero', function () {
+
+            //Given:
+            var data = [
+                {key:'a', value:11, date: new Date(2014,0,1)},
+                {key:'b', value:3, date: new Date(2014,0,3)},
+                {key:'c', value:12, date: new Date(2014,0,2)},
+                {key:'d', value:20, date: new Date(2014,0,14)},
+                {key:'e', value:13, date: new Date(2013,4,15)}
+            ];
+
+            var x = new insight.Axis('Key Axis', insight.scales.ordinal);
+            var y = new insight.Axis('Value Axis', insight.scales.linear);
+
+            var series = new insight.ColumnSeries('chart', data, x, y)
+                .valueFunction(function (d) {
+                    return d.value;
+                });
+
+            // When:
+            var observedResult = y.domain();
+
+            //Then:
+            expect(observedResult).toEqual([0, 20]);
+        });
+
+        it('calculates values of ordinal axis', function () {
 
             //Given:
             var dataset = new insight.DataSet(data);
 
-            var x = new insight.Axis('Key Axis', insight.Scales.Ordinal);
-            var y = new insight.Axis('Value Axis', insight.Scales.Linear);
+            var x = new insight.Axis('Key Axis', insight.scales.ordinal);
+            var y = new insight.Axis('Value Axis', insight.scales.linear);
 
             var series = new insight.ColumnSeries('chart', dataset, x, y)
                 .valueFunction(function (d) {
@@ -175,13 +221,33 @@ describe('Axis', function() {
             expect(observedResult).toEqual(expectedResult);
         });
 
-        it('calculates min max values of time scale', function () {
+        it('has default value for ordinal axis if series has no data', function () {
+
+            //Given:
+            var emptyData = [];
+
+            var x = new insight.Axis('Key Axis', insight.scales.ordinal);
+            var y = new insight.Axis('Value Axis', insight.scales.linear);
+
+            var series = new insight.ColumnSeries('chart', emptyData, x, y)
+                .valueFunction(function (d) {
+                    return d.value;
+                });
+
+            // When:
+            var observedResult = x.domain();
+
+            //Then:
+            expect(observedResult).toEqual([]);
+        });
+
+        it('calculates min max values of time axis', function () {
 
             //Given:
             var dataset = new insight.DataSet(data);
 
-            var x = new insight.Axis('Key Axis', insight.Scales.Time);
-            var y = new insight.Axis('Value Axis', insight.Scales.Linear);
+            var x = new insight.Axis('Key Axis', insight.scales.time);
+            var y = new insight.Axis('Value Axis', insight.scales.linear);
 
             var series = new insight.Series('chart', dataset, x, y)
                 .keyFunction(function (d) {
@@ -194,12 +260,32 @@ describe('Axis', function() {
 
             expect(observedResult).toEqual(expectedResult);
         });
+
+        it('has default value for time axis if series has no data', function () {
+
+            //Given:
+            var emptyData = [];
+
+            var x = new insight.Axis('Key Axis', insight.scales.ordinal);
+            var y = new insight.Axis('Value Axis', insight.scales.time);
+
+            var series = new insight.ColumnSeries('chart', emptyData, x, y)
+                .valueFunction(function (d) {
+                    return d.date;
+                });
+
+            // When:
+            var observedResult = y.domain();
+
+            //Then:
+            expect(observedResult).toEqual([new Date(0), new Date(1)]);
+        });
     });
 
     describe('axisPosition', function() {
         var axis;
         beforeEach(function() {
-            axis = new insight.Axis('Key Axis', insight.Scales.Linear);
+            axis = new insight.Axis('Key Axis', insight.scales.linear);
             axis.bounds = [300, 400];
         });
 
@@ -262,7 +348,7 @@ describe('Axis', function() {
         it('returns no tick rotation by default', function () {
 
             // Given
-            var y = new insight.Axis('Key Axis', insight.Scales.Linear)
+            var y = new insight.Axis('Key Axis', insight.scales.linear)
                 .tickSize(0)
                 .tickPadding(0);
 
@@ -277,7 +363,7 @@ describe('Axis', function() {
         it('returns 90 degree tick rotation when top to bottom specified', function () {
 
             //Given:
-            var y = new insight.Axis('Key Axis', insight.Scales.Linear)
+            var y = new insight.Axis('Key Axis', insight.scales.linear)
                 .tickLabelOrientation('tb')
                 .tickSize(0)
                 .tickPadding(0);
@@ -307,7 +393,7 @@ describe('Axis', function() {
 
         it('gridlines hidden by default', function () {
             //Given:
-            var y = new insight.Axis('Key Axis', insight.Scales.Linear)
+            var y = new insight.Axis('Key Axis', insight.scales.linear)
                 .tickLabelOrientation('tb')
                 .tickSize(0);
 
@@ -331,10 +417,10 @@ describe('Axis', function() {
                     bottom: 100
                 });
 
-            var x = new insight.Axis('ValueAxis', insight.Scales.Linear)
+            var x = new insight.Axis('ValueAxis', insight.scales.linear)
                 .tickLabelOrientation('lr');
 
-            var y = new insight.Axis('KeyAxis', insight.Scales.Linear)
+            var y = new insight.Axis('KeyAxis', insight.scales.linear)
                 .tickLabelOrientation('lr')
                 .shouldShowGridlines(false);
 
@@ -374,10 +460,10 @@ describe('Axis', function() {
                     bottom: 100
                 });
 
-            var x = new insight.Axis('ValueAxis', insight.Scales.Linear)
+            var x = new insight.Axis('ValueAxis', insight.scales.linear)
                 .tickLabelOrientation('lr');
 
-            var y = new insight.Axis('KeyAxis', insight.Scales.Linear)
+            var y = new insight.Axis('KeyAxis', insight.scales.linear)
                 .tickLabelOrientation('lr')
                 .shouldShowGridlines(true);
 
@@ -401,7 +487,7 @@ describe('Axis', function() {
             expect(y.gridlines.allGridlines(chart)[0].length).toEqual(7);
         });
 
-        it('Gridlines drawn when axis has no label', function() {
+        it('Gridlines drawn when axis has no title', function() {
             //Given:
             createChartElement();
 
@@ -409,8 +495,8 @@ describe('Axis', function() {
                 .width(500)
                 .height(500);
 
-            var x = new insight.Axis('ValueAxis', insight.Scales.Linear);
-            var y = new insight.Axis('', insight.Scales.Linear)
+            var x = new insight.Axis('ValueAxis', insight.scales.linear);
+            var y = new insight.Axis('', insight.scales.linear)
                 .shouldShowGridlines(true);
 
             chart.addXAxis(x);
@@ -438,8 +524,8 @@ describe('Axis', function() {
                 .width(500)
                 .height(500);
 
-            var x = new insight.Axis('ValueAxis', insight.Scales.Linear);
-            var y = new insight.Axis('Key Axis', insight.Scales.Linear)
+            var x = new insight.Axis('ValueAxis', insight.scales.linear);
+            var y = new insight.Axis('Key Axis', insight.scales.linear)
                 .shouldShowGridlines(true);
 
             chart.addXAxis(x);
@@ -467,8 +553,8 @@ describe('Axis', function() {
                 .width(500)
                 .height(500);
 
-            var x = new insight.Axis('ValueAxis', insight.Scales.Linear);
-            var y = new insight.Axis('Key$Axis', insight.Scales.Linear)
+            var x = new insight.Axis('ValueAxis', insight.scales.linear);
+            var y = new insight.Axis('Key$Axis', insight.scales.linear)
                 .shouldShowGridlines(true);
 
             chart.addXAxis(x);
@@ -491,8 +577,8 @@ describe('Axis', function() {
 
     describe('calculateLabelDimensions', function() {
         var axis,
-            axisFont = insight.defaultTheme.axisStyle.axisLabelFont,
-            axisLabel = 'Axis Label',
+            axisFont = insight.defaultTheme.axisStyle.axisTitleFont,
+            axisTitle = 'Axis Title',
             tickPadding = 5,
             tickLabelFont = insight.defaultTheme.axisStyle.tickLabelFont,
             tickSize = 10,
@@ -506,8 +592,8 @@ describe('Axis', function() {
         ];
 
         beforeEach(function() {
-            axis = new insight.Axis('', insight.Scales.Ordinal);
-            var secondaryAxis = new insight.Axis('Y Label', insight.Scales.Linear);
+            axis = new insight.Axis('', insight.scales.ordinal);
+            var secondaryAxis = new insight.Axis('Y Title', insight.scales.linear);
 
             series = new insight.ColumnSeries('testSeries', data, axis, secondaryAxis);
 
@@ -519,7 +605,7 @@ describe('Axis', function() {
         it('uses tickValues to perform calculation', function () {
 
             // Given
-            axis.label('')
+            axis.title('')
                 .tickPadding(0)
                 .tickSize(0);
             spyOn(axis, 'tickValues').andCallThrough();
@@ -541,7 +627,7 @@ describe('Axis', function() {
             it('returns correct value when no title and zero tick size and tick padding', function () {
 
                 // Given
-                axis.label('')
+                axis.title('')
                     .tickPadding(0)
                     .tickSize(0);
 
@@ -557,7 +643,7 @@ describe('Axis', function() {
             it('returns correct value when no title and non-zero tick size and tick padding', function () {
 
                 // Given
-                axis.label('')
+                axis.title('')
                     .tickPadding(tickPadding)
                     .tickSize(tickSize);
 
@@ -578,7 +664,7 @@ describe('Axis', function() {
             it('returns correct value when title provided and non-zero tick size and tick padding', function () {
 
                 // Given
-                axis.label(axisLabel)
+                axis.title(axisTitle)
                     .tickPadding(tickPadding)
                     .tickSize(tickSize);
 
@@ -587,12 +673,12 @@ describe('Axis', function() {
 
                 // Then
                 var expectedTickLabelHeight = textMeasurer.measureText('Largest', tickLabelFont).height;
-                var expectedAxisLabelHeight = textMeasurer.measureText(axisLabel, axisFont).height;
+                var expectedAxisTitleHeight = textMeasurer.measureText(axisTitle, axisFont).height;
 
                 var expectedResult = expectedTickLabelHeight
                     + tickPadding * 2
                     + tickSize
-                    + expectedAxisLabelHeight;
+                    + expectedAxisTitleHeight;
 
                 expect(result.height).toBe(expectedResult);
 
@@ -605,7 +691,7 @@ describe('Axis', function() {
 
                 axis.tickSize(tickSize)
                     .tickPadding(tickPadding)
-                    .label(axisLabel)
+                    .title(axisTitle)
                     .tickLabelRotation(tickLabelRotation);
 
                 // When
@@ -613,13 +699,13 @@ describe('Axis', function() {
 
                 // Then
                 var expectedTickLabelHeight = textMeasurer.measureText('Largest', tickLabelFont, tickLabelRotation).height;
-                var expectedAxisLabelHeight = textMeasurer.measureText(axisLabel, axisFont).height;
+                var expectedAxisTitleHeight = textMeasurer.measureText(axisTitle, axisFont).height;
 
                 var expectedResult =
                     tickSize +
                     tickPadding * 2 +
                     expectedTickLabelHeight +
-                    expectedAxisLabelHeight;
+                    expectedAxisTitleHeight;
 
                 expect(result.height).toBe(expectedResult);
 
@@ -632,7 +718,7 @@ describe('Axis', function() {
 
                 axis.tickSize(tickSize)
                     .tickPadding(tickPadding)
-                    .label(axisLabel)
+                    .title(axisTitle)
                     .tickLabelRotation(tickLabelRotation);
 
                 // When
@@ -640,13 +726,13 @@ describe('Axis', function() {
 
                 // Then
                 var expectedTickLabelHeight = textMeasurer.measureText('Largest', tickLabelFont, tickLabelRotation).height;
-                var expectedAxisLabelHeight = textMeasurer.measureText(axisLabel, axisFont).height;
+                var expectedAxisTitleHeight = textMeasurer.measureText(axisTitle, axisFont).height;
 
                 var expectedResult =
                     tickSize +
                     tickPadding * 2 +
                     Math.abs(expectedTickLabelHeight) +
-                    expectedAxisLabelHeight;
+                    expectedAxisTitleHeight;
 
                 expect(result.height).toBe(expectedResult);
 
@@ -659,7 +745,7 @@ describe('Axis', function() {
 
                 axis.tickSize(tickSize)
                     .tickPadding(tickPadding)
-                    .label(axisLabel)
+                    .title(axisTitle)
                     .tickLabelRotation(tickLabelRotation);
 
                 // When
@@ -667,13 +753,13 @@ describe('Axis', function() {
 
                 // Then
                 var expectedTickLabelHeight = textMeasurer.measureText('Largest', tickLabelFont, tickLabelRotation).height;
-                var expectedAxisLabelHeight = textMeasurer.measureText(axisLabel, axisFont).height;
+                var expectedAxisTitleHeight = textMeasurer.measureText(axisTitle, axisFont).height;
 
                 var expectedResult =
                     tickSize +
                     tickPadding * 2 +
                     Math.abs(expectedTickLabelHeight) +
-                    expectedAxisLabelHeight;
+                    expectedAxisTitleHeight;
 
                 expect(result.height).toBe(expectedResult);
 
@@ -686,7 +772,7 @@ describe('Axis', function() {
 
                 axis.tickSize(tickSize)
                     .tickPadding(tickPadding)
-                    .label(axisLabel)
+                    .title(axisTitle)
                     .tickLabelRotation(tickLabelRotation);
 
                 // When
@@ -694,13 +780,13 @@ describe('Axis', function() {
 
                 // Then
                 var expectedAxisTickLabelHeight = textMeasurer.measureText('Largest', tickLabelFont, tickLabelRotation).height;
-                var expectedAxisLabelHeight = textMeasurer.measureText(axisLabel, axisFont).height;
+                var expectedAxisTitleHeight = textMeasurer.measureText(axisTitle, axisFont).height;
 
                 var expectedResult =
                     tickSize +
                     tickPadding * 2 +
                     Math.abs(expectedAxisTickLabelHeight) +
-                    expectedAxisLabelHeight;
+                    expectedAxisTitleHeight;
 
                 expect(result.height).toBe(expectedResult);
 
@@ -713,7 +799,7 @@ describe('Axis', function() {
 
                 axis.tickSize(tickSize)
                     .tickPadding(tickPadding)
-                    .label(axisLabel)
+                    .title(axisTitle)
                     .tickLabelRotation(tickLabelRotation)
                     .tickLabelFormat(function(tickLabel) {
                         return tickLabel + '!!!';
@@ -724,13 +810,13 @@ describe('Axis', function() {
 
                 // Then
                 var expectedTickLabelHeight = textMeasurer.measureText('Largest!!!', tickLabelFont, tickLabelRotation).height;
-                var expectedAxisLabelHeight = textMeasurer.measureText(axisLabel, axisFont).height;
+                var expectedAxisTitleHeight = textMeasurer.measureText(axisTitle, axisFont).height;
 
                 var expectedResult =
                     tickSize +
                     tickPadding * 2 +
                     expectedTickLabelHeight +
-                    expectedAxisLabelHeight;
+                    expectedAxisTitleHeight;
 
                 expect(result.height).toBe(expectedResult);
 
@@ -744,7 +830,7 @@ describe('Axis', function() {
                 axis.shouldDisplay(false)
                     .tickSize(tickSize)
                     .tickPadding(tickPadding)
-                    .label(axisLabel)
+                    .title(axisTitle)
                     .tickLabelRotation(tickLabelRotation)
                     .tickLabelFormat(function(tickLabel) {
                         return tickLabel + '!!!';
@@ -755,15 +841,36 @@ describe('Axis', function() {
 
                 // Then
                 var expectedTickLabelHeight = textMeasurer.measureText('Largest!!!', tickLabelFont, tickLabelRotation).height;
-                var expectedAxisLabelHeight = textMeasurer.measureText(axisLabel, axisFont).height;
+                var expectedAxisTitleHeight = textMeasurer.measureText(axisTitle, axisFont).height;
 
                 var expectedResult =
                     tickSize +
                     tickPadding * 2 +
                     expectedTickLabelHeight +
-                    expectedAxisLabelHeight;
+                    expectedAxisTitleHeight;
 
                 expect(result.height).toBe(0);
+
+            });
+
+            it('handles empty list of tick values', function() {
+
+                // Given
+                spyOn(axis, 'tickValues').andReturn([]);
+
+                var tickPadding = 10,
+                    tickSize = 5;
+
+                axis.title('')
+                    .tickPadding(tickPadding)
+                    .tickSize(tickSize);
+
+                // When
+                var result = axis.calculateLabelDimensions();
+
+                // Then
+                var expectedHeight = 2 * tickPadding + tickSize;
+                expect(result.height).toBe(expectedHeight);
 
             });
 
@@ -778,7 +885,7 @@ describe('Axis', function() {
             it('returns correct value when no title and zero tick size and tick padding', function () {
 
                 // Given
-                axis.label('')
+                axis.title('')
                     .tickPadding(0)
                     .tickSize(0);
 
@@ -813,7 +920,7 @@ describe('Axis', function() {
             it('returns correct value when title provided and non-zero tick size and tick padding', function () {
 
                 // Given
-                axis.label(axisLabel)
+                axis.title(axisTitle)
                     .tickPadding(tickPadding)
                     .tickSize(tickSize);
 
@@ -822,12 +929,12 @@ describe('Axis', function() {
 
                 // Then
                 var expectedMaxTickLabelWidth = textMeasurer.measureText('Largest', tickLabelFont).width;
-                var expectedAxisLabelWidth = textMeasurer.measureText(axisLabel, axisFont).width;
+                var expectedAxisTitleWidth = textMeasurer.measureText(axisTitle, axisFont).width;
 
                 var expectedResult = expectedMaxTickLabelWidth
                     + tickPadding * 2
                     + tickSize
-                    + expectedAxisLabelWidth;
+                    + expectedAxisTitleWidth;
 
                 expect(result.width).toBe(expectedResult);
 
@@ -840,7 +947,7 @@ describe('Axis', function() {
 
                 axis.tickSize(tickSize)
                     .tickPadding(tickPadding)
-                    .label(axisLabel)
+                    .title(axisTitle)
                     .tickLabelRotation(tickLabelRotation);
 
                 // When
@@ -848,12 +955,12 @@ describe('Axis', function() {
 
                 // Then
                 var expectedMaxTickLabelWidth = textMeasurer.measureText('Largest', tickLabelFont, tickLabelRotation).width;
-                var expectedAxisLabelWidth = textMeasurer.measureText(axisLabel, axisFont).width;
+                var expectedAxisTitleWidth = textMeasurer.measureText(axisTitle, axisFont).width;
 
                 var expectedResult = expectedMaxTickLabelWidth
                     + tickPadding * 2
                     + tickSize
-                    + expectedAxisLabelWidth;
+                    + expectedAxisTitleWidth;
 
                 expect(result.width).toBe(expectedResult);
 
@@ -866,7 +973,7 @@ describe('Axis', function() {
 
                 axis.tickSize(tickSize)
                     .tickPadding(tickPadding)
-                    .label(axisLabel)
+                    .title(axisTitle)
                     .tickLabelRotation(tickLabelRotation);
 
                 // When
@@ -874,13 +981,13 @@ describe('Axis', function() {
 
                 // Then
                 var expectedTickLabelWidth = textMeasurer.measureText('Largest', tickLabelFont, tickLabelRotation).width;
-                var expectedAxisLabelWidth = textMeasurer.measureText(axisLabel, axisFont).width;
+                var expectedAxisTitleWidth = textMeasurer.measureText(axisTitle, axisFont).width;
 
                 var expectedResult =
                     tickSize +
                     tickPadding * 2 +
                     Math.abs(expectedTickLabelWidth) +
-                    expectedAxisLabelWidth;
+                    expectedAxisTitleWidth;
 
                 expect(result.width).toBe(expectedResult);
 
@@ -894,7 +1001,7 @@ describe('Axis', function() {
 
                 axis.tickSize(tickSize)
                     .tickPadding(tickPadding)
-                    .label(axisLabel)
+                    .title(axisTitle)
                     .tickLabelRotation(tickLabelRotation);
 
                 // When
@@ -902,13 +1009,13 @@ describe('Axis', function() {
 
                 // Then
                 var expectedTickLabelWidth = textMeasurer.measureText('Largest', tickLabelFont, tickLabelRotation).width;
-                var expectedAxisLabelWidth = textMeasurer.measureText(axisLabel, axisFont).width;
+                var expectedAxisTitleWidth = textMeasurer.measureText(axisTitle, axisFont).width;
 
                 var expectedResult =
                     tickSize +
                     tickPadding * 2 +
                     Math.abs(expectedTickLabelWidth) +
-                    expectedAxisLabelWidth;
+                    expectedAxisTitleWidth;
 
                 expect(result.width).toBe(expectedResult);
 
@@ -922,7 +1029,7 @@ describe('Axis', function() {
 
                 axis.tickSize(tickSize)
                     .tickPadding(tickPadding)
-                    .label(axisLabel)
+                    .title(axisTitle)
                     .tickLabelRotation(tickLabelRotation)
                     .tickLabelFormat(function(tickValue) {
                         return '_' + tickValue + '_';
@@ -933,12 +1040,12 @@ describe('Axis', function() {
 
                 // Then
                 var expectedMaxTickLabelWidth = textMeasurer.measureText('_Largest_', tickLabelFont, tickLabelRotation).width;
-                var expectedAxisLabelWidth = textMeasurer.measureText(axisLabel, axisFont).width;
+                var expectedAxisTitleWidth = textMeasurer.measureText(axisTitle, axisFont).width;
 
                 var expectedResult = expectedMaxTickLabelWidth
                     + tickPadding * 2
                     + tickSize
-                    + expectedAxisLabelWidth;
+                    + expectedAxisTitleWidth;
 
                 expect(result.width).toBe(expectedResult);
 
@@ -952,7 +1059,7 @@ describe('Axis', function() {
                 axis.shouldDisplay(false)
                     .tickSize(tickSize)
                     .tickPadding(tickPadding)
-                    .label(axisLabel)
+                    .title(axisTitle)
                     .tickLabelRotation(tickLabelRotation)
                     .tickLabelFormat(function(tickValue) {
                         return '_' + tickValue + '_';
@@ -963,14 +1070,35 @@ describe('Axis', function() {
 
                 // Then
                 var expectedMaxTickLabelWidth = textMeasurer.measureText('_Largest_', tickLabelFont, tickLabelRotation).width;
-                var expectedAxisLabelWidth = textMeasurer.measureText(axisLabel, axisFont).width;
+                var expectedAxisTitleWidth = textMeasurer.measureText(axisTitle, axisFont).width;
 
                 var expectedResult = expectedMaxTickLabelWidth
                     + tickPadding * 2
                     + tickSize
-                    + expectedAxisLabelWidth;
+                    + expectedAxisTitleWidth;
 
                 expect(result.width).toBe(0);
+
+            });
+
+            it('handles empty list of tick values', function() {
+
+                // Given
+                spyOn(axis, 'tickValues').andReturn([]);
+
+                var tickPadding = 10,
+                    tickSize = 5;
+
+                axis.title('')
+                    .tickPadding(tickPadding)
+                    .tickSize(tickSize);
+
+                // When
+                var result = axis.calculateLabelDimensions();
+
+                // Then
+                var expectedWidth = 2 * tickPadding + tickSize;
+                expect(result.width).toBe(expectedWidth);
 
             });
 
@@ -997,12 +1125,12 @@ describe('Axis', function() {
             ];
 
             beforeEach(function() {
-                axis = new insight.Axis('', insight.Scales.Ordinal)
+                axis = new insight.Axis('', insight.scales.ordinal)
                     .tickLabelFormat(function(tickValue) {
                         return tickValue + '!!!';
                     });
 
-                var secondaryAxis = new insight.Axis('Y Label', insight.Scales.Linear);
+                var secondaryAxis = new insight.Axis('Y Title', insight.scales.linear);
                 series = new insight.ColumnSeries('testSeries', data, axis, secondaryAxis);
             });
 
@@ -1016,6 +1144,30 @@ describe('Axis', function() {
 
                     // Given
                     axis.shouldDisplay(false);
+
+                    // When
+                    var result = axis.calculateLabelOverhang();
+
+                    // Then
+                    var expectedResult = {
+                        top: 0,
+                        bottom: 0,
+                        right: 0,
+                        left: 0
+                    };
+
+                    expect(result).toEqual(expectedResult);
+
+                });
+
+                it('returns zero overhang if domain is empty and tick labels are rotated and formatted', function() {
+
+                    // Given
+                    spyOn(axis, 'domain').andReturn([]);
+                    axis.tickLabelRotation(30);
+                    axis.tickLabelFormat(function(d) {
+                        return d.valueOf();
+                    });
 
                     // When
                     var result = axis.calculateLabelOverhang();
@@ -1412,6 +1564,30 @@ describe('Axis', function() {
 
                 beforeEach(function() {
                     axis.isHorizontal = d3.functor(false);
+                });
+
+                it('returns zero overhang if domain is empty and there is tick label rotation and formatting', function() {
+
+                    // Given
+                    spyOn(axis, 'domain').andReturn([]);
+                    axis.tickLabelRotation(30);
+                    axis.tickLabelFormat(function(d) {
+                        return d.valueOf();
+                    });
+
+                    // When
+                    var result = axis.calculateLabelOverhang();
+
+                    // Then
+                    var expectedResult = {
+                        top: 0,
+                        bottom: 0,
+                        right: 0,
+                        left: 0
+                    };
+
+                    expect(result).toEqual(expectedResult);
+
                 });
 
                 it('returns zero overhang if axis is not displayed and rotation is 90 degrees', function() {
@@ -1815,7 +1991,7 @@ describe('Axis', function() {
         var axis;
 
         beforeEach(function() {
-            axis = new insight.Axis('TestAxis', insight.Scales.Linear);
+            axis = new insight.Axis('TestAxis', insight.scales.linear);
         });
 
         describe('vertical axis', function() {
@@ -2363,7 +2539,7 @@ describe('Axis', function() {
 
             var axis;
             beforeEach(function() {
-                axis = new insight.Axis('axis', insight.Scales.Linear);
+                axis = new insight.Axis('axis', insight.scales.linear);
             });
 
             it('tickValues are generated from tickFrequency', function() {
@@ -2500,7 +2676,7 @@ describe('Axis', function() {
             var categories;
 
             beforeEach(function() {
-                axis = new insight.Axis('axis', insight.Scales.Ordinal);
+                axis = new insight.Axis('axis', insight.scales.ordinal);
                 categories = ['Cat', 'Dog', 'Snake', 'Horse', 'Rabbit'];
                 spyOn(axis, 'domain').andReturn(categories);
             });
@@ -2590,7 +2766,7 @@ describe('Axis', function() {
 
             var axis;
             beforeEach(function() {
-                axis = new insight.Axis('axis', insight.Scales.Time);
+                axis = new insight.Axis('axis', insight.scales.time);
             });
 
             it('tickValues are generated from tickFrequency', function() {
@@ -2804,7 +2980,7 @@ describe('Axis', function() {
     describe('initial tick', function() {
         it('on linear axis is a multiple of the tick frequency', function() {
             //Given:
-            var axis = new insight.Axis('axis', insight.Scales.Linear);
+            var axis = new insight.Axis('axis', insight.scales.linear);
             spyOn(axis, 'domain').andReturn([7, 20]);
             var tickFrequency = 4;
             var axisStrategy = new insight.LinearAxis();
@@ -2815,25 +2991,157 @@ describe('Axis', function() {
             expect(observedFirstTick).toBe(expectedFirstTick);
         });
 
-        it('on date axis is a multiple of the tick frequency', function() {
-            //Given:
-            var axis = new insight.Axis('axis', insight.Scales.Time);
-            spyOn(axis, 'domain').andReturn([
-                    new Date(2014, 10, 8, 4, 6, 1),
-                    new Date(2014, 10, 8, 16, 33, 3)]
-            );
-            var tickFrequency = insight.DateFrequency.dateFrequencyForHours(1);
-            var axisStrategy = new insight.DateAxis();
+        describe('on date axis', function() {
 
-            //Then:
-            var expectedFirstTick = new Date(2014, 10, 8, 4);
-            var observedFirstTick = axisStrategy.initialTickValue(axis, tickFrequency);
-            expect(observedFirstTick).toEqual(expectedFirstTick);
+            it('is a multiple of a second tick frequency', function() {
+                //Given:
+                var axis = new insight.Axis('axis', insight.scales.time);
+                spyOn(axis, 'domain').andReturn([
+                        new Date(Date.UTC(2014, 10, 8, 4, 6, 4)),
+                        new Date(Date.UTC(2014, 10, 8, 16, 33, 5))]
+                );
+                var tickFrequency = insight.DateFrequency.dateFrequencyForSeconds(15);
+                var axisStrategy = new insight.DateAxis();
+
+                //Then:
+                var expectedFirstTick = new Date(Date.UTC(2014, 10, 8, 4, 6, 15));
+                var observedFirstTick = axisStrategy.initialTickValue(axis, tickFrequency);
+                expect(observedFirstTick).toEqual(expectedFirstTick);
+            });
+
+            it('is a multiple of a minute tick frequency', function() {
+                //Given:
+                var axis = new insight.Axis('axis', insight.scales.time);
+                spyOn(axis, 'domain').andReturn([
+                        new Date(Date.UTC(2014, 10, 8, 4, 6, 4)),
+                        new Date(Date.UTC(2014, 10, 8, 16, 33, 5))]
+                );
+                var tickFrequency = insight.DateFrequency.dateFrequencyForMinutes(30);
+                var axisStrategy = new insight.DateAxis();
+
+                //Then:
+                var expectedFirstTick = new Date(Date.UTC(2014, 10, 8, 4, 30));
+                var observedFirstTick = axisStrategy.initialTickValue(axis, tickFrequency);
+                expect(observedFirstTick).toEqual(expectedFirstTick);
+            });
+
+            it('is a multiple of a hour tick frequency', function() {
+                //Given:
+                var axis = new insight.Axis('axis', insight.scales.time);
+                spyOn(axis, 'domain').andReturn([
+                        new Date(Date.UTC(2014, 10, 8, 4, 6)),
+                        new Date(Date.UTC(2014, 10, 8, 16, 33))]
+                );
+                var tickFrequency = insight.DateFrequency.dateFrequencyForHours(6);
+                var axisStrategy = new insight.DateAxis();
+
+                //Then:
+                var expectedFirstTick = new Date(Date.UTC(2014, 10, 8, 6));
+                var observedFirstTick = axisStrategy.initialTickValue(axis, tickFrequency);
+                expect(observedFirstTick).toEqual(expectedFirstTick);
+            });
+
+            it('is a multiple of a day tick frequency', function() {
+                //Given:
+                var axis = new insight.Axis('axis', insight.scales.time);
+                spyOn(axis, 'domain').andReturn([
+                        new Date(Date.UTC(2013, 9, 30, 4)),
+                        new Date(Date.UTC(2013, 10, 9, 16))]
+                );
+                var tickFrequency = insight.DateFrequency.dateFrequencyForDays(2);
+                var axisStrategy = new insight.DateAxis();
+
+                //Then:
+                var expectedFirstTick = new Date(Date.UTC(2013, 9, 30));
+                var observedFirstTick = axisStrategy.initialTickValue(axis, tickFrequency);
+                expect(observedFirstTick).toEqual(expectedFirstTick);
+            });
+
+            it('handles month boundaries for day tick frequencies', function() {
+                //Given:
+                var axis = new insight.Axis('axis', insight.scales.time);
+                spyOn(axis, 'domain').andReturn([
+                        new Date(Date.UTC(2013, 9, 31, 4)),
+                        new Date(Date.UTC(2014, 1, 18, 16))]
+                );
+                var tickFrequency = insight.DateFrequency.dateFrequencyForDays(2);
+                var axisStrategy = new insight.DateAxis();
+
+                //Then:
+                var expectedFirstTick = new Date(Date.UTC(2013, 10, 1));
+                var observedFirstTick = axisStrategy.initialTickValue(axis, tickFrequency);
+                expect(observedFirstTick).toEqual(expectedFirstTick);
+            });
+
+            it('handles year boundaries for day tick frequencies', function() {
+                //Given:
+                var axis = new insight.Axis('axis', insight.scales.time);
+                spyOn(axis, 'domain').andReturn([
+                        new Date(Date.UTC(2014, 0, 1, 4)),
+                        new Date(Date.UTC(2014, 0, 18, 16))]
+                );
+                var tickFrequency = insight.DateFrequency.dateFrequencyForDays(2);
+                var axisStrategy = new insight.DateAxis();
+
+                //Then:
+                var expectedFirstTick = new Date(Date.UTC(2014, 0, 2));
+                var observedFirstTick = axisStrategy.initialTickValue(axis, tickFrequency);
+                expect(observedFirstTick).toEqual(expectedFirstTick);
+            });
+
+            it('is a multiple of a week tick frequency', function() {
+                //Given:
+                var axis = new insight.Axis('axis', insight.scales.time);
+                spyOn(axis, 'domain').andReturn([
+                        new Date(Date.UTC(2014, 10, 8, 4)),
+                        new Date(Date.UTC(2014, 10, 8, 16))]
+                );
+                var tickFrequency = insight.DateFrequency.dateFrequencyForWeeks(1);
+                var axisStrategy = new insight.DateAxis();
+
+                //Then:
+                var expectedFirstTick = new Date(Date.UTC(2014, 10, 9));
+                var observedFirstTick = axisStrategy.initialTickValue(axis, tickFrequency);
+                expect(observedFirstTick).toEqual(expectedFirstTick);
+            });
+
+            it('is a multiple of a month tick frequency', function() {
+                //Given:
+                var axis = new insight.Axis('axis', insight.scales.time);
+                spyOn(axis, 'domain').andReturn([
+                        new Date(Date.UTC(2014, 7, 8)),
+                        new Date(Date.UTC(2014, 11, 8))]
+                );
+                var tickFrequency = insight.DateFrequency.dateFrequencyForMonths(3);
+                var axisStrategy = new insight.DateAxis();
+
+                //Then:
+                var expectedFirstTick = new Date(Date.UTC(2014, 9));
+                var observedFirstTick = axisStrategy.initialTickValue(axis, tickFrequency);
+                expect(observedFirstTick).toEqual(expectedFirstTick);
+            });
+
+            it('is a multiple of a year tick frequency', function() {
+                //Given:
+                var axis = new insight.Axis('axis', insight.scales.time);
+                spyOn(axis, 'domain').andReturn([
+                        new Date(Date.UTC(2014, 10, 8, 4, 6, 1)),
+                        new Date(Date.UTC(2014, 10, 8, 16, 33, 3))]
+                );
+                var tickFrequency = insight.DateFrequency.dateFrequencyForYears(5);
+                var axisStrategy = new insight.DateAxis();
+
+                //Then:
+                var expectedFirstTick = new Date(2015, 0);
+                var observedFirstTick = axisStrategy.initialTickValue(axis, tickFrequency);
+                expect(observedFirstTick).toEqual(expectedFirstTick);
+            });
         });
+
 
         it('on ordinal axis is the first value', function() {
             //Given:
-            var axis = new insight.Axis('axis', insight.Scales.Ordinal);
+            var axis = new insight.Axis('axis', insight.scales.ordinal);
             spyOn(axis, 'domain').andReturn(['Cat', 'Dog', 'Horse', 'Rat', 'Rabbit']);
             var axisStrategy = new insight.OrdinalAxis();
             var tickFrequency;
@@ -2851,7 +3159,7 @@ describe('Axis', function() {
 
             var axis;
             beforeEach(function() {
-                axis = new insight.Axis('axis', insight.Scales.Linear);
+                axis = new insight.Axis('axis', insight.scales.linear);
                 axis.bounds = [1000, 300];
                 axis.isHorizontal = d3.functor(true);
 
@@ -2977,7 +3285,7 @@ describe('Axis', function() {
 
             var axis;
             beforeEach(function() {
-                axis = new insight.Axis('axis', insight.Scales.Time);
+                axis = new insight.Axis('axis', insight.scales.time);
                 axis.bounds = [1000, 300];
                 axis.isHorizontal = d3.functor(true);
 
@@ -3067,6 +3375,114 @@ describe('Axis', function() {
                 expect(observedFrequency).toEqual(expectedFrequency);
             });
 
+        });
+    });
+
+    describe('range', function() {
+
+        describe('on linear axis', function() {
+
+            var axis;
+
+            beforeEach(function () {
+                axis = new insight.Axis('axis', insight.scales.linear);
+                axis.scale.domain([5, 1000]);
+            });
+
+            it('defaults to domain', function () {
+                //Then:
+                expect(axis.axisRange()).toEqual([5, 1000]);
+            });
+
+            it('can be overriden directly', function () {
+                //When:
+                axis.axisRange(7, 23);
+
+                //Then:
+                expect(axis.axisRange()).toEqual([7, 23]);
+            });
+
+            it('orders the range in ascending order', function() {
+                //When:
+                axis.axisRange(25, 6);
+
+                //Then:
+                expect(axis.axisRange()).toEqual([6, 25]);
+            });
+        });
+
+        describe('on time axis', function() {
+
+            var axis;
+
+            beforeEach(function () {
+                axis = new insight.Axis('axis', insight.scales.time);
+                axis.scale.domain([new Date(2014, 1), new Date(2015, 8)]);
+            });
+
+            it('defaults to domain', function () {
+                //Then:
+                expect(axis.axisRange()).toEqual([new Date(2014, 1), new Date(2015, 8)]);
+            });
+
+            it('can be overriden directly', function () {
+                //When:
+                axis.axisRange(new Date(2014, 3), new Date(2015, 1));
+
+                //Then:
+                expect(axis.axisRange()).toEqual([new Date(2014, 3), new Date(2015, 1)]);
+            });
+
+            it('orders the range in ascending order', function() {
+                //When:
+                axis.axisRange(new Date(2015, 1), new Date(2014, 3));
+
+                //Then:
+                expect(axis.axisRange()).toEqual([new Date(2014, 3), new Date(2015, 1)]);
+            });
+        });
+
+        describe('on ordinal axis', function() {
+
+            var axis,
+                categories;
+
+            beforeEach(function () {
+                // Specifically *not* alphabetically ordered; arranged by index
+                categories = ['Aston Martin', 'Bentley', 'Citroen', 'Ford',
+                    'Hyundai', 'Kia', 'Mercedes', 'Peugeot',
+                    'Toyota', 'Audi', 'BMW', 'Ferrari',
+                    'Nissan', 'Porsche', 'Vauxhall', 'Honda',
+                    'Jaguar', 'Skoda', 'Volkswagen', 'Volvo'];
+
+                var mockSeries = jasmine.createSpyObj(insight.Series, ['keys', 'findMax']);
+                mockSeries.keys.andReturn(categories);
+                mockSeries.findMax.andReturn('Volvo');
+
+                axis = new insight.Axis('axis', insight.scales.ordinal);
+                axis.series = [mockSeries];
+            });
+
+            it('defaults to domain', function () {
+                //Then:
+                expect(axis.axisRange()).toEqual(categories);
+            });
+
+            it('can be overriden directly', function () {
+                //When:
+                axis.axisRange('Kia', 'Audi');
+
+                //Then:
+                expect(axis.axisRange()).toEqual(['Kia', 'Mercedes', 'Peugeot', 'Toyota', 'Audi']);
+            });
+
+            it('orders the range in ascending order', function() {
+                //When:
+                axis.axisRange('Honda', 'BMW');
+
+                //Then:
+                expect(axis.axisRange()).toEqual(['BMW', 'Ferrari', 'Nissan', 'Porsche', 'Vauxhall', 'Honda']);
+            });
         });
     });
 });

@@ -14,7 +14,7 @@
 
         /*
          * Queries all series that use this axis to get the list of available values
-         * @returns {object[]} values - the values for this ordinal axis
+         * @returns {Object[]} values - the values for this ordinal axis
          */
         function findOrdinalValues(axis) {
             var vals = [];
@@ -26,7 +26,7 @@
                 vals = vals.concat(series.keys(axis.orderingFunction()));
             });
 
-            vals = insight.Utils.arrayUnique(vals);
+            vals = insight.utils.arrayUnique(vals);
 
             return vals;
         }
@@ -34,8 +34,32 @@
         // Internal functions -----------------------------------------------------------------------------------------
 
         self.domain = function(axis) {
-            return findOrdinalValues(axis);
+            return self.axisRange(axis, axis.rangeMinimum(), axis.rangeMaximum());
         };
+
+        self.axisRange = function(axis, minimum, maximum) {
+            var domain = findOrdinalValues(axis);
+            var minIndex = domain.indexOf(minimum);
+            var maxIndex = domain.indexOf(maximum);
+
+            if (minIndex === -1 || maxIndex === -1) {
+                return domain;
+            }
+
+            //Swap the indices to ensure minIndex < maxIndex
+            if (minIndex > maxIndex) {
+                var temp = minIndex;
+                minIndex = maxIndex;
+                maxIndex = temp;
+            }
+
+            var rangeValues = domain.slice(minIndex, 1 + maxIndex);
+
+            return rangeValues;
+        };
+
+        //Default ordinal domain is []
+        self.defaultDomain = d3.functor([]);
 
         self.tickValues = function(axis) {
             return axis.domain();
@@ -65,6 +89,25 @@
             }
 
             return categories[tickIndex - 1];
+        };
+
+
+        /*
+         * Calculates the minimum value to be used in this axis.
+         * @returns {Object} - The smallest value in the datasets that use this axis
+         */
+        self.findMin = function(axis) {
+            var values = findOrdinalValues(axis);
+            return (values.length > 0) ? values[0] : undefined;
+        };
+
+        /*
+         * Calculates the maximum value to be used in this axis.
+         * @returns {Object} - The largest value in the datasets that use this axis
+         */
+        self.findMax = function(axis) {
+            var values = findOrdinalValues(axis);
+            return (values.length > 0) ? values[values.length - 1] : undefined;
         };
     };
 

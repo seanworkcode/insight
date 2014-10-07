@@ -3,12 +3,12 @@
     /**
      * The BubbleSeries class extends the PointSeries class to display datapoints as differently sized circles,
      * where radius represents a measured value.
-     * @class insight.BubbleSeries
+     * @constructor
      * @extends insight.PointSeries
-     * @param {string} name - A uniquely identifying name for this series
-     * @param {DataSet} data - The DataSet containing this series' data
-     * @param {insight.Scales.Scale} x - the x axis
-     * @param {insight.Scales.Scale} y - the y axis
+     * @param {String} name - A uniquely identifying name for this series
+     * @param {insight.DataProvider | Object[]} data - An object which contains this series' data
+     * @param {insight.Axis} x - The x axis
+     * @param {insight.Axis} y - The y axis
      */
     insight.BubbleSeries = function BubbleSeries(name, data, x, y) {
 
@@ -20,7 +20,7 @@
 
         // Internal variables -----------------------------------------------------------------------------------------
 
-        self.cssClassName = d3.functor(insight.Constants.Bubble);
+        self.cssClassName = d3.functor(insight.constants.Bubble);
 
         self.classValues = [self.cssClassName()];
 

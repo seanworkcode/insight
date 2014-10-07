@@ -2,12 +2,12 @@
 
     /**
      * The ScatterSeries class extends the PointSeries class to display datapoints as small circles.
-     * @class insight.ScatterSeries
+     * @constructor
      * @extends insight.PointSeries
-     * @param {string} name - A uniquely identifying name for this series
-     * @param {DataSet} data - The DataSet containing this series' data
-     * @param {insight.Scales.Scale} x - the x axis
-     * @param {insight.Scales.Scale} y - the y axis
+     * @param {String} name - A uniquely identifying name for this series
+     * @param {insight.DataProvider | Object[]} data - An object which contains this series' data
+     * @param {insight.Axis} x - The x axis
+     * @param {insight.Axis} y - The y axis
      */
     insight.ScatterSeries = function ScatterSeries(name, data, x, y) {
 
@@ -19,7 +19,7 @@
 
         // Internal variables -----------------------------------------------------------------------------------------
 
-        self.cssClassName = d3.functor(insight.Constants.Scatter);
+        self.cssClassName = d3.functor(insight.constants.Scatter);
 
         self.classValues = [self.cssClassName()];
 

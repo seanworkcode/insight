@@ -30,8 +30,30 @@
         // Internal functions -----------------------------------------------------------------------------------------
 
         self.domain = function(axis) {
-            return [0, 0];
+            var rangeMin = axis.rangeMinimum();
+            var rangeMax = axis.rangeMaximum();
+
+            if (rangeMin.valueOf() === rangeMax.valueOf()) {
+                return axis.scale.domain();
+            }
+
+            if (axis.isZoomable() && !self.domainIsDefault(axis.scale.domain())) {
+                return axis.scale.domain();
+            }
+
+            return [rangeMin, rangeMax];
         };
+
+        self.axisRange = function(axis, minimum, maximum) {
+            return [minimum, maximum];
+        };
+
+        self.domainIsDefault = function(domain) {
+            return insight.utils.arrayEquals(self.defaultDomain(), domain);
+        };
+
+        //Default time/linear axis domain is [0,1]
+        self.defaultDomain = d3.functor([0, 1]);
 
         self.initialTickValue = function(axis, tickFrequency) {
             return 0;
@@ -111,34 +133,26 @@
 
         /*
          * Calculates the minimum value to be used in this axis.
-         * @returns {object} - The smallest value in the datasets that use this axis
+         * @returns {Object} - The smallest value in the datasets that use this axis
          */
         self.findMin = function(axis) {
-            var min = Number.MAX_VALUE;
-
-            axis.series.forEach(function(series) {
-                var m = series.findMin(axis);
-
-                min = m < min ? m : min;
+            var min = d3.min(axis.series, function(series) {
+                return series.findMin(axis);
             });
 
-            return min;
+            return min || 0;
         };
 
         /*
          * Calculates the maximum value to be used in this axis.
-         * @returns {object} - The largest value in the datasets that use this axis
+         * @returns {Object} - The largest value in the datasets that use this axis
          */
         self.findMax = function(axis) {
-            var max = 0;
-
-            axis.series.forEach(function(series) {
-                var m = series.findMax(axis);
-
-                max = m > max ? m : max;
+            var max = d3.max(axis.series, function(series) {
+                return series.findMax(axis);
             });
 
-            return max;
+            return max || 0;
         };
 
         self.nextTickValue = function(axis, currentTickValue, tickFrequency) {
