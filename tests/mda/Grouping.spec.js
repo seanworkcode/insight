@@ -257,9 +257,7 @@ describe('Grouping', function() {
             var group = new insight.Grouping(dimension);
 
             // When
-            group.isOrdered(true);
-
-            var data = group.extractData(function(a,b){return b.value.Count - a.value.Count;});
+            var data = group.extractData(function(a,b){return b.value.count - a.value.count;});
 
             // Then
             expect(data[0].key).toBe('England');
@@ -274,9 +272,7 @@ describe('Grouping', function() {
             var group = new insight.Grouping(dimension);
 
             // When
-            group.isOrdered(true);
-
-            var data = group.extractData(function(a,b){return b.value.Count - a.value.Count;});
+            var data = group.extractData(function(a,b){return b.value.count - a.value.count;});
 
             // Then
             expect(data[0].key).toBe('England');
