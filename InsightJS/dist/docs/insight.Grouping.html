@@ -767,10 +767,6 @@
             
                 <li data-name="insight.Grouping#self.filterFunction"><a href="insight.Grouping.html##self.filterFunction">#self.filterFunction</a></li>
             
-                <li data-name="insight.Grouping#self.isOrdered"><a href="insight.Grouping.html##self.isOrdered">#self.isOrdered</a></li>
-            
-                <li data-name="insight.Grouping#self.isOrdered"><a href="insight.Grouping.html##self.isOrdered">#self.isOrdered</a></li>
-            
                 <li data-name="insight.Grouping#self.mean"><a href="insight.Grouping.html##self.mean">#self.mean</a></li>
             
                 <li data-name="insight.Grouping#self.mean"><a href="insight.Grouping.html##self.mean">#self.mean</a></li>
@@ -2219,195 +2215,6 @@ The function should return a boolean where false means the object is not include
             
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="#self.isOrdered">
-            
-            #self.isOrdered<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Boolean}</span>
-        </h4>
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Whether the group's data is ordered.
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-
-
-<h5>Returns:</h5>
-Whether the group's data is ordered.
-<br />
-
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="#self.isOrdered">
-            
-            #self.isOrdered<span class="signature">(ordered)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{this}</span>
-        </h4>
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Sets if this Grouping will be ordered or not
-    </div>
-    
-
-    
-    
-    
-    
-    
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>ordered</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Boolean</span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                Whether to order this Grouping or not</td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-
-
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
         <h4 class="name" id="#self.mean">
             
             #self.mean<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{String[]}</span>
@@ -2470,7 +2277,8 @@ Whether the group's data is ordered.
 
 
 <h5>Returns:</h5>
-The list of property names that will averaged
+The list of property names whose mean will be calculated after the map reduce
+of this Grouping.
 <br />
 
     
@@ -2541,7 +2349,8 @@ The list of property names that will averaged
             
             <td class="description last">
                 
-                An array of properties that will be averaged after the map reduce of this Grouping.</td>
+                An array of properties whose mean will be calculated after the map reduce
+of this Grouping.</td>
         </tr>
 	
 	

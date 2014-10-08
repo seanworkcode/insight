@@ -233,11 +233,11 @@
                 var bubbles = new BubbleSeries('bubbles' + $scope.chartId, chart, grouping, bubbleX, bubbleY, 'cyan')
                     .xFunction(function(d)
                     {
-                        return d.value[measures[0]].Average;
+                        return d.value[measures[0]].mean;
                     })
                     .yFunction(function(d)
                     {
-                        return d.value[measures[1]].Average;
+                        return d.value[measures[1]].mean;
                     })
                     .tooltipLabelFormat(function(d)
                     {
@@ -544,16 +544,16 @@ function createBubbleChart(chartGroup, bubbleData) {
 
     var bubbles = new insight.BubbleSeries('bubbles', bubbleData, xAxis, yAxis)
         .keyFunction(function(d) {
-            return d.value.averageUserRating.Average;
+            return d.value.averageUserRating.mean;
         })
         .valueFunction(function(d) {
-            return d.value.price.Average;
+            return d.value.price.mean;
         })
         .radiusFunction(function(d) {
-            return Math.sqrt(d.value.fileSizeBytes.Average);
+            return Math.sqrt(d.value.fileSizeBytes.mean);
         })
         .tooltipFunction(function(d) {
-            var fileSize = d.value.fileSizeBytes.Average / 1024 / 1024;
+            var fileSize = d.value.fileSizeBytes.mean / 1024 / 1024;
             return d.key + ": " + Math.round(fileSize) + "MB";
         });
 
@@ -584,7 +584,7 @@ function createGenreCountChart(chartGroup, genreData){
         .title("Total number of Apps by genre");
 
     var series = new insight.RowSeries('genre', genreData, x, y)
-        .valueFunction(function(d){ return d.value.Count; });
+        .valueFunction(function(d){ return d.value.count; });
 
     chart.series([series]);
     chartGroup.add(chart);
