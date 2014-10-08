@@ -586,6 +586,31 @@
          * @memberof! insight.Grouping
          * @returns {this}
          * @param {String[]} properties - An array of property names to be summed for slices in this Grouping.
+         * @example var dataSet = new insight.DataSet([
+         *   { forename: 'Alan', height: 160, gender: 'Male' },
+         *   { forename: 'Bob', height: 169, gender: 'Male' },
+         *   { forename: 'Mary', height: 151, gender: 'Female' },
+         *   { forename: 'Sam', height: 160, gender: 'Female' },
+         *   { forename: 'Steve', height: 172, gender: 'Male' },
+         *   { forename: 'Harold', height: 160, gender: 'Male' }
+         * ]);
+         *
+         * var totalHeightByGender = dataSet.group('gender', function (d) { return d.gender; })
+         *                                  .sum(['height']);
+         *
+         * var groups = totalHeightByGender.rawData();
+         *
+         * // groups[1] now looks like this:
+         * {
+         *   "key": "Male",
+         *   "value": {
+         *     "count": 4,
+         *     "height": {
+         *       "sum": 661,
+         *       "count": 4
+         *     }
+         *   }
+         * }
          */
         self.sum = function(properties) {
             if (!arguments.length) {
@@ -642,6 +667,46 @@
          * @memberof! insight.Grouping
          * @returns {this}
          * @param {String[]} properties - An array of property names to be cumulatively summed over slices in this Grouping.
+         * @example var dataSet = new insight.DataSet([
+         *   { forename: 'Alan', height: 160, gender: 'Male' },
+         *   { forename: 'Bob', height: 169, gender: 'Male' },
+         *   { forename: 'Mary', height: 151, gender: 'Female' },
+         *   { forename: 'Sam', height: 160, gender: 'Female' },
+         *   { forename: 'Steve', height: 172, gender: 'Male' },
+         *   { forename: 'Harold', height: 160, gender: 'Male' }
+         * ]);
+         *
+         * var cumulativeHeightByGender = dataSet.group('gender', function (d) { return d.gender; })
+         *                                       .sum(['height'])
+         *                                       .cumulative(['height.sum']);
+         *
+         * var groups = cumulativeHeightByGender.rawData();
+         *
+         * // groups now looks like this:
+         * [
+         *   {
+         *     "key": "Female",
+         *     "value": {
+         *       "count": 2,
+         *       "height": {
+         *         "sum": 311,
+         *         "count": 2,
+         *         "sumCumulative": 311
+         *       }
+         *     }
+         *   },
+         *   {
+         *     "key": "Male",
+         *     "value": {
+         *       "count": 4,
+         *       "height": {
+         *         "sum": 661,
+         *         "count": 4,
+         *         "sumCumulative": 972
+         *       }
+         *     }
+         *   }
+         * ]
          */
         self.cumulative = function(properties) {
             if (!arguments.length) {
@@ -659,11 +724,40 @@
          *
          * @also
          *
-         * Sets the array of properties whose distinct value occurences will be counted during the reduction of this Grouping
+         * Sets the array of properties whose distinct value occurences will be counted during the reduction of this
+         * Grouping
          * @instance
          * @memberof! insight.Grouping
          * @returns {this}
-         * @param {String[]} properties - An array of properties whose distinct value occurences will be counted during the reduction of this Grouping
+         * @param {String[]} properties - An array of properties whose distinct value occurences will be counted during
+         * the reduction of this Grouping
+         * @example var dataSet = new insight.DataSet([
+         *   { forename: 'Alan', height: 160, gender: 'Male' },
+         *   { forename: 'Bob', height: 169, gender: 'Male' },
+         *   { forename: 'Mary', height: 151, gender: 'Female' },
+         *   { forename: 'Sam', height: 160, gender: 'Female' },
+         *   { forename: 'Steve', height: 172, gender: 'Male' },
+         *   { forename: 'Harold', height: 160, gender: 'Male' }
+         * ]);
+         *
+         * var countHeightsByGender = dataSet.group('gender', function (d) { return d.gender; })
+         *                                   .count(['height']);
+         *
+         * var groups = countHeightsByGender.rawData();
+         *
+         * // groups[1] now looks like this:
+         * {
+         *   "key": "Male",
+         *     "value": {
+         *       "count": 4,
+         *       "height": {
+         *         "160": 2,
+         *         "169": 1,
+         *         "172": 1,
+         *         "total": 4
+         *       }
+         *     }
+         *  }
          */
         self.count = function(properties) {
             if (!arguments.length) {
@@ -688,6 +782,32 @@
          * @returns {this}
          * @param {String[]} properties - An array of properties whose mean will be calculated after the map reduce
          * of this Grouping.
+         * @example var dataSet = new insight.DataSet([
+         *   { forename: 'Alan', height: 160, gender: 'Male' },
+         *   { forename: 'Bob', height: 169, gender: 'Male' },
+         *   { forename: 'Mary', height: 151, gender: 'Female' },
+         *   { forename: 'Sam', height: 160, gender: 'Female' },
+         *   { forename: 'Steve', height: 172, gender: 'Male' },
+         *   { forename: 'Harold', height: 160, gender: 'Male' }
+         * ]);
+         *
+         * var meanHeightByGender = dataSet.group('gender', function (d) { return d.gender; })
+         *                                 .mean(['height']);
+         *
+         * var groups = meanHeightByGender.rawData();
+         *
+         * // groups[1] now looks like this:
+         * {
+         *   "key": "Male",
+         *   "value": {
+         *     "count": 4,
+         *     "height": {
+         *       "sum": 661,
+         *       "count": 4,
+         *       "mean": 165.25
+         *     }
+         *   }
+         * }
          */
         self.mean = function(properties) {
             if (!arguments.length) {
@@ -718,7 +838,8 @@
          * ]);
          *
          * // Group on gender and calculate mean height for each gender
-         * var genderGrouping = dataSet.group('gender', function (d) { return d.gender; }).mean(['height']);
+         * var genderGrouping = dataSet.group('gender', function (d) { return d.gender; })
+         *                             .mean(['height']);
          *
          * var groups = genderGrouping.rawData();
          *
@@ -741,7 +862,8 @@
          * ]);
          *
          * // Group on an array / one-to-many value, to aggregate the count of interests.
-         * var interestsGrouping = dataSet.group('Interests', function(d) { return d.Interests; }, true).count(['Interests']);
+         * var interestsGrouping = dataSet.group('Interests', function(d) { return d.Interests; }, true)
+         *                                .count(['Interests']);
          *
          * var groups = interestsGrouping.extractData();
          *
