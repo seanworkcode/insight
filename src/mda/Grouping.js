@@ -15,7 +15,7 @@
             sumProperties = [],
             countProperties = [],
             cumulativeProperties = [],
-            averageProperties = [],
+            meanProperties = [],
             correlationPairProperties = [],
             allCorrelationProperties = [],
             ordered = false;
@@ -74,18 +74,18 @@
          * Takes a group object and calculates the mean for any properties configured.
          * @param {Object} group - A dimensional slice of a Grouping {key: 'X', value : {}}
          */
-        function calculateAverages(group) {
+        function calculateMeans(group) {
 
 
-            for (var i = 0, len = averageProperties.length; i < len; i++) {
+            for (var i = 0, len = meanProperties.length; i < len; i++) {
 
-                var propertyName = averageProperties[i];
+                var propertyName = meanProperties[i];
                 var propertyValue = group.value[propertyName];
                 var mean = propertyValue.Sum / propertyValue.Count;
 
                 mean = insight.utils.isNumber(mean) && isFinite(mean) ? mean : undefined;
 
-                group.value[propertyName].Average = mean;
+                group.value[propertyName].mean = mean;
             }
         }
 
@@ -161,7 +161,7 @@
                             var groupData = insight.utils.takeWhere(globalData, 'key', self.dimension.aggregationFunction(addingData))[0].value;
 
                             // get the group mean from global data for this grouping
-                            var groupMean = groupData[propertyName].Average;
+                            var groupMean = groupData[propertyName].mean;
 
                             var value = addingData[propertyName];
                             var deviation = value - groupMean;
@@ -268,7 +268,7 @@
 
             data.forEach(function(d) {
 
-                calculateAverages(d);
+                calculateMeans(d);
 
                 calculateCumulativeValues(d, totals);
 
@@ -551,8 +551,6 @@
                         reduceRemoveFromGroup,
                         reduceInitializeGroup
                     );
-
-
             }
 
             self.data = basicGroupData;
@@ -612,7 +610,7 @@
             }
 
             // need mean for correlation
-            averageProperties = insight.utils.arrayUnique(averageProperties.concat(allCorrelationProperties));
+            meanProperties = insight.utils.arrayUnique(meanProperties.concat(allCorrelationProperties));
 
             // need sum for mean so set that too
             sumProperties = insight.utils.arrayUnique(sumProperties.concat(allCorrelationProperties));
@@ -668,7 +666,8 @@
          * Returns the list of properties whose mean will be calculated after the map reduce of this Grouping.
          * @instance
          * @memberof! insight.Grouping
-         * @returns {String[]} - The list of property names that will averaged
+         * @returns {String[]} - The list of property names whose mean will be calculated after the map reduce
+         * of this Grouping.
          *
          * @also
          *
@@ -676,15 +675,16 @@
          * @instance
          * @memberof! insight.Grouping
          * @returns {this}
-         * @param {String[]} properties - An array of properties that will be averaged after the map reduce of this Grouping.
+         * @param {String[]} properties - An array of properties whose mean will be calculated after the map reduce
+         * of this Grouping.
          */
         self.mean = function(properties) {
             if (!arguments.length) {
-                return averageProperties;
+                return meanProperties;
             }
-            averageProperties = properties;
+            meanProperties = properties;
 
-            sumProperties = insight.utils.arrayUnique(sumProperties.concat(averageProperties));
+            sumProperties = insight.utils.arrayUnique(sumProperties.concat(meanProperties));
 
             return self;
         };

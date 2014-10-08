@@ -164,7 +164,7 @@ describe('Grouping', function() {
             var scotland = findByKey(data, 'Scotland');
 
             // Then
-            expect(scotland.value.IQ.Average).toBe(268/3);
+            expect(scotland.value.IQ.mean).toBe(268/3);
             expect(scotland.value.IQ.Sum).toBe(268);
         });
 
@@ -191,8 +191,8 @@ describe('Grouping', function() {
             var england = findByKey(data, 'England');
 
             // Then
-            expect(scotland.value.IQ.Average).toBe(199/2);
-            expect(england.value.IQ.Average).toBe(278/4);
+            expect(scotland.value.IQ.mean).toBe(199/2);
+            expect(england.value.IQ.mean).toBe(278/4);
             expect(scotland.value.Count).toBe(2);
         });
 
@@ -211,9 +211,9 @@ describe('Grouping', function() {
             var england = findByKey(data, 'England');
 
             // Then
-            expect(scotland.value.IQ.Average).toBe(196/2);
+            expect(scotland.value.IQ.mean).toBe(196/2);
             expect(scotland.value.IQ.Sum).toBe(196);
-            expect(england.value.IQ.Average).not.toBeDefined();
+            expect(england.value.IQ.mean).not.toBeDefined();
             expect(england.value.IQ.Sum).toBe(0);
         });
 
@@ -241,9 +241,9 @@ describe('Grouping', function() {
 
             // Then
 
-            expect(scotland.value.IQ.Average).toBe(103);
+            expect(scotland.value.IQ.mean).toBe(103);
             expect(scotland.value.IQ.Sum).toBe(103);
-            expect(england.value.IQ.Average).not.toBeDefined();
+            expect(england.value.IQ.mean).not.toBeDefined();
             expect(england.value.IQ.Sum).toBe(0);
         });
     });
@@ -294,7 +294,7 @@ describe('Grouping', function() {
 
             // When
             group.mean(['IQ'])
-                .cumulative(['IQ.Sum','IQ.Average']);
+                .cumulative(['IQ.Sum','IQ.mean']);
 
             var data = group.extractData();
 

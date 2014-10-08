@@ -129,7 +129,7 @@ describe('ColumnSeries', function() {
             name: 'value2',
             valueFunction: function(d)
             {
-                return d.value.Age.Average;
+                return d.value.Age.mean;
             },
             label: 'Value 2',
             color: '#2980b9',
@@ -167,7 +167,7 @@ describe('ColumnSeries', function() {
             name: 'value2',
             valueFunction: function(d)
             {
-                return d.value.Age.Average;
+                return d.value.Age.mean;
             },
             label: 'Value 2',
             color: '#2980b9',

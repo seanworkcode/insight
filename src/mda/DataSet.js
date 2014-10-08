@@ -37,7 +37,7 @@
          *
          *  // The mean height by gender can now be included in a chart using the following value function
          *  var averageHeightValue = function(d) {
-         *      return d.value.height.Average;
+         *      return d.value.height.mean;
          *  };
          *
          * @example var dataSet = new insight.DataSet([
