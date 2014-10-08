@@ -3,8 +3,7 @@
 * Library changes:
   * Improved documentation for working with groupings.
   * Updated Grouping calculations to improve consistency
-    * Grouping.count() stores result in `value.propertyName.count` rather than `value.propertyName.Count`
-    * Grouping.cumulative() stores result in `value.propertyName.propertyValue.count` rather than `value.propertyName.propertyValue.Count`
+    * Grouping.count() stores total count in `value.propertyName.total` rather than `value.propertyName.Total`
     * Grouping.mean() stores mean in `value.propertyName.mean` rather than `value.propertyName.Average`
     * Grouping.sum() stores sum in `value.propertyName.sum` rather than `value.propertyName.Sum`
 
