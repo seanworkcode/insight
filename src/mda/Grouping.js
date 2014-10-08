@@ -264,7 +264,7 @@
 
             var totals = {};
 
-            var data = self.isOrdered() ? self.extractData(self.orderingFunction()) : self.extractData();
+            var data = self.extractData();
 
             data.forEach(function(d) {
 
@@ -685,29 +685,6 @@
             meanProperties = properties;
 
             sumProperties = insight.utils.arrayUnique(sumProperties.concat(meanProperties));
-
-            return self;
-        };
-
-        /**
-         * Whether the group's data is ordered.
-         * @instance
-         * @memberof! insight.Grouping
-         * @returns {Boolean} - Whether the group's data is ordered.
-         *
-         * @also
-         *
-         * Sets if this Grouping will be ordered or not
-         * @instance
-         * @memberof! insight.Grouping
-         * @returns {this}
-         * @param {Boolean} ordered - Whether to order this Grouping or not
-         */
-        self.isOrdered = function(value) {
-            if (!arguments.length) {
-                return ordered;
-            }
-            ordered = value;
 
             return self;
         };
