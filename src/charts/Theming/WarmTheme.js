@@ -1,8 +1,8 @@
 (function(insight) {
 
     /**
-     * A Theme for drawing on a lightly coloured background. Sets a number of the properties defined in the Theme base
-     * class.
+     * A Theme for drawing on a white background, uses warm colors with white as a base. 
+     * Sets a number of the properties defined in the Theme base class.
      * @constructor
      */
     insight.WarmTheme = function WarmTheme() {
