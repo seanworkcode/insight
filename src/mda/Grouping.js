@@ -745,33 +745,11 @@
          *
          * var groups = interestsGrouping.extractData();
          *
-         * // groups now looks like this:
-         * // [
-         * //   {
-         * //     "key": "Triathlon",
-         * //     "value": 2
-         * //   },
-         * //   {
-         * //     "key": "Music",
-         * //     "value": 3
-         * //   },
-         * //   {
-         * //     "key": "Mountain Biking",
-         * //     "value": 1
-         * //   },
-         * //   {
-         * //     "key": "Ballet",
-         * //     "value": 1
-         * //   },
-         * //   {
-         * //     "key": "Climbing",
-         * //     "value": 1
-         * //   },
-         * //   {
-         * //     "key": "Kayaking",
-         * //     "value": 1
-         * //   }
-         * // ]
+         * // groups[0] now looks like this:
+         * // {
+         * //   "key": "Triathlon",
+         * //   "value": 2
+         * // }
          * */
         self.rawData = function() {
 
