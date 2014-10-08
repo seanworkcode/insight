@@ -1,9 +1,16 @@
 (function(insight) {
     /**
-     * A Grouping is generated on a dimension, to reduce the items in the data set into groups along the provided dimension.
+     * A Grouping is used to reduce the items in a data set into groups so aggregate values can be calculated for each
+     * group.  The recommended way to create a grouping is to use the
+     * [insight.DataSet.group]{@link insight.DataSet#self.group} function.
+     * Calling functions such as [sum]{@link insight.Grouping#self.sum} and [mean]{@link insight.Grouping#self.mean} on
+     * a Grouping will allow aggregate values to be extracted for each group in a data set.
+     * Calling [rawData]{@link insight.Grouping#self.rawData} on a Grouping will result in an object array which
+     * can be used for analysis or as the data provider for a [Series]{@link insight.Series} or
+     * [Table]{@link insight.Table}.
      * @constructor
      * @extends insight.DataProvider
-     * @param {Object} dimension - The dimension to group
+     * @param {insight.Dimension} dimension - The dimension to group
      */
     insight.Grouping = function Grouping(dimension) {
 
@@ -701,6 +708,70 @@
          * @memberof! insight.Grouping
          * @instance
          * @returns {Object[]} - An object array containing one object per group in the data set.
+         * @example var dataSet = new insight.DataSet([
+         *   { forename: 'Alan', height: 133, gender: 'Male' },
+         *   { forename: 'Bob', height: 169, gender: 'Male' },
+         *   { forename: 'Mary', height: 151, gender: 'Female' },
+         *   { forename: 'Sam', height: 160, gender: 'Female' },
+         *   { forename: 'Steve', height: 172, gender: 'Male' },
+         *   { forename: 'Harold', height: 160, gender: 'Male' }
+         * ]);
+         *
+         * // Group on gender and calculate mean height for each gender
+         * var genderGrouping = dataSet.group('gender', function (d) { return d.gender; }).mean(['height']);
+         *
+         * var groups = genderGrouping.rawData();
+         *
+         * // groups[0] now looks like this:
+         * // {
+         * //   "key": "Female",
+         * //   "value": {
+         * //     "count": 2,
+         * //     "height": {
+         * //       "sum": 311,
+         * //       "count": 2,
+         * //       "mean": 155.5
+         * //     }
+         * //   }
+         *  }
+         * @example var dataSet = new insight.DataSet([
+         *   { Forename : 'Gary', Interests : [ 'Triathlon', 'Music', 'Mountain Biking' ] },
+         *   { Forename : 'Paul', Interests : [ 'Ballet', 'Music', 'Climbing' ] },
+         *   { Forename : 'George', Interests : [ 'Triathlon', 'Music', 'Kayaking' ] }
+         * ]);
+         *
+         * // Group on an array / one-to-many value, to aggregate the count of interests.
+         * var interestsGrouping = dataSet.group('Interests', function(d) { return d.Interests; }, true).count(['Interests']);
+         *
+         * var groups = interestsGrouping.extractData();
+         *
+         * // groups now looks like this:
+         * // [
+         * //   {
+         * //     "key": "Triathlon",
+         * //     "value": 2
+         * //   },
+         * //   {
+         * //     "key": "Music",
+         * //     "value": 3
+         * //   },
+         * //   {
+         * //     "key": "Mountain Biking",
+         * //     "value": 1
+         * //   },
+         * //   {
+         * //     "key": "Ballet",
+         * //     "value": 1
+         * //   },
+         * //   {
+         * //     "key": "Climbing",
+         * //     "value": 1
+         * //   },
+         * //   {
+         * //     "key": "Kayaking",
+         * //     "value": 1
+         * //   }
+         * // ]
          * */
         self.rawData = function() {
 
