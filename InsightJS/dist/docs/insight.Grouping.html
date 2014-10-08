@@ -707,6 +707,25 @@
             </ul>
         </li>
     
+        <li class="item" data-name="insight.Dimension">
+            <span class="title">
+                <a href="insight.Dimension.html">insight.Dimension</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
         <li class="item" data-name="insight.ErrorContainer">
             <span class="title">
                 <a href="insight.ErrorContainer.html">insight.ErrorContainer</a>
@@ -1366,7 +1385,14 @@
     
     
     <div class="description">
-        A Grouping is generated on a dimension, to reduce the items in the data set into groups along the provided dimension.
+        A Grouping is used to reduce the items in a data set into groups so aggregate values can be calculated for each
+group.  The recommended way to create a grouping is to use the
+<a href="insight.DataSet.html##self.group">insight.DataSet.group</a> function.
+Calling functions such as <a href="insight.Grouping.html##self.sum">sum</a> and <a href="insight.Grouping.html##self.mean">mean</a> on
+a Grouping will allow aggregate values to be extracted for each group in a data set.
+Calling <a href="insight.Grouping.html##self.rawData">rawData</a> on a Grouping will result in an object array which
+can be used for analysis or as the data provider for a <a href="insight.Series.html">Series</a> or
+<a href="insight.Table.html">Table</a>.
     </div>
     
 
@@ -1403,7 +1429,7 @@
             <td class="type">
             
                 
-<span class="param-type">Object</span>
+<span class="param-type"><a href="insight.Dimension.html">insight.Dimension</a></span>
 
 
             
@@ -2668,6 +2694,59 @@ An object array containing one object per group in the data set.
 
     
     
+    
+        <h5>Examples</h5>
+        
+
+    
+    <pre class="prettyprint"><code> var dataSet = new insight.DataSet([
+  { forename: 'Alan', height: 133, gender: 'Male' },
+  { forename: 'Bob', height: 169, gender: 'Male' },
+  { forename: 'Mary', height: 151, gender: 'Female' },
+  { forename: 'Sam', height: 160, gender: 'Female' },
+  { forename: 'Steve', height: 172, gender: 'Male' },
+  { forename: 'Harold', height: 160, gender: 'Male' }
+]);
+
+// Group on gender and calculate mean height for each gender
+var genderGrouping = dataSet.group('gender', function (d) { return d.gender; }).mean(['height']);
+
+var groups = genderGrouping.rawData();
+
+// groups[0] now looks like this:
+// {
+//   "key": "Female",
+//   "value": {
+//     "count": 2,
+//     "height": {
+//       "sum": 311,
+//       "count": 2,
+//       "mean": 155.5
+//     }
+//   }
+ }</code></pre>
+    
+
+
+    
+    <pre class="prettyprint"><code> var dataSet = new insight.DataSet([
+  { Forename : 'Gary', Interests : [ 'Triathlon', 'Music', 'Mountain Biking' ] },
+  { Forename : 'Paul', Interests : [ 'Ballet', 'Music', 'Climbing' ] },
+  { Forename : 'George', Interests : [ 'Triathlon', 'Music', 'Kayaking' ] }
+]);
+
+// Group on an array / one-to-many value, to aggregate the count of interests.
+var interestsGrouping = dataSet.group('Interests', function(d) { return d.Interests; }, true).count(['Interests']);
+
+var groups = interestsGrouping.extractData();
+
+// groups[0] now looks like this:
+// {
+//   "key": "Triathlon",
+//   "value": 2
+// }</code></pre>
+    
+
     
 </dd>
 
