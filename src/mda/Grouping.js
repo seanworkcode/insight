@@ -42,16 +42,19 @@
             return data;
         }
 
-        // The default post aggregation step is blank, and can be overriden by users if they want to calculate additional values with this Grouping
+        // The default post aggregation step is blank, and can be overriden by users if they want to calculate
+        // additional values with this Grouping
         function postAggregation(grouping) {
 
         }
 
         /*
-         * Takes an object and a property name in the form of a string, traversing the object until it finds a property with that name and returning
-         * a wrapped object with the immediate parent of the found property and the property's value.
+         * Takes an object and a property name in the form of a string, traversing the object until it finds a property
+         * with that name and returning a wrapped object with the immediate parent of the found property and the
+         * property's value.
          * @param {Object} - The object to search
-         * @param {String} propertyName - A string of the property to search, can include sub-properties using a dot notation. Eg. 'value.Revenue.Sum', which cannot be indexed directly in Javascript.
+         * @param {String} propertyName - A string of the property to search, can include sub-properties using a dot
+         * notation. Eg. 'value.Revenue.sum', which cannot be indexed directly in Javascript.
          */
         function getDescendant(obj, propertyName) {
             var arr = propertyName.split(".");
@@ -81,7 +84,7 @@
 
                 var propertyName = meanProperties[i];
                 var propertyValue = group.value[propertyName];
-                var mean = propertyValue.Sum / propertyValue.Count;
+                var mean = propertyValue.sum / propertyValue.count;
 
                 mean = insight.utils.isNumber(mean) && isFinite(mean) ? mean : undefined;
 
@@ -292,7 +295,7 @@
          */
         function reduceAddToGroup(group, data) {
 
-            group.Count++;
+            group.count++;
 
             var propertyName,
                 i,
@@ -302,13 +305,14 @@
                 propertyName = sumProperties[i];
 
                 if (data.hasOwnProperty(propertyName)) {
-                    group[propertyName].Sum += data[propertyName];
-                    group[propertyName].Count++;
+                    group[propertyName].sum += data[propertyName];
+                    group[propertyName].count++;
                 }
             }
 
-            // Increment the counts of the different occurences of any properties defined. E.g: if a property 'Country' can take multiple string values,
-            // this counts the occurences of each distinct value the property takes
+            // Increment the counts of the different occurences of any properties defined.
+            // E.g: if a property 'Country' can take multiple string values, this counts the occurences of each
+            // distinct value the property takes
             for (i = 0, len = countProperties.length; i < len; i++) {
                 propertyName = countProperties[i];
 
@@ -325,11 +329,11 @@
                             var subVal = propertyValue[subIndex];
                             //Initialize or increment the count for this occurence of the property value
                             group[propertyName][subVal] = groupProperty.hasOwnProperty(subVal) ? groupProperty[subVal] + 1 : 1;
-                            group[propertyName].Total++;
+                            group[propertyName].total++;
                         }
                     } else {
                         group[propertyName][propertyValue] = groupProperty.hasOwnProperty(propertyValue) ? groupProperty[propertyValue] + 1 : 1;
-                        group[propertyName].Total++;
+                        group[propertyName].total++;
                     }
                 }
             }
@@ -345,7 +349,7 @@
          */
         function reduceRemoveFromGroup(group, data) {
 
-            group.Count--;
+            group.count--;
 
             var propertyName,
                 i,
@@ -355,8 +359,8 @@
                 propertyName = sumProperties[i];
 
                 if (data.hasOwnProperty(propertyName)) {
-                    group[propertyName].Sum -= data[propertyName];
-                    group[propertyName].Count--;
+                    group[propertyName].sum -= data[propertyName];
+                    group[propertyName].count--;
                 }
             }
 
@@ -372,12 +376,12 @@
                         for (var subIndex in propertyValue) {
                             var subVal = propertyValue[subIndex];
                             group[propertyName][subVal] = group[propertyName].hasOwnProperty(subVal) ? group[propertyName][subVal] - 1 : 0;
-                            group[propertyName].Total--;
+                            group[propertyName].total--;
                         }
 
                     } else {
                         group[propertyName][propertyValue] = group[propertyName].hasOwnProperty(propertyValue) ? group[propertyName][propertyValue] - 1 : 0;
-                        group[propertyName].Total--;
+                        group[propertyName].total--;
                     }
                 }
             }
@@ -392,7 +396,7 @@
          */
         function reduceInitializeGroup() {
             var group = {
-                    Count: 0
+                    count: 0
                 },
                 propertyName,
                 i,
@@ -403,14 +407,14 @@
                 propertyName = sumProperties[i];
 
                 group[propertyName] = group[propertyName] ? group[propertyName] : {};
-                group[propertyName].Sum = 0;
-                group[propertyName].Count = 0;
+                group[propertyName].sum = 0;
+                group[propertyName].count = 0;
             }
 
             for (i = 0, len = countProperties.length; i < len; i++) {
                 propertyName = countProperties[i];
                 group[propertyName] = group[propertyName] ? group[propertyName] : {};
-                group[propertyName].Total = 0;
+                group[propertyName].total = 0;
             }
 
             return group;

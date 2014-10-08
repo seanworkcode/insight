@@ -96,7 +96,7 @@ describe('ColumnSeries', function() {
         chart.addYAxis(yScale);
 
         var series = new insight.ColumnSeries('countryColumn', group, xScale, yScale)
-                            .valueFunction(function(d){return d.value.Count;});
+                            .valueFunction(function(d){return d.value.count;});
         
         var max = series.findMax(yScale);
 
@@ -119,7 +119,7 @@ describe('ColumnSeries', function() {
             name: 'value',
             valueFunction: function(d)
             {
-                return d.value.Count;
+                return d.value.count;
             },
             label: 'Value',
             color: '#e67e22',
@@ -157,7 +157,7 @@ describe('ColumnSeries', function() {
             name: 'value',
             valueFunction: function(d)
             {
-                return d.value.Count;
+                return d.value.count;
             },
             label: 'Value',
             color: '#e67e22',
@@ -255,7 +255,7 @@ describe('ColumnSeries', function() {
                     return group.key;
                 })
                 .valueFunction(function(group) {
-                    return group.value.Count;
+                    return group.value.count;
                 });
 
         });
