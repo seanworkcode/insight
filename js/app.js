@@ -17,10 +17,10 @@
         {
             $routeProvider.
             when('/',
-            {
-                templateUrl: 'partials/index.html',
-                controller: 'Index'
-            })
+                {
+                    templateUrl: 'partials/index.html',
+                    controller: 'Index'
+                })
                 .when('/example/:example',
                 {
                     templateUrl: 'partials/example.html',

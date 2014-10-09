@@ -279,3 +279,12 @@ pre.language-javascript {
     color: #eee;
     border-radius: 5px;
 }
+
+.chart-centre > * {
+    display: block !important;
+    margin: 20px auto;
+}
+
+.disabled-link {
+    pointer-events: none;
+}
