@@ -1,7 +1,7 @@
 (function(insight) {
 
     /**
-     * A Theme for drawing on a white background, uses warm colors with white as a base. 
+     * A Theme for drawing on a white background, uses warm colors with white as a base.
      * Sets a number of the properties defined in the Theme base class.
      * @constructor
      */
@@ -29,7 +29,7 @@
         self.axisStyle.axisTitleColor = '#081717';
 
         //Configure for chart
-        self.chartStyle.seriesPalette = ['#A60303', '#FFAD00', '#FF7905', '#F2911B', '#F2911B'];
+        self.chartStyle.seriesPalette = ['#A60303', '#FFAD00', '#FF2F00', '#BD7217', '#873300'];
         self.chartStyle.fillColor = '#fff';
         self.chartStyle.titleFont = 'bold 11pt Helvetica';
         self.chartStyle.titleColor = '#081717';
