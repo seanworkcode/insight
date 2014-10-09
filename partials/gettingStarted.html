@@ -17,7 +17,7 @@
 
 </code>
 
-<p>By the way, InsightJS has been design to be compatible with <a href="http://requirejs.org/">RequireJS</a>.</p>
+<p>By the way, InsightJS has been designed to be compatible with <a href="http://requirejs.org/">RequireJS</a>.</p>
 
 <h3>Objective</h3>
 
@@ -28,11 +28,11 @@
 <div id="chart" class="chart-centre"></div>
 
 
-<h3>Importing a DataSet</h3>
+<h3>Importing a Data Set</h3>
 
 <p>Before using the tools that InsightJS has to offer we will first need some data to analyse. </p>
 
-<p>Below we have supplied some sample data containing the names, ages and eye colours of 12 different people.</p>
+<p>Below we have supplied some sample data containing the names, ages and eye colors of 12 different people.</p>
 
 <code class="language-javascript">
     var data = [
@@ -53,8 +53,8 @@
 </code>
 
 <p>
-    In order to chart this data we will first need to create an InsightJS data set object.
-    The data we initialise the data set with should be an array of objects.
+    In order to chart this data, we will first need to create an InsightJS data set object.
+    The data we use to initialise the data set should be an array of objects.
 </p>
 
 <code class="language-javascript">
@@ -63,7 +63,7 @@
 </code>
 
 
-<h3>Grouping data</h3>
+<h3>Grouping Data</h3>
 
 <p>
     If you look at chart above, you will see that the data has been grouped by eye color. However, our data is not
@@ -73,7 +73,7 @@
 <p>
     In the code below,
     we have named the grouping <code>'eye-color'</code> and defined a function that groups the data.
-    See our <a target="_blank" href="InsightJS/dist/docs/insight.DataSet.html##self.group"><span
+    See <a target="_blank" href="InsightJS/dist/docs/insight.DataSet.html##self.group">insight.DataSet.group <span
         class="badge">API</span></a> for more details.
 </p>
 <code class="language-javascript">
@@ -82,7 +82,7 @@
 </code>
 
 
-<h4>Understanding how grouping works</h4>
+<h4>Understanding How Grouping Works</h4>
 
 <p>Let's see what an InsightJS grouping actually looks like by calling <code>eyeColorGrouping.rawData()</code>.</p>
 <code class="language-javascript">
@@ -138,12 +138,12 @@
 </p>
 
 
-<h4>Choosing the axes</h4>
+<h4>Choosing the Axes</h4>
 
 <p>
     Now, with the chart initialised we need to define some axes.
 
-    The first decision we need to make is which scale to use for the axis. There are three options:
+    The first decision we need to make is which scale to use for each of the axes. There are three options:
 </p>
 <ul>
     <li><a target="_blank" href="InsightJS/dist/docs/insight.scales.html#insight.scales.linear">insight.scales.linear
@@ -184,7 +184,7 @@
 
 </code>
 
-<h4>Initialising a chart series</h4>
+<h4>Initialising a Chart Series</h4>
 
 <p>
     At this point we have created a chart object and given it axes, but it does not yet know about the grouping object
@@ -210,7 +210,7 @@
 
 <p>
     The y value of a column series is given by
-    <a target="_blank" href="InsightJS/dist/docs/insight.ColumnSeries.html##self.valueFunction">valueFunction()
+    <a target="_blank" href="InsightJS/dist/docs/insight.ColumnSeries.html##self.valueFunction">insight.ColumnSeries.valueFunction
         <span class="badge">API</span></a>. In this case we used the
     <code>value.Count</code> property
     to get the number of records for each group, based upon our grouping object.
@@ -226,11 +226,11 @@
 </code>
 
 
-<h4>Displaying the chart</h4>
+<h4>Displaying the Chart</h4>
 
 <p>
-    Up until this point if we had tried to view our chart on the page we would not have seen much at all.
-    This is because we are missing the all important step of instructing InsightJS to draw the chart!
+    Up until this point, if we had tried to view our chart on the page we would not have seen much at all.
+    This is because we are missing the all important step of instructing InsightJS to draw the chart:
 </p>
 
 <code class="language-javascript">
@@ -239,18 +239,18 @@
 </code>
 
 <p>
-    Congratulations, you have drawn your first chart!
+    Congratulations, you have created your first chart!
 </p>
 
 <h3>Where next ...</h3>
 
 <p>
-   Now, that you mastered the basics of making charts you are ready to start using InsightJS to make interesting
-    discoveries about your own data.
+   Now, that you have mastered the basics of creating charts you are ready to start making interesting
+    discoveries about your own data with InsightJS.
 </p>
 <p>
-   There's so much more to InsightJS than what we have been able to show you in this quick introduction.
-   To learn more and really use InsightJS to its full potential you should take a look at:
+   There's so much more than what we have been able to show you in this quick introduction. In order to use
+    InsightJS to its full potential you should take a look at our:
 </p>
 
 <ul>
