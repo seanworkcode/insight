@@ -18,22 +18,22 @@
             $routeProvider.
             when('/',
                 {
-                    templateUrl: 'partials/index.html',
+                    templateUrl: 'app/partials/index.html',
                     controller: 'Index'
                 })
                 .when('/example/:example',
                 {
-                    templateUrl: 'partials/example.html',
+                    templateUrl: 'app/partials/example.html',
                     controller: 'Example'
                 })
                 .when('/gettingStarted',
                 {
-                    templateUrl: 'partials/gettingStarted.html',
+                    templateUrl: 'app/partials/gettingStarted.html',
                     controller: 'GettingStarted'
                 })
                 .when('/explorer',
                 {
-                    templateUrl: 'partials/explorer.html',
+                    templateUrl: 'app/partials/explorer.html',
                     controller: 'Explorer'
                 })
                 .otherwise(
