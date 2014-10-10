@@ -15,7 +15,7 @@ var yearly = dataset.group('years', function(item)
     return new Date(item.releaseDate.getFullYear(), 0, 1);
 });
 
-// Add an "Average" property to each datapoint
+// Add a "mean" property to each datapoint
 // with the mean price for that year.
 yearly.mean(['price']);
 

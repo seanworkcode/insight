@@ -17,11 +17,11 @@
     .columns([{
         label: 'Total area (km&lt;sup&gt;2&lt;/sup&gt;)',
         value: function(d) {
-            return insight.formatters.numberFormatter(d.value.area.Sum);
+            return insight.formatters.numberFormatter(d.value.area.sum);
         }
     }])
     .descending(function(d) {
-        return d.value.area.Sum;
+        return d.value.area.sum;
     });
 </code>
 
