@@ -1,9 +1,16 @@
 (function(insight) {
     /**
-     * A Grouping is generated on a dimension, to reduce the items in the data set into groups along the provided dimension.
+     * A Grouping is used to reduce the items in a data set into groups so aggregate values can be calculated for each
+     * group.  The recommended way to create a grouping is to use the
+     * [insight.DataSet.group]{@link insight.DataSet#self.group} function.
+     * Calling functions such as [sum]{@link insight.Grouping#self.sum} and [mean]{@link insight.Grouping#self.mean} on
+     * a Grouping will allow aggregate values to be extracted for each group in a data set.
+     * Calling [rawData]{@link insight.Grouping#self.rawData} on a Grouping will result in an object array which
+     * can be used for analysis or as the data provider for a [Series]{@link insight.Series} or
+     * [Table]{@link insight.Table}.
      * @constructor
      * @extends insight.DataProvider
-     * @param {Object} dimension - The dimension to group
+     * @param {insight.Dimension} dimension - The dimension to group
      */
     insight.Grouping = function Grouping(dimension) {
 
@@ -15,7 +22,7 @@
             sumProperties = [],
             countProperties = [],
             cumulativeProperties = [],
-            averageProperties = [],
+            meanProperties = [],
             correlationPairProperties = [],
             allCorrelationProperties = [],
             ordered = false;
@@ -42,16 +49,19 @@
             return data;
         }
 
-        // The default post aggregation step is blank, and can be overriden by users if they want to calculate additional values with this Grouping
+        // The default post aggregation step is blank, and can be overriden by users if they want to calculate
+        // additional values with this Grouping
         function postAggregation(grouping) {
 
         }
 
         /*
-         * Takes an object and a property name in the form of a string, traversing the object until it finds a property with that name and returning
-         * a wrapped object with the immediate parent of the found property and the property's value.
+         * Takes an object and a property name in the form of a string, traversing the object until it finds a property
+         * with that name and returning a wrapped object with the immediate parent of the found property and the
+         * property's value.
          * @param {Object} - The object to search
-         * @param {String} propertyName - A string of the property to search, can include sub-properties using a dot notation. Eg. 'value.Revenue.Sum', which cannot be indexed directly in Javascript.
+         * @param {String} propertyName - A string of the property to search, can include sub-properties using a dot
+         * notation. Eg. 'value.Revenue.sum', which cannot be indexed directly in Javascript.
          */
         function getDescendant(obj, propertyName) {
             var arr = propertyName.split(".");
@@ -74,18 +84,18 @@
          * Takes a group object and calculates the mean for any properties configured.
          * @param {Object} group - A dimensional slice of a Grouping {key: 'X', value : {}}
          */
-        function calculateAverages(group) {
+        function calculateMeans(group) {
 
 
-            for (var i = 0, len = averageProperties.length; i < len; i++) {
+            for (var i = 0, len = meanProperties.length; i < len; i++) {
 
-                var propertyName = averageProperties[i];
+                var propertyName = meanProperties[i];
                 var propertyValue = group.value[propertyName];
-                var mean = propertyValue.Sum / propertyValue.Count;
+                var mean = propertyValue.sum / propertyValue.count;
 
                 mean = insight.utils.isNumber(mean) && isFinite(mean) ? mean : undefined;
 
-                group.value[propertyName].Average = mean;
+                group.value[propertyName].mean = mean;
             }
         }
 
@@ -161,7 +171,7 @@
                             var groupData = insight.utils.takeWhere(globalData, 'key', self.dimension.aggregationFunction(addingData))[0].value;
 
                             // get the group mean from global data for this grouping
-                            var groupMean = groupData[propertyName].Average;
+                            var groupMean = groupData[propertyName].mean;
 
                             var value = addingData[propertyName];
                             var deviation = value - groupMean;
@@ -264,11 +274,11 @@
 
             var totals = {};
 
-            var data = self.isOrdered() ? self.extractData(self.orderingFunction()) : self.extractData();
+            var data = self.extractData();
 
             data.forEach(function(d) {
 
-                calculateAverages(d);
+                calculateMeans(d);
 
                 calculateCumulativeValues(d, totals);
 
@@ -292,7 +302,7 @@
          */
         function reduceAddToGroup(group, data) {
 
-            group.Count++;
+            group.count++;
 
             var propertyName,
                 i,
@@ -302,13 +312,14 @@
                 propertyName = sumProperties[i];
 
                 if (data.hasOwnProperty(propertyName)) {
-                    group[propertyName].Sum += data[propertyName];
-                    group[propertyName].Count++;
+                    group[propertyName].sum += data[propertyName];
+                    group[propertyName].count++;
                 }
             }
 
-            // Increment the counts of the different occurences of any properties defined. E.g: if a property 'Country' can take multiple string values,
-            // this counts the occurences of each distinct value the property takes
+            // Increment the counts of the different occurences of any properties defined.
+            // E.g: if a property 'Country' can take multiple string values, this counts the occurences of each
+            // distinct value the property takes
             for (i = 0, len = countProperties.length; i < len; i++) {
                 propertyName = countProperties[i];
 
@@ -325,11 +336,11 @@
                             var subVal = propertyValue[subIndex];
                             //Initialize or increment the count for this occurence of the property value
                             group[propertyName][subVal] = groupProperty.hasOwnProperty(subVal) ? groupProperty[subVal] + 1 : 1;
-                            group[propertyName].Total++;
+                            group[propertyName].totalCount++;
                         }
                     } else {
                         group[propertyName][propertyValue] = groupProperty.hasOwnProperty(propertyValue) ? groupProperty[propertyValue] + 1 : 1;
-                        group[propertyName].Total++;
+                        group[propertyName].totalCount++;
                     }
                 }
             }
@@ -345,7 +356,7 @@
          */
         function reduceRemoveFromGroup(group, data) {
 
-            group.Count--;
+            group.count--;
 
             var propertyName,
                 i,
@@ -355,8 +366,8 @@
                 propertyName = sumProperties[i];
 
                 if (data.hasOwnProperty(propertyName)) {
-                    group[propertyName].Sum -= data[propertyName];
-                    group[propertyName].Count--;
+                    group[propertyName].sum -= data[propertyName];
+                    group[propertyName].count--;
                 }
             }
 
@@ -372,12 +383,12 @@
                         for (var subIndex in propertyValue) {
                             var subVal = propertyValue[subIndex];
                             group[propertyName][subVal] = group[propertyName].hasOwnProperty(subVal) ? group[propertyName][subVal] - 1 : 0;
-                            group[propertyName].Total--;
+                            group[propertyName].totalCount--;
                         }
 
                     } else {
                         group[propertyName][propertyValue] = group[propertyName].hasOwnProperty(propertyValue) ? group[propertyName][propertyValue] - 1 : 0;
-                        group[propertyName].Total--;
+                        group[propertyName].totalCount--;
                     }
                 }
             }
@@ -392,7 +403,7 @@
          */
         function reduceInitializeGroup() {
             var group = {
-                    Count: 0
+                    count: 0
                 },
                 propertyName,
                 i,
@@ -403,14 +414,14 @@
                 propertyName = sumProperties[i];
 
                 group[propertyName] = group[propertyName] ? group[propertyName] : {};
-                group[propertyName].Sum = 0;
-                group[propertyName].Count = 0;
+                group[propertyName].sum = 0;
+                group[propertyName].count = 0;
             }
 
             for (i = 0, len = countProperties.length; i < len; i++) {
                 propertyName = countProperties[i];
                 group[propertyName] = group[propertyName] ? group[propertyName] : {};
-                group[propertyName].Total = 0;
+                group[propertyName].totalCount = 0;
             }
 
             return group;
@@ -551,8 +562,6 @@
                         reduceRemoveFromGroup,
                         reduceInitializeGroup
                     );
-
-
             }
 
             self.data = basicGroupData;
@@ -577,6 +586,31 @@
          * @memberof! insight.Grouping
          * @returns {this}
          * @param {String[]} properties - An array of property names to be summed for slices in this Grouping.
+         * @example var dataSet = new insight.DataSet([
+         *   { forename: 'Alan', height: 160, gender: 'Male' },
+         *   { forename: 'Bob', height: 169, gender: 'Male' },
+         *   { forename: 'Mary', height: 151, gender: 'Female' },
+         *   { forename: 'Sam', height: 160, gender: 'Female' },
+         *   { forename: 'Steve', height: 172, gender: 'Male' },
+         *   { forename: 'Harold', height: 160, gender: 'Male' }
+         * ]);
+         *
+         * var totalHeightByGender = dataSet.group('gender', function (d) { return d.gender; })
+         *                                  .sum(['height']);
+         *
+         * var groups = totalHeightByGender.rawData();
+         *
+         * // groups[1] now looks like this:
+         * {
+         *   "key": "Male",
+         *   "value": {
+         *     "count": 4,
+         *     "height": {
+         *       "sum": 661,
+         *       "count": 4
+         *     }
+         *   }
+         * }
          */
         self.sum = function(properties) {
             if (!arguments.length) {
@@ -612,7 +646,7 @@
             }
 
             // need mean for correlation
-            averageProperties = insight.utils.arrayUnique(averageProperties.concat(allCorrelationProperties));
+            meanProperties = insight.utils.arrayUnique(meanProperties.concat(allCorrelationProperties));
 
             // need sum for mean so set that too
             sumProperties = insight.utils.arrayUnique(sumProperties.concat(allCorrelationProperties));
@@ -633,6 +667,46 @@
          * @memberof! insight.Grouping
          * @returns {this}
          * @param {String[]} properties - An array of property names to be cumulatively summed over slices in this Grouping.
+         * @example var dataSet = new insight.DataSet([
+         *   { forename: 'Alan', height: 160, gender: 'Male' },
+         *   { forename: 'Bob', height: 169, gender: 'Male' },
+         *   { forename: 'Mary', height: 151, gender: 'Female' },
+         *   { forename: 'Sam', height: 160, gender: 'Female' },
+         *   { forename: 'Steve', height: 172, gender: 'Male' },
+         *   { forename: 'Harold', height: 160, gender: 'Male' }
+         * ]);
+         *
+         * var cumulativeHeightByGender = dataSet.group('gender', function (d) { return d.gender; })
+         *                                       .sum(['height'])
+         *                                       .cumulative(['height.sum']);
+         *
+         * var groups = cumulativeHeightByGender.rawData();
+         *
+         * // groups now looks like this:
+         * [
+         *   {
+         *     "key": "Female",
+         *     "value": {
+         *       "count": 2,
+         *       "height": {
+         *         "sum": 311,
+         *         "count": 2,
+         *         "sumCumulative": 311
+         *       }
+         *     }
+         *   },
+         *   {
+         *     "key": "Male",
+         *     "value": {
+         *       "count": 4,
+         *       "height": {
+         *         "sum": 661,
+         *         "count": 4,
+         *         "sumCumulative": 972
+         *       }
+         *     }
+         *   }
+         * ]
          */
         self.cumulative = function(properties) {
             if (!arguments.length) {
@@ -650,11 +724,40 @@
          *
          * @also
          *
-         * Sets the array of properties whose distinct value occurences will be counted during the reduction of this Grouping
+         * Sets the array of properties whose distinct value occurences will be counted during the reduction of this
+         * Grouping
          * @instance
          * @memberof! insight.Grouping
          * @returns {this}
-         * @param {String[]} properties - An array of properties whose distinct value occurences will be counted during the reduction of this Grouping
+         * @param {String[]} properties - An array of properties whose distinct value occurences will be counted during
+         * the reduction of this Grouping
+         * @example var dataSet = new insight.DataSet([
+         *   { forename: 'Alan', height: 160, gender: 'Male' },
+         *   { forename: 'Bob', height: 169, gender: 'Male' },
+         *   { forename: 'Mary', height: 151, gender: 'Female' },
+         *   { forename: 'Sam', height: 160, gender: 'Female' },
+         *   { forename: 'Steve', height: 172, gender: 'Male' },
+         *   { forename: 'Harold', height: 160, gender: 'Male' }
+         * ]);
+         *
+         * var countHeightsByGender = dataSet.group('gender', function (d) { return d.gender; })
+         *                                   .count(['height']);
+         *
+         * var groups = countHeightsByGender.rawData();
+         *
+         * // groups[1] now looks like this:
+         * {
+         *   "key": "Male",
+         *     "value": {
+         *       "count": 4,
+         *       "height": {
+         *         "160": 2,
+         *         "169": 1,
+         *         "172": 1,
+         *         "totalCount": 4
+         *       }
+         *     }
+         *  }
          */
         self.count = function(properties) {
             if (!arguments.length) {
@@ -668,7 +771,8 @@
          * Returns the list of properties whose mean will be calculated after the map reduce of this Grouping.
          * @instance
          * @memberof! insight.Grouping
-         * @returns {String[]} - The list of property names that will averaged
+         * @returns {String[]} - The list of property names whose mean will be calculated after the map reduce
+         * of this Grouping.
          *
          * @also
          *
@@ -676,38 +780,42 @@
          * @instance
          * @memberof! insight.Grouping
          * @returns {this}
-         * @param {String[]} properties - An array of properties that will be averaged after the map reduce of this Grouping.
+         * @param {String[]} properties - An array of properties whose mean will be calculated after the map reduce
+         * of this Grouping.
+         * @example var dataSet = new insight.DataSet([
+         *   { forename: 'Alan', height: 160, gender: 'Male' },
+         *   { forename: 'Bob', height: 169, gender: 'Male' },
+         *   { forename: 'Mary', height: 151, gender: 'Female' },
+         *   { forename: 'Sam', height: 160, gender: 'Female' },
+         *   { forename: 'Steve', height: 172, gender: 'Male' },
+         *   { forename: 'Harold', height: 160, gender: 'Male' }
+         * ]);
+         *
+         * var meanHeightByGender = dataSet.group('gender', function (d) { return d.gender; })
+         *                                 .mean(['height']);
+         *
+         * var groups = meanHeightByGender.rawData();
+         *
+         * // groups[1] now looks like this:
+         * {
+         *   "key": "Male",
+         *   "value": {
+         *     "count": 4,
+         *     "height": {
+         *       "sum": 661,
+         *       "count": 4,
+         *       "mean": 165.25
+         *     }
+         *   }
+         * }
          */
         self.mean = function(properties) {
             if (!arguments.length) {
-                return averageProperties;
+                return meanProperties;
             }
-            averageProperties = properties;
+            meanProperties = properties;
 
-            sumProperties = insight.utils.arrayUnique(sumProperties.concat(averageProperties));
-
-            return self;
-        };
-
-        /**
-         * Whether the group's data is ordered.
-         * @instance
-         * @memberof! insight.Grouping
-         * @returns {Boolean} - Whether the group's data is ordered.
-         *
-         * @also
-         *
-         * Sets if this Grouping will be ordered or not
-         * @instance
-         * @memberof! insight.Grouping
-         * @returns {this}
-         * @param {Boolean} ordered - Whether to order this Grouping or not
-         */
-        self.isOrdered = function(value) {
-            if (!arguments.length) {
-                return ordered;
-            }
-            ordered = value;
+            sumProperties = insight.utils.arrayUnique(sumProperties.concat(meanProperties));
 
             return self;
         };
@@ -720,6 +828,50 @@
          * @memberof! insight.Grouping
          * @instance
          * @returns {Object[]} - An object array containing one object per group in the data set.
+         * @example var dataSet = new insight.DataSet([
+         *   { forename: 'Alan', height: 133, gender: 'Male' },
+         *   { forename: 'Bob', height: 169, gender: 'Male' },
+         *   { forename: 'Mary', height: 151, gender: 'Female' },
+         *   { forename: 'Sam', height: 160, gender: 'Female' },
+         *   { forename: 'Steve', height: 172, gender: 'Male' },
+         *   { forename: 'Harold', height: 160, gender: 'Male' }
+         * ]);
+         *
+         * // Group on gender and calculate mean height for each gender
+         * var genderGrouping = dataSet.group('gender', function (d) { return d.gender; })
+         *                             .mean(['height']);
+         *
+         * var groups = genderGrouping.rawData();
+         *
+         * // groups[0] now looks like this:
+         * // {
+         * //   "key": "Female",
+         * //   "value": {
+         * //     "count": 2,
+         * //     "height": {
+         * //       "sum": 311,
+         * //       "count": 2,
+         * //       "mean": 155.5
+         * //     }
+         * //   }
+         *  }
+         * @example var dataSet = new insight.DataSet([
+         *   { Forename : 'Gary', Interests : [ 'Triathlon', 'Music', 'Mountain Biking' ] },
+         *   { Forename : 'Paul', Interests : [ 'Ballet', 'Music', 'Climbing' ] },
+         *   { Forename : 'George', Interests : [ 'Triathlon', 'Music', 'Kayaking' ] }
+         * ]);
+         *
+         * // Group on an array / one-to-many value, to aggregate the count of interests.
+         * var interestsGrouping = dataSet.group('Interests', function(d) { return d.Interests; }, true)
+         *                                .count(['Interests']);
+         *
+         * var groups = interestsGrouping.extractData();
+         *
+         * // groups[0] now looks like this:
+         * // {
+         * //   "key": "Triathlon",
+         * //   "value": 2
+         * // }
          * */
         self.rawData = function() {
 
