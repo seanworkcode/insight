@@ -16,21 +16,21 @@ var clientGroup = dataset.group('clients', function(d) {
     return d.Client;
 })
 .sum(['CurrentRevenue'])
-.cumulative(['CurrentRevenue.Sum'])
+.cumulative(['CurrentRevenue.sum'])
 .orderingFunction(function(a, b) {
-    return b.value.CurrentRevenue.Sum - a.value.CurrentRevenue.Sum;
+    return b.value.CurrentRevenue.sum - a.value.CurrentRevenue.sum;
 });
             </code>
         </p>
 
         <p>
             This causes the data to be grouped by <code>Client</code> with each client group containing a
-            <code>CurrentRevenue.Sum</code> property and a <code>CurrentRevenue.SumCumulative</code> property.
+            <code>CurrentRevenue.sum</code> property and a <code>CurrentRevenue.sumCumulative</code> property.
         </p>
         <p>
             Calling <code>clientGroup.postAggregation(someFunction)</code> on a group allows further processing to be
-            done on the group. This pareto chart uses the <code>CurrentRevenue.Sum</code> and
-            <code>CurrentRevenue.SumCumulative</code> properties of each client, in order to calculate the percentage
+            done on the group. This pareto chart uses the <code>CurrentRevenue.sum</code> and
+            <code>CurrentRevenue.sumCumulative</code> properties of each client, in order to calculate the percentage
             that the client contributed to total revenue and store it in the <code>Percentage</code> property for each
             client:
 
@@ -42,12 +42,12 @@ var aggregateFunction = function(clientGrouping)
 
     clientGrouping.extractData()
         .forEach(function(client) {
-            total += client.value.CurrentRevenue.Sum;
+            total += client.value.CurrentRevenue.sum;
         });
 
     clientGrouping.extractData()
         .forEach(function(client) {
-            client.value.Percentage = client.value.CurrentRevenue.SumCumulative / total;
+            client.value.Percentage = client.value.CurrentRevenue.sumCumulative / total;
         });
 };
 

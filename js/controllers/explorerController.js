@@ -140,11 +140,11 @@
                 var bubbles = new BubbleSeries('bubbles' + $scope.chartId, chart, grouping, bubbleX, bubbleY, 'cyan')
                     .xFunction(function(d)
                     {
-                        return d.value[measures[0]].Average;
+                        return d.value[measures[0]].mean;
                     })
                     .yFunction(function(d)
                     {
-                        return d.value[measures[1]].Average;
+                        return d.value[measures[1]].mean;
                     })
                     .tooltipLabelFormat(function(d)
                     {

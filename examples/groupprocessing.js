@@ -25,7 +25,7 @@ $(document)
             var clientRevenues = new insight.ColumnSeries('clientColumn', clientData, x, clientRevenueAxis)
                 .valueFunction(function(d)
                 {
-                    return d.value.CurrentRevenue.Sum;
+                    return d.value.CurrentRevenue.sum;
                 })
                 .tooltipFormat(insight.formatters.currencyFormatter);
 
@@ -51,10 +51,10 @@ $(document)
                     return d.Client;
                 })
                 .sum(['CurrentRevenue'])
-                .cumulative(['CurrentRevenue.Sum'])
+                .cumulative(['CurrentRevenue.sum'])
                 .orderingFunction(function(a, b)
                 {
-                    return b.value.CurrentRevenue.Sum - a.value.CurrentRevenue.Sum;
+                    return b.value.CurrentRevenue.sum - a.value.CurrentRevenue.sum;
                 });
         }
 
@@ -67,13 +67,13 @@ $(document)
                 grouping.extractData()
                     .forEach(function(d)
                     {
-                        total += d.value.CurrentRevenue.Sum;
+                        total += d.value.CurrentRevenue.sum;
                     });
 
                 grouping.extractData()
                     .forEach(function(d)
                     {
-                        d.value.Percentage = d.value.CurrentRevenue.SumCumulative / total;
+                        d.value.Percentage = d.value.CurrentRevenue.sumCumulative / total;
                     });
             };
 

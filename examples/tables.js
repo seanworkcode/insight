@@ -24,7 +24,7 @@ $(document)
                     label: 'Total area (km<sup>2</sup>)',
                     value: function(d)
                     {
-                        var floored = Math.floor(d.value.area.Sum);
+                        var floored = Math.floor(d.value.area.sum);
                         var formatted = insight.formatters.numberFormatter(floored);
 
                         return formatted;
@@ -32,7 +32,7 @@ $(document)
                 }])
                 .descending(function(region)
                 {
-                    return region.value.area.Sum;
+                    return region.value.area.sum;
                 });
 
             table.draw();

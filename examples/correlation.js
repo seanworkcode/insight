@@ -44,11 +44,11 @@ $(document)
             var scatter = new insight.ScatterSeries('bubbles', genres, xAxis, yAxis)
                 .keyFunction(function(d)
                 {
-                    return d.value.userRatingCount.Average;
+                    return d.value.userRatingCount.mean;
                 })
                 .valueFunction(function(d)
                 {
-                    return d.value.price.Average;
+                    return d.value.price.mean;
                 })
                 .tooltipFunction(function(d)
                 {
@@ -99,7 +99,7 @@ $(document)
                 {
                     scatter.valueFunction(function(d)
                     {
-                        return d.value.averageUserRating.Average;
+                        return d.value.averageUserRating.mean;
                     });
                     yAxis.title('Average Rating');
 
@@ -112,7 +112,7 @@ $(document)
                 {
                     scatter.valueFunction(function(d)
                     {
-                        return d.value.userRatingCount.Average;
+                        return d.value.userRatingCount.mean;
                     });
                     yAxis.title('Average # Ratings');
 
@@ -124,7 +124,7 @@ $(document)
                 {
                     scatter.valueFunction(function(d)
                     {
-                        return d.value.price.Average;
+                        return d.value.price.mean;
                     });
                     yAxis.title('Average Price');
 
@@ -136,7 +136,7 @@ $(document)
                 {
                     scatter.keyFunction(function(d)
                     {
-                        return d.value.userRatingCount.Sum;
+                        return d.value.userRatingCount.sum;
                     });
                     xAxis.title('Total Ratings');
 
@@ -148,7 +148,7 @@ $(document)
                 {
                     scatter.keyFunction(function(d)
                     {
-                        return d.value.averageUserRating.Average;
+                        return d.value.averageUserRating.mean;
                     });
                     xAxis.title('Average Rating');
 
@@ -161,7 +161,7 @@ $(document)
 
                     scatter.keyFunction(function(d)
                     {
-                        return d.value.fileSizeBytes.Average / 1024 / 1024;
+                        return d.value.fileSizeBytes.mean / 1024 / 1024;
                     });
                     xAxis.title('Average File Size (Mb)');
 
