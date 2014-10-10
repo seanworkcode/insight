@@ -56,6 +56,13 @@
         "partialCSS": "examples/css/example.css"
     },
     {
+        "name": "themes",
+        "pageName": "Themes",
+        "script": "examples/themes.js",
+        "partial": "examples/partials/themes.html",
+        "partialCSS": "examples/css/example.css"
+    },
+    {
         "name": "tables",
         "pageName": "Tables",
         "script": "examples/tables.js",
