@@ -358,7 +358,7 @@ describe('Grouping', function() {
             // Then
             expect(scotland.value.Interests.Ballet).toBe(1);
             expect(scotland.value.Interests.Music).toBe(3);
-            expect(scotland.value.Interests.total).toBe(9);
+            expect(scotland.value.Interests.totalCount).toBe(9);
 
         });
 
@@ -379,9 +379,9 @@ describe('Grouping', function() {
             // Then
             expect(scotland.value.Interests.Boxing).toBe(1);
             expect(scotland.value.Interests.Music).toBe(2);
-            expect(scotland.value.Interests.total).toBe(6);
+            expect(scotland.value.Interests.totalCount).toBe(6);
             expect(england.value.Interests.Music).not.toBeDefined();
-            expect(england.value.Interests.total).toBe(0);
+            expect(england.value.Interests.totalCount).toBe(0);
 
         });
 
@@ -404,7 +404,7 @@ describe('Grouping', function() {
             expect(scotland.value.Gender.Female).toBe(1);
             expect(scotland.value.Interests.Ballet).toBe(1);
             expect(scotland.value.Interests.Music).toBe(3);
-            expect(scotland.value.Interests.total).toBe(9);
+            expect(scotland.value.Interests.totalCount).toBe(9);
 
             //filter age by people older than 10, to remove an entry from the scotland group and hopefully trigger a recalculation of the property counts
             ageDimension.crossfilterDimension.filter(function(d){
@@ -419,7 +419,7 @@ describe('Grouping', function() {
             expect(scotland.value.Gender.Female).toBe(1);
             expect(scotland.value.Interests.Triathlon).toBe(1);
             expect(scotland.value.Interests.Music).toBe(2);
-            expect(scotland.value.Interests.total).toBe(6);
+            expect(scotland.value.Interests.totalCount).toBe(6);
         });
 
 

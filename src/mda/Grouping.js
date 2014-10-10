@@ -336,11 +336,11 @@
                             var subVal = propertyValue[subIndex];
                             //Initialize or increment the count for this occurence of the property value
                             group[propertyName][subVal] = groupProperty.hasOwnProperty(subVal) ? groupProperty[subVal] + 1 : 1;
-                            group[propertyName].total++;
+                            group[propertyName].totalCount++;
                         }
                     } else {
                         group[propertyName][propertyValue] = groupProperty.hasOwnProperty(propertyValue) ? groupProperty[propertyValue] + 1 : 1;
-                        group[propertyName].total++;
+                        group[propertyName].totalCount++;
                     }
                 }
             }
@@ -383,12 +383,12 @@
                         for (var subIndex in propertyValue) {
                             var subVal = propertyValue[subIndex];
                             group[propertyName][subVal] = group[propertyName].hasOwnProperty(subVal) ? group[propertyName][subVal] - 1 : 0;
-                            group[propertyName].total--;
+                            group[propertyName].totalCount--;
                         }
 
                     } else {
                         group[propertyName][propertyValue] = group[propertyName].hasOwnProperty(propertyValue) ? group[propertyName][propertyValue] - 1 : 0;
-                        group[propertyName].total--;
+                        group[propertyName].totalCount--;
                     }
                 }
             }
@@ -421,7 +421,7 @@
             for (i = 0, len = countProperties.length; i < len; i++) {
                 propertyName = countProperties[i];
                 group[propertyName] = group[propertyName] ? group[propertyName] : {};
-                group[propertyName].total = 0;
+                group[propertyName].totalCount = 0;
             }
 
             return group;
@@ -754,7 +754,7 @@
          *         "160": 2,
          *         "169": 1,
          *         "172": 1,
-         *         "total": 4
+         *         "totalCount": 4
          *       }
          *     }
          *  }
