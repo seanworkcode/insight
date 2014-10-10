@@ -418,13 +418,15 @@
                 adjustedTickSize += self.lineWidth();
             }
 
+            var tickValues = self.tickValues(); 
+
             self.axis = d3.svg.axis()
                 .scale(self.scale)
                 .orient(self.orientation())
                 .tickSize(adjustedTickSize)
                 .tickPadding(self.tickPadding())
                 .tickFormat(self.tickLabelFormat())
-                .tickValues(self.tickValues());
+                .tickValues(tickValues);
 
             self.axisElement
                 .attr('transform', self.axisPosition())
@@ -459,7 +461,7 @@
             self.positionLabel();
 
             if (self.shouldShowGridlines()) {
-                self.gridlines.drawGridLines(plotArea, self.scale.ticks());
+                self.gridlines.drawGridLines(plotArea, tickValues);
             }
         };
 
@@ -945,7 +947,7 @@
          */
         self.shouldShowGridlines = function(showLines) {
             if (!arguments.length) {
-                return axisStrategy.canShowGridlines() && shouldShowGridlines;
+                return shouldShowGridlines;
             }
             shouldShowGridlines = showLines;
 

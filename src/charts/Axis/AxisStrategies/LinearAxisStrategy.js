@@ -68,11 +68,6 @@
         self.findMin = function(axis) {
             return 0;
         };
-
-        self.canShowGridlines = function() {
-            return true;
-        };
-
     };
 
     insight.LinearAxisStrategy.prototype = Object.create(insight.AxisStrategy.prototype);
