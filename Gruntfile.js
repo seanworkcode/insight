@@ -8,6 +8,7 @@ module.exports = function(grunt) {
     'src/mda/*.js', 
     'src/charts/Theming/Theme.js',
     'src/charts/Theming/LightTheme.js',
+    'src/charts/Theming/WarmTheme.js',
     'src/charts/ChartGroup.js',
     'src/charts/Chart.js',
     'src/charts/Table.js',
