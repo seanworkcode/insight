@@ -21,9 +21,9 @@
             headerTextColor = d3.functor('red'),
             headerFont = 'bold 16pt Helvetica Neue',
             rowHeaderTextColor = d3.functor('blue'),
-            rowHeaderFont = 'bold 14pt Times New Roman',
+            rowHeaderFont = 'bold 14pt Helvetica Neue',
             cellTextColor = d3.functor('green'),
-            cellFont = '12pt Arial',
+            cellFont = '12pt Helvetica Neue',
             headerDivider = '0px solid white',
             headerBackgroundColor = d3.functor('white'),
             rowBackgroundColor = d3.functor('white'),
@@ -178,6 +178,10 @@
                 .style('font', self.headerFont())
                 .html(labelFunction);
 
+            header.selectAll('th.column')
+                .style('color', self.headerTextColor())
+                .style('font', self.headerFont());
+
             var rows = self.tableBody.selectAll('tr.' + insight.constants.TableRowClass)
                 .data(data, keyFunction);
 
@@ -190,6 +194,15 @@
                 .style('color', self.rowHeaderTextColor())
                 .style('font', self.rowHeaderFont())
                 .html(keyFunction);
+
+            rows
+                .style('background-color', rowColor)
+                .style('color', self.rowHeaderTextColor())
+                .style('font', self.rowHeaderFont());
+
+            rows.selectAll('th')
+                .style('color', self.rowHeaderTextColor())
+                .style('font', self.rowHeaderFont());
 
             var cells = rows.selectAll('td')
                 .data(columnBuilder);

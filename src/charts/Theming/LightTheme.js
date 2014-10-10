@@ -37,6 +37,7 @@
         //Configure series
         self.seriesStyle.shouldShowPoints = false;
         self.seriesStyle.lineStyle = 'linear';
+        self.seriesStyle.pointRadius = 3;
 
         //Configure table
         self.tableStyle.headerFont = 'bold 14pt Helvetica Neue';

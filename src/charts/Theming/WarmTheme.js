@@ -12,16 +12,16 @@
         insight.Theme.apply(self);
 
         //Configure for axis
-        self.axisStyle.gridlineWidth = 1;
+        self.axisStyle.gridlineWidth = 2;
         self.axisStyle.gridlineColor = '#081717';
         self.axisStyle.shouldShowGridlines = false;
 
         self.axisStyle.tickSize = 2;
         self.axisStyle.tickPadding = 10;
 
-        self.axisStyle.axisLineWidth = 1;
+        self.axisStyle.axisLineWidth = 2;
         self.axisStyle.axisLineColor = '#081717';
-        self.axisStyle.tickLineWidth = 1;
+        self.axisStyle.tickLineWidth = 2;
         self.axisStyle.tickLineColor = '#081717';
         self.axisStyle.tickLabelFont = '11pt Helvetica';
         self.axisStyle.tickLabelColor = '#081717';
@@ -37,6 +37,7 @@
         //Configure series
         self.seriesStyle.shouldShowPoints = true;
         self.seriesStyle.lineStyle = 'linear';
+        self.seriesStyle.pointRadius = 3;
 
         //Configure table
         self.tableStyle.headerFont = 'bold 12pt Helvetica';

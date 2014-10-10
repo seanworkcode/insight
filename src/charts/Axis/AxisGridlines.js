@@ -19,7 +19,8 @@
 
         // Internal functions ----------------------------------------------------------------------------------------
 
-        self.drawGridLines = function(chart, ticks) {
+        self.drawGridLines = function(plotArea, ticks) {
+
             var attributes = {
                 'class': gridlineClass(),
                 'fill': 'none',
@@ -43,7 +44,7 @@
             }
 
             //Get all lines, and add new datapoints.
-            var gridLines = self.allGridlines(chart).data(ticks);
+            var gridLines = self.allGridlines(plotArea).data(ticks);
 
             //Add lines for all new datapoints
             gridLines
@@ -55,7 +56,6 @@
 
             //Remove any lines which are no longer in the data
             gridLines.exit().remove();
-
         };
 
         function gridlineClass() {
@@ -72,9 +72,9 @@
          * @param {insight.Chart} chart The chart to grab the gridlines from.
          * @returns {Object[]} - All of the gridlines currently added to this chart.
          */
-        self.allGridlines = function(chart) {
+        self.allGridlines = function(plotArea) {
             var gridLineIdentifier = 'line.' + gridlineClass();
-            return chart.plotArea.selectAll(gridLineIdentifier);
+            return plotArea.selectAll(gridLineIdentifier);
         };
 
         /** The color of the gridlines.
