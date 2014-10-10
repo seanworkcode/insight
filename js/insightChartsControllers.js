@@ -409,7 +409,7 @@
 {
     'use strict';
 
-    angular.module('insightChartsControllers').controller('GettingStarted', ['$scope', 'Examples', '$http',
+    angular.module('insightChartsControllers').controller('GettingStartedWithGroupings', ['$scope', 'Examples', '$http',
         function($scope, Examples, $http)
         {
             $scope.examples = Examples.query();
