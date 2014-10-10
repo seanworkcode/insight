@@ -14,29 +14,6 @@ $(document)
         chart.xAxis(x);
         chart.yAxis(y);
 
-        d3.json('datasets/football_teams.json', function(leaguePlaces)
-        {
-            var propertyFunction = function(property)
-            {
-                return function(obj)
-                {
-                    return obj[property];
-                };
-            };
-
-            var currentPoints = new insight.ColumnSeries('Current', leaguePlaces, x, y)
-                .keyFunction(propertyFunction('teamName'))
-                .valueFunction(propertyFunction('currentPoints'));
-
-            var targetPoints = new insight.MarkerSeries('Target', leaguePlaces, x, y)
-                .keyFunction(propertyFunction('teamName'))
-                .valueFunction(propertyFunction('targetPoints'));
-
-            chart.series([currentPoints, targetPoints]);
-            selectButton(themeButtons[0].button);
-            setChartTheme(themeButtons[0].theme);
-        });
-
         function setChartTheme(theme)
         {
             chart.applyTheme(theme);
@@ -78,4 +55,29 @@ $(document)
             $(button)
                 .addClass('selected');
         };
+
+        d3.json('datasets/football_teams.json', function(leaguePlaces)
+        {
+            var propertyFunction = function(property)
+            {
+                return function(obj)
+                {
+                    return obj[property];
+                };
+            };
+
+            var currentPoints = new insight.ColumnSeries('Current', leaguePlaces, x, y)
+                .keyFunction(propertyFunction('teamName'))
+                .valueFunction(propertyFunction('currentPoints'));
+
+            var targetPoints = new insight.MarkerSeries('Target', leaguePlaces, x, y)
+                .keyFunction(propertyFunction('teamName'))
+                .valueFunction(propertyFunction('targetPoints'));
+
+            chart.series([currentPoints, targetPoints]);
+            selectButton(themeButtons[0].button);
+            setChartTheme(themeButtons[0].theme);
+
+
+        });
     });
