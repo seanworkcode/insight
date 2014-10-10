@@ -1,40 +1,6 @@
-(function()
-{
-    'use strict';
-
-
-    /* Controllers */
-
-    var insightChartsControllers = angular.module('insightChartsControllers', [])
-        .directive('reDraw', function()
-        {
-            return {
-                link: function($scope, $element, $attrs)
-                {
-                    $scope.$watch($attrs.accessor + '()', function(v)
-                    {
-                        if (v) $element[0].value = v;
-                    });
-                    $element.bind('input', function(e)
-                    {
-                        $scope.$apply($attrs.accessor + '(' + e.target.value + ')');
-                        $scope.$apply($attrs.func);
-                    });
-                }
-            };
-        });
-
-
-    insightChartsControllers.controller('MainCtrl', ['$scope', 'Examples',
-        function($scope, Examples)
-        {
-            $scope.title = "InsightJS";
-            $scope.examples = Examples.query();
-        }
-    ]);
-
-}());
-
+(function() {
+    angular.module('insightChartsControllers', []);
+})();
 (function()
 {
     'use strict';
@@ -639,6 +605,20 @@
         }
     ]);
 }());
+(function()
+{
+    'use strict';
+
+    function MainCtrl ($scope, Examples) {
+        $scope.title = "InsightJS";
+        $scope.examples = Examples.query();
+    }
+
+    angular.module('insightChartsControllers')
+        .controller('MainCtrl', ['$scope', 'Examples', MainCtrl]);
+
+}());
+
 function createBubbleChart(chartGroup, bubbleData) {
 
     var bubbleChart = new insight.Chart('Bubble Chart', '#bubble-chart')
