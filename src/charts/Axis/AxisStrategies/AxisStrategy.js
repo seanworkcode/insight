@@ -164,7 +164,7 @@
         };
 
         self.canShowGridlines = function() {
-            return false;
+            return true;
         };
     };
 
