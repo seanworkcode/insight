@@ -17,7 +17,8 @@
 
         var self = this,
             lineType = 'linear',
-            displayPoints = true;
+            displayPoints = true,
+            pointRadius = 3;
 
         // Internal variables -----------------------------------------------------------------------------------------
 
@@ -95,6 +96,8 @@
                     .on('click', lineClick);
             }
 
+            rangeElement.style("stroke", self.color);
+
             var duration = isDragging ? 0 : 300;
 
             chart.plotArea.selectAll(rangeIdentifier)
@@ -129,7 +132,7 @@
                 .duration(duration)
                 .attr("cx", self.rangeX)
                 .attr("cy", self.rangeY)
-                .attr("r", 5)
+                .attr("r", pointRadius)
                 .style("fill", colorFunc)
                 .style("stroke-width", 0);
         };
@@ -155,6 +158,28 @@
                 return displayPoints;
             }
             displayPoints = showPoints;
+            return self;
+        };
+
+        /**
+         * Returns the radius of points
+         * @memberof! insight.LineSeries
+         * @instance
+         * @returns {Number} the radius of each point in pixels
+         *
+         * @also
+         *
+         * Sets the radius of points
+         * @memberof! insight.LineSeries
+         * @instance
+         * @param {Number} the radius of each point in pixels
+         * @returns {this}
+         */
+        self.pointRadius = function(radius) {
+            if (!arguments.length) {
+                return pointRadius;
+            }
+            pointRadius = radius;
             return self;
         };
 
@@ -193,7 +218,7 @@
     insight.LineSeries.prototype.applyTheme = function(theme) {
         this.lineType(theme.seriesStyle.lineStyle);
         this.shouldShowPoints(theme.seriesStyle.shouldShowPoints);
-
+        this.pointRadius(theme.seriesStyle.pointRadius);
         return this;
     };
 

@@ -3,7 +3,7 @@
     /*
      * An axis strategy representing category scales.
      */
-    insight.OrdinalAxis = function OrdinalAxis() {
+    insight.OrdinalAxisStrategy = function OrdinalAxisStrategy() {
 
         insight.AxisStrategy.call(this);
 
@@ -111,7 +111,7 @@
         };
     };
 
-    insight.OrdinalAxis.prototype = Object.create(insight.AxisStrategy.prototype);
-    insight.OrdinalAxis.prototype.constructor = insight.OrdinalAxis;
+    insight.OrdinalAxisStrategy.prototype = Object.create(insight.AxisStrategy.prototype);
+    insight.OrdinalAxisStrategy.prototype.constructor = insight.OrdinalAxisStrategy;
 
 })(insight);

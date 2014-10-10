@@ -162,6 +162,10 @@
         self.previousTickValue = function(axis, currentTickValue, tickFrequency) {
             return currentTickValue;
         };
+
+        self.canShowGridlines = function() {
+            return false;
+        };
     };
 
 })(insight);

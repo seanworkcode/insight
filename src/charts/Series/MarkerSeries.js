@@ -150,7 +150,8 @@
                 .attr('y', self.yPosition)
                 .attr('x', self.xPosition)
                 .attr('width', self.markerWidth)
-                .attr('height', self.markerHeight);
+                .attr('height', self.markerHeight)
+                .style('fill', self.color);
 
             groups.exit().remove();
         };

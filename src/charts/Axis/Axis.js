@@ -32,7 +32,7 @@
             initialisedAxisView = false,
             shouldReversePosition = false,
             zoomable = false,
-            axisStrategy = strategyForScale(scale),
+            axisStrategy = scale.strategy,
             tickFrequency;
 
         // Internal variables ---------------------------------------------------------------------------------------
@@ -53,20 +53,6 @@
         self.gridlines = new insight.AxisGridlines(self);
 
         // Private functions -------------------------------------------------------------------------------------
-
-        function strategyForScale(scale) {
-            switch (scale.name) {
-                case insight.scales.linear.name:
-                    return new insight.LinearAxis();
-                case insight.scales.ordinal.name:
-                    return new insight.OrdinalAxis();
-                case insight.scales.time.name:
-                    return new insight.DateAxis();
-
-                default:
-                    return new insight.LinearAxis();
-            }
-        }
 
         function orientation() {
             if (self.isHorizontal()) {
@@ -380,7 +366,7 @@
 
         };
 
-        self.setupAxisView = function(chart) {
+        self.setupAxisView = function(plotArea, container) {
 
             if (initialisedAxisView) {
                 return;
@@ -392,7 +378,8 @@
 
             self.axis = d3.svg.axis();
 
-            self.axisElement = chart.plotArea.append('g');
+            self.axisElement = plotArea
+                .append('g');
 
             self.axisElement
                 .attr('class', insight.constants.AxisClass)
@@ -400,21 +387,17 @@
                 .selectAll('text')
                 .attr('class', insight.constants.AxisTextClass);
 
-            self.labelElement = chart.container
+            self.labelElement = container
                 .append('div')
                 .attr('class', insight.constants.AxisLabelClass)
                 .style('position', 'absolute');
         };
 
-        self.updateAxisBounds = function(chart) {
-            self.bounds = chart.calculatePlotAreaSize();
-        };
-
-        self.draw = function(chart, isDragging) {
+        self.draw = function(bounds, plotArea, container, isDragging) {
 
             // Scale range and bounds need to be initialized regardless of whether the axis will be displayed
 
-            self.updateAxisBounds(chart);
+            self.bounds = bounds;
 
             if (!self.isZoomable()) {
                 self.initializeScale();
@@ -424,7 +407,7 @@
                 return;
             }
 
-            self.setupAxisView(chart);
+            self.setupAxisView(plotArea, container);
 
             var animationDuration = isDragging ? 0 : 200;
 
@@ -476,7 +459,7 @@
             self.positionLabel();
 
             if (self.shouldShowGridlines()) {
-                self.gridlines.drawGridLines(chart, self.scale.ticks());
+                self.gridlines.drawGridLines(plotArea, self.scale.ticks());
             }
         };
 
@@ -962,7 +945,7 @@
          */
         self.shouldShowGridlines = function(showLines) {
             if (!arguments.length) {
-                return shouldShowGridlines;
+                return axisStrategy.canShowGridlines() && shouldShowGridlines;
             }
             shouldShowGridlines = showLines;
 

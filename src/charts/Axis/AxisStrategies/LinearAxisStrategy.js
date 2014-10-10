@@ -3,7 +3,7 @@
     /*
      * An axis strategy representing linear scales.
      */
-    insight.LinearAxis = function LinearAxis() {
+    insight.LinearAxisStrategy = function LinearAxisStrategy() {
 
         insight.AxisStrategy.call(this);
 
@@ -69,9 +69,13 @@
             return 0;
         };
 
+        self.canShowGridlines = function() {
+            return true;
+        };
+
     };
 
-    insight.LinearAxis.prototype = Object.create(insight.AxisStrategy.prototype);
-    insight.LinearAxis.prototype.constructor = insight.LinearAxis;
+    insight.LinearAxisStrategy.prototype = Object.create(insight.AxisStrategy.prototype);
+    insight.LinearAxisStrategy.prototype.constructor = insight.LinearAxisStrategy;
 
 })(insight);
