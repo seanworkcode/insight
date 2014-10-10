@@ -101,7 +101,7 @@
                     .width;
                 legendWidth = Math.max(legendWidth, seriesTextWidth + 25);
             }
-            legendHeight = (series.length - 1) * 20 + 20;
+            legendHeight = series.length * 20;
 
             // Adjust legend to tightly wrap items
             chart.legendBox
