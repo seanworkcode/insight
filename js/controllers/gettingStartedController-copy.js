@@ -27,29 +27,28 @@
 
             var dataset = new insight.DataSet(data);
 
-            var chart = new insight.Chart('Ages', '#chart')
-                .width(500)
+            var eyeColorGrouping = dataset.group('eye-color', function(d) { return d.eyeColor; });
+
+            var chart = new insight.Chart('EyeColors', '#chart')
+                .width(350)
                 .height(350)
-                .title('Ages of People');
+                .title('Number of People by Eye Color');
 
-            var x = new insight.Axis('Age', insight.scales.linear);
+            var x = new insight.Axis('Eye Color', insight.scales.ordinal);
 
-            var y = new insight.Axis('', insight.scales.ordinal);
+            var y = new insight.Axis('', insight.scales.linear);
 
             chart.xAxis(x);
             chart.yAxis(y);
 
 
-            var rows = new insight.RowSeries('rows', dataset, x, y)
-                .keyFunction(function(d) {
-                    return d.name;
-                })
+            var columns = new insight.ColumnSeries('columns', eyeColorGrouping, x, y)
                 .valueFunction(function(d){
-                    return d.age;
+                    return d.value.Count;
                 });
 
 
-            chart.series([rows]);
+            chart.series([columns]);
 
             chart.draw();
         }
