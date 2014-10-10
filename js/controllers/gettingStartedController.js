@@ -33,7 +33,6 @@
                 .title('Ages of People');
 
             var x = new insight.Axis('Age', insight.scales.linear);
-
             var y = new insight.Axis('', insight.scales.ordinal);
 
             chart.xAxis(x);
@@ -41,11 +40,11 @@
 
 
             var rows = new insight.RowSeries('rows', dataset, x, y)
-                .keyFunction(function(d) {
-                    return d.name;
+                .keyFunction(function(person) {
+                    return person.name;
                 })
-                .valueFunction(function(d){
-                    return d.age;
+                .valueFunction(function(person){
+                    return person.age;
                 });
 
 
