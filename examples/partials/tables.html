@@ -9,7 +9,7 @@
         <p>
             This table uses <a target="_blank" href="https://mledoze.github.io/countries/">world country data</a>
             grouped by region. The table has been sorted using the <code>descending()</code> function. See the
-            <a target="_blank" href="http://localhost:8999/InsightJS/dist/docs/insight.Table.html">API docs</a> to
+            <a target="_blank" href="InsightJS/dist/docs/insight.Table.html">API docs</a> to
             see what else you can do with tables.
         </p>
 
@@ -17,11 +17,11 @@
     .columns([{
         label: 'Total area (km&lt;sup&gt;2&lt;/sup&gt;)',
         value: function(d) {
-            return insight.formatters.numberFormatter(d.value.area.Sum);
+            return insight.formatters.numberFormatter(d.value.area.sum);
         }
     }])
     .descending(function(d) {
-        return d.value.area.Sum;
+        return d.value.area.sum;
     });
 </code>
 

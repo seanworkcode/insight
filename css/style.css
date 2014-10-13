@@ -2,7 +2,6 @@ body {
     font: 14px/1.5 "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #2c3e50;
     font-weight: 300;
-    background-color: rgb(255, 248, 244);
 }
 
 h1, h2, h3 {
@@ -287,4 +286,16 @@ pre.language-javascript {
 
 .disabled-link {
     pointer-events: none;
+}
+
+h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
+    font-weight: 500;
+}
+
+h1,h2,h3,.h1,.h2,.h3 {
+    margin-top: 35px;
+}
+
+h4,h5,h6,.h4,.h5,.h6 {
+    margin-top: 30px;
 }

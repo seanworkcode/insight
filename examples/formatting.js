@@ -23,7 +23,7 @@ $(document)
             var clientRevenues = new insight.ColumnSeries('clientColumn', clientData, x, y)
                 .valueFunction(function(d)
                 {
-                    return d.value.CurrentRevenue.Sum;
+                    return d.value.CurrentRevenue.sum;
                 })
                 .tooltipFormat(insight.formatters.currencyFormatter);
 
@@ -43,7 +43,7 @@ $(document)
                 .sum(['CurrentRevenue'])
                 .orderingFunction(function(a, b)
                 {
-                    return b.value.CurrentRevenue.Sum - a.value.CurrentRevenue.Sum;
+                    return b.value.CurrentRevenue.sum - a.value.CurrentRevenue.sum;
                 });
         }
 

@@ -44,7 +44,7 @@ $(document)
             var series = new insight.LineSeries('valueLine', dates, xTime, yTime, '#336699')
                 .valueFunction(function(d)
                 {
-                    return d.value.Count;
+                    return d.value.count;
                 })
                 .shouldShowPoints(false);
 
