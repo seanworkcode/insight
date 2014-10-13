@@ -51,6 +51,7 @@
     //This file has been prefixed with underscore so that insightChartsControllers is concatenated in the correct order
     angular.module('insightChartsControllers', []);
 })();
+
 (function () {
 
     'use strict';
@@ -326,6 +327,7 @@
 
     angular.module('insightChartsControllers').controller('Index', ['$scope', 'ExamplesResource', '$http', indexController]);
 }());
+
 (function()
 {
     'use strict';
@@ -350,11 +352,11 @@
 
 }());
 
-
 (function() {
     //This file has been prefixed with underscore so that insightChartsServices is concatenated in the correct order
     angular.module('insightChartsServices', ['ngResource']);
 })();
+
 (function () {
 
     function examplesResource($resource)
@@ -377,6 +379,7 @@
     angular.module('insightChartsServices').factory('ExamplesResource', ['$resource', examplesResource]);
 
 })();
+
 (function() {
 
     'use strict';
@@ -409,7 +412,6 @@
     angular.module('insightChartsServices').factory('ResolveExample', ['$http', resolveExampleService]);
 
 })();
-
 
 (function() {
 

@@ -30,4 +30,3 @@
     angular.module('insightChartsServices').factory('ResolveExample', ['$http', resolveExampleService]);
 
 })();
-

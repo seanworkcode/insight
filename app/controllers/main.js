@@ -21,4 +21,3 @@
         .controller('MainCtrl', ['$scope', 'ExamplesResource', MainCtrl]);
 
 }());
-
