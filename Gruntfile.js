@@ -10,8 +10,8 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
         concat: {
           dist: {
-              src: ['app/controllers/*.js', 'app/snippets/*.js'],
-              dest: 'app/insightChartsControllers.js'
+              src: ['app/app.module.js', 'app/app.routes.js', 'app/controllers/*.js', 'app/services/*.js', 'app/directives/*.js', 'app/snippets/*.js', ],
+              dest: 'app/app.dist.js'
           }
         },
         connect: {

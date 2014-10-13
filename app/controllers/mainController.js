@@ -2,13 +2,13 @@
 {
     'use strict';
 
-    function MainCtrl ($scope, Examples) {
+    function MainCtrl ($scope, ExamplesResource) {
         $scope.title = "InsightJS";
-        $scope.examples = Examples.query();
+        $scope.examples = ExamplesResource.query();
     }
 
     angular.module('insightChartsControllers')
-        .controller('MainCtrl', ['$scope', 'Examples', MainCtrl]);
+        .controller('MainCtrl', ['$scope', 'ExamplesResource', MainCtrl]);
 
 }());
 

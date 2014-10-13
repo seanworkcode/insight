@@ -15,9 +15,9 @@
         });
     }
 
-    function indexController($scope, Examples, $http)
+    function indexController($scope, ExamplesResource, $http)
     {
-        $scope.examples = Examples.query();
+        $scope.examples = ExamplesResource.query();
         $scope.$parent.title = 'InsightJS - Open Source Analytics and Visualization for JavaScript';
 
         var chartGroup, genreGrouping, languageGrouping;
@@ -116,5 +116,5 @@
         });
     }
 
-    angular.module('insightChartsControllers').controller('Index', ['$scope', 'Examples', '$http', indexController]);
+    angular.module('insightChartsControllers').controller('Index', ['$scope', 'ExamplesResource', '$http', indexController]);
 }());

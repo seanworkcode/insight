@@ -1,3 +1,61 @@
+(function()
+{
+    'use strict';
+
+    /* App Module */
+
+    var insightCharts = angular.module('insightCharts', [
+        'ngRoute',
+        'insightChartsControllers',
+        'insightChartsServices',
+        'ui.bootstrap'
+    ]);
+}());
+
+$('.dropdown-toggle')
+    .click(function(e)
+    {
+        e.preventDefault();
+        e.stopPropagation();
+
+        return false;
+    });
+
+(function()
+{
+    angular.module('insightCharts')
+        .config(['$routeProvider',
+            function($routeProvider)
+            {
+                $routeProvider.
+                when('/',
+                    {
+                        templateUrl: 'app/partials/index.html',
+                        controller: 'Index'
+                    })
+                    .when('/example/:example',
+                    {
+                        templateUrl: 'app/partials/example.html',
+                        controller: 'Example'
+                    })
+                    .when('/gettingStarted',
+                    {
+                        templateUrl: 'app/partials/gettingStarted.html',
+                        controller: 'GettingStarted'
+                    })
+                    .when('/how-to',
+                    {
+                        templateUrl: 'app/partials/how-to-index.html',
+                        controller: 'HowTo'
+                    })
+                    .otherwise(
+                    {
+                        redirectTo: '/'
+                    });
+            }
+        ]);
+})();
+
 (function() {
     //This file has been prefixed with underscore so that insightChartsControllers is concatenated in the correct order
     angular.module('insightChartsControllers', []);
@@ -6,7 +64,7 @@
 
     'use strict';
 
-    function exampleController($scope, $http, $routeParams, ExamplePage) {
+    function exampleController($scope, $http, $routeParams, ResolveExample) {
 
         $scope.onHtmlLoaded = function () {
             $scope.loadContent();
@@ -34,14 +92,14 @@
             });
         };
 
-        ExamplePage.get($routeParams.example, function (page) {
+        ResolveExample.get($routeParams.example, function (page) {
             $scope.$parent.title = page.pageName;
             $scope.page = page;
         });
     }
 
     angular.module('insightChartsControllers')
-        .controller('Example', ['$scope', '$http', '$routeParams', 'ExamplePage', exampleController]);
+        .controller('Example', ['$scope', '$http', '$routeParams', 'ResolveExample', exampleController]);
 
 }());
 
@@ -49,10 +107,10 @@
 {
     'use strict';
 
-    angular.module('insightChartsControllers').controller('GettingStartedWithGroupings', ['$scope', 'Examples', '$http',
-        function($scope, Examples, $http)
+    angular.module('insightChartsControllers').controller('GettingStartedWithGroupings', ['$scope', 'ExamplesResource', '$http',
+        function($scope, ExamplesResource, $http)
         {
-            $scope.examples = Examples.query();
+            $scope.examples = ExamplesResource.query();
             $scope.$parent.title = 'Getting Started - InsightJS';
 
             Prism.highlightAll();
@@ -105,8 +163,8 @@
 (function () {
     'use strict';
 
-    function gettingStartedController($scope, Examples, $http) {
-        $scope.examples = Examples.query();
+    function gettingStartedController($scope, ExamplesResource, $http) {
+        $scope.examples = ExamplesResource.query();
         $scope.$parent.title = 'Getting Started - InsightJS';
 
         Prism.highlightAll();
@@ -154,7 +212,7 @@
         chart.draw();
     }
 
-    angular.module('insightChartsControllers').controller('GettingStarted', ['$scope', 'Examples', '$http', gettingStartedController]);
+    angular.module('insightChartsControllers').controller('GettingStarted', ['$scope', 'ExamplesResource', '$http', gettingStartedController]);
 }());
 
 (function()
@@ -174,9 +232,9 @@
         });
     }
 
-    function indexController($scope, Examples, $http)
+    function indexController($scope, ExamplesResource, $http)
     {
-        $scope.examples = Examples.query();
+        $scope.examples = ExamplesResource.query();
         $scope.$parent.title = 'InsightJS - Open Source Analytics and Visualization for JavaScript';
 
         var chartGroup, genreGrouping, languageGrouping;
@@ -275,22 +333,108 @@
         });
     }
 
-    angular.module('insightChartsControllers').controller('Index', ['$scope', 'Examples', '$http', indexController]);
+    angular.module('insightChartsControllers').controller('Index', ['$scope', 'ExamplesResource', '$http', indexController]);
 }());
 (function()
 {
     'use strict';
 
-    function MainCtrl ($scope, Examples) {
+    function MainCtrl ($scope, ExamplesResource) {
         $scope.title = "InsightJS";
-        $scope.examples = Examples.query();
+        $scope.examples = ExamplesResource.query();
     }
 
     angular.module('insightChartsControllers')
-        .controller('MainCtrl', ['$scope', 'Examples', MainCtrl]);
+        .controller('MainCtrl', ['$scope', 'ExamplesResource', MainCtrl]);
 
 }());
 
+
+(function() {
+    //This file has been prefixed with underscore so that insightChartsServices is concatenated in the correct order
+    angular.module('insightChartsServices', ['ngResource']);
+})();
+(function () {
+
+    function examplesResource($resource)
+    {
+        return $resource(
+            'pages.json',
+            {},
+            {
+                query:
+                {
+                    method: 'GET',
+                    params:
+                    {},
+                    isArray: true
+                }
+            }
+        );
+    }
+
+    angular.module('insightChartsServices').factory('ExamplesResource', ['$resource', examplesResource]);
+
+})();
+(function() {
+
+    'use strict';
+
+    function resolveExampleService($http)
+    {
+        var factory = {};
+
+        factory.get = function(input, callback)
+        {
+            $http.get('pages.json')
+                .success(function(data)
+                {
+                    var page = data.filter(function(item)
+                    {
+                        return item.name == input;
+                    });
+                    if (page.length == 1)
+                    {
+                        callback(page[0]);
+                    }
+
+                    return [];
+                });
+        };
+
+        return factory;
+    }
+
+    angular.module('insightChartsServices').factory('ResolveExample', ['$http', resolveExampleService]);
+
+})();
+
+
+(function() {
+
+    'use strict';
+
+    /*
+     * Allows a controller to do something when the user presses the escape key.
+     */
+     function escapeKeyDirective($document) {
+        return function (scope, element, attrs) {
+
+            $document.keydown(function (event) {
+                if (event.which === 27) {
+                    scope.$apply(function () {
+                        scope.$eval(attrs.ngEscapeKey);
+                    });
+
+                    event.preventDefault();
+                }
+            });
+
+        };
+    }
+
+    angular.module('insightCharts').directive('ngEscapeKey', escapeKeyDirective);
+})();
 
 function createBubbleChart(chartGroup, bubbleData) {
 

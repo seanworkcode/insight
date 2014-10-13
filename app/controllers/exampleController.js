@@ -2,7 +2,7 @@
 
     'use strict';
 
-    function exampleController($scope, $http, $routeParams, ExamplePage) {
+    function exampleController($scope, $http, $routeParams, ResolveExample) {
 
         $scope.onHtmlLoaded = function () {
             $scope.loadContent();
@@ -30,13 +30,13 @@
             });
         };
 
-        ExamplePage.get($routeParams.example, function (page) {
+        ResolveExample.get($routeParams.example, function (page) {
             $scope.$parent.title = page.pageName;
             $scope.page = page;
         });
     }
 
     angular.module('insightChartsControllers')
-        .controller('Example', ['$scope', '$http', '$routeParams', 'ExamplePage', exampleController]);
+        .controller('Example', ['$scope', '$http', '$routeParams', 'ResolveExample', exampleController]);
 
 }());
