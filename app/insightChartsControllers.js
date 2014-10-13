@@ -1,374 +1,48 @@
 (function() {
+    //This file has been prefixed with underscore so that insightChartsControllers is concatenated in the correct order
     angular.module('insightChartsControllers', []);
 })();
-(function()
-{
+(function () {
+
     'use strict';
+
+    function exampleController($scope, $http, $routeParams, ExamplePage) {
+
+        $scope.onHtmlLoaded = function () {
+            $scope.loadContent();
+        };
+
+        //This function is responsible for loading the script and CSS specific to the example
+        $scope.loadContent = function () {
+            var script = $scope.page.script;
+            var css = $scope.page.partialCSS;
+
+            $http.get(script).then(function (result) {
+                var script = document.createElement("script");
+                script.type = "text/javascript";
+                script.text = result.data;
+
+                var style = document.createElement("link");
+                style.type = "text/css";
+                style.rel = "stylesheet";
+                style.href = css;
+
+                document.body.appendChild(script);
+                document.body.appendChild(style);
+
+                Prism.highlightAll();
+            });
+        };
+
+        ExamplePage.get($routeParams.example, function (page) {
+            $scope.$parent.title = page.pageName;
+            $scope.page = page;
+        });
+    }
 
     angular.module('insightChartsControllers')
-        .controller('Example', ['$scope', '$routeParams', 'ExamplePage',
-            function($scope, $routeParams, ExamplePage)
-            {
-                $scope.onHtmlLoaded = function()
-                {
-                    $scope.loadContent();
-                };
+        .controller('Example', ['$scope', '$http', '$routeParams', 'ExamplePage', exampleController]);
 
-                $scope.loadContent = function()
-                {
-
-                    var script = $scope.page.script;
-                    var css = $scope.page.partialCSS;
-
-                    $.ajax(
-                    {
-                        url: script,
-                        dataType: 'html',
-                        success: function(result)
-                        {
-
-                            $('#source')
-                                .text(result);
-
-                            var script = document.createElement("script");
-                            script.type = "text/javascript";
-                            script.text = result;
-
-                            var style = document.createElement("link");
-                            style.type = "text/css";
-                            style.rel = "stylesheet";
-                            style.href = css;
-
-                            document.body.appendChild(script);
-                            document.body.appendChild(style);
-
-                            Prism.highlightAll();
-                        }
-                    });
-                };
-
-                ExamplePage.get($routeParams.example, function(page)
-                {
-                    $scope.$parent.title = page.pageName;
-                    $scope.page = page;
-                });
-            }
-        ]);
-
-}());
-
-(function()
-{
-    'use strict';
-
-
-    angular.module('insightChartsControllers').controller('Explorer', ['$scope', '$routeParams', 'DataSet',
-
-        function($scope, $routeParams, DataSet)
-        {
-
-
-            var datasets = [
-            {
-                name: 'App Store',
-                url: 'datasets/appstore.json'
-            },
-            {
-                name: 'Revenue',
-                url: 'datasets/revenuereport.json'
-            }];
-
-            $scope.dataset = {
-                dummy: null,
-                selectedItem : datasets[0],
-                dimensions : [],
-                groupings : [],
-                ndx : {},
-                measures : [],
-                charts : [],
-                selectedDimensions : [],
-                selectedMeasures : []
-            };
-            
-            $scope.chartId = 1;
-            $scope.list1 = true;
-
-            $scope.chartName = function(chart)
-            {
-                return chart.element.substr(1, chart.element.length);
-            };
-
-            $scope.isShown = function(chartType)
-            {
-                return chartType.Dimensions <= $scope.dataset.selectedDimensions.length && chartType.Measures <= $scope.dataset.selectedMeasures.length;
-            };
-
-            $scope.redraw = function(chart)
-            {
-                chart.draw();
-            };
-
-            $scope.createBarChart = function()
-            {
-                var measures = $scope.dataset.selectedMeasures.slice(0);
-                var dimension = $scope.dataset.selectedDimensions.slice(0)[0];
-
-                var grouping = new Grouping(dimension)
-                    .average(measures);
-
-                grouping.initialize();
-
-                var chart = new Chart('Chart ' + $scope.chartId, "#chart" + $scope.chartId, dimension)
-                    .width(400)
-                    .height(350)
-                    .margin(
-                    {
-                        top: 10,
-                        left: 100,
-                        right: 40,
-                        bottom: 120
-                    })
-                    .barPadding(0.3);
-
-                var xScale = new Scale(chart, dimension.Name, d3.scale.ordinal(), 'h', 'ordinal');
-                var yScale = new Scale(chart, "# Apps", d3.scale.linear(), 'v', 'linear');
-
-                var series = new ColumnSeries('genre', chart, grouping, xScale, yScale, 'silver');
-
-                series.series = [
-                {
-                    name: dimension.Name,
-                    accessor: function(d)
-                    {
-                        return d.value.Count;
-                    },
-                    label: function(d)
-                    {
-                        return d.key;
-                    },
-                    color: '#2980b9',
-                    tooltipValue: function(d)
-                    {
-                        return d.value.Count;
-                    }
-                }];
-
-                chart.series([series]);
-
-                var xAxis = new Axis(chart, "x", xScale, 'bottom')
-                    .tickSize(5)
-                    .tickPadding(0)
-                    .labelOrientation('tb');
-
-                var yAxis = new Axis(chart, "y", yScale, 'left')
-                    .tickSize(5);
-
-                $scope.chartId++;
-
-                $scope.dataset.chartgroup.addChart(chart);
-                $scope.dataset.charts.push(chart);
-
-                chart.init(true, '#chartPanel');
-            };
-
-            $scope.createBubbleChart = function()
-            {
-                var measures = $scope.dataset.selectedMeasures.slice(0);
-                var dimension = $scope.dataset.selectedDimensions.slice(0)[0];
-
-                var chart = new Chart('Chart ' + $scope.chartId, "#chart" + $scope.chartId, dimension)
-                    .width(400)
-                    .height(350)
-                    .margin(
-                    {
-                        top: 10,
-                        left: 50,
-                        right: 40,
-                        bottom: 60
-                    });
-
-
-                var grouping = new Grouping(dimension)
-                    .average(measures);
-
-                grouping.initialize();
-
-                var bubbleX = new Scale(chart, measures[0], d3.scale.linear(), 'h', 'linear');
-                var bubbleY = new Scale(chart, measures[1], d3.scale.linear(), 'v', 'linear');
-
-                var bubbles = new BubbleSeries('bubbles' + $scope.chartId, chart, grouping, bubbleX, bubbleY, 'cyan')
-                    .xFunction(function(d)
-                    {
-                        return d.value[measures[0]].Average;
-                    })
-                    .yFunction(function(d)
-                    {
-                        return d.value[measures[1]].Average;
-                    })
-                    .tooltipLabelFormat(function(d)
-                    {
-                        return d.key;
-                    })
-                    .radiusFunction(function(d)
-                    {
-                        return d.value.Count;
-                    })
-                    .tooltipFunction(function(d)
-                    {
-                        return d.value.Count;
-                    });
-
-                chart.series([bubbles]);
-
-                var bubbleXAxis = new Axis(chart, "x", bubbleX, 'bottom')
-                    .tickSize(5)
-                    .tickPadding(0)
-                    .labelOrientation('tb')
-                    .format(d3.format("0,000"));
-
-                var bubbleYAxis = new Axis(chart, "y", bubbleY, 'left')
-                    .tickSize(5)
-                    .format(d3.format("0,000"));
-
-                $scope.chartId++;
-
-                $scope.dataset.chartgroup.addChart(chart);
-                $scope.dataset.charts.push(chart);
-
-                chart.init(true, '#chartPanel');
-
-            };
-
-            $scope.drawCharts = function() {
-
-            };
-
-
-            $scope.addDimension = function(field)
-            {
-                var dim = $scope.dataset.chartgroup.addDimension($scope.dataset.ndx, field, function(d)
-                {
-                    return d[field];
-                }, function(d)
-                {
-                    return d[field];
-                });
-                $scope.dataset.dimensions.push(dim);
-            };
-
-            $scope.addMeasure = function(field)
-            {
-                $scope.dataset.measures.push(field);
-            };
-
-
-            $scope.dimensionSelected = function(dimension)
-            {
-                var index = $scope.dataset.selectedDimensions.indexOf(dimension);
-
-                if (index == -1)
-                {
-                    $scope.dataset.selectedDimensions.push(dimension);
-                }
-                else
-                {
-                    $scope.dataset.selectedDimensions.splice(index, 1);
-                }
-            };
-
-
-            $scope.measureSelected = function(measure)
-            {
-
-                var index = $scope.dataset.selectedMeasures.indexOf(measure);
-                if (index == -1)
-                {
-                    $scope.dataset.selectedMeasures.push(measure);
-                }
-                else
-                {
-                    $scope.dataset.selectedMeasures.splice(index, 1);
-                }
-            };
-
-            $scope.updateDataSet = function()
-            {
-                $scope.loadData($scope.dataset.selectedItem);
-            };
-
-
-            $scope.newChart = function()
-            {
-                var chart = new Chart('Chart ' + $scope.chartId, "#genreCount", null)
-                    .width(400)
-                    .height(350)
-                    .margin(
-                    {
-                        top: 10,
-                        left: 40,
-                        right: 40,
-                        bottom: 40
-                    });
-
-                $scope.chartId++;
-
-                $scope.dataset.chartgroup.addChart(chart);
-            };
-
-            $scope.loadData = function(dataset)
-            {
-
-                DataSet.get(dataset.url, function(data)
-                {
-                    $scope.data = data;
-                    $scope.loadFields();
-                    $scope.dataset.measures = [];
-                    $scope.dataset.charts = [];
-                    $scope.dataset.dimensions = [];
-
-                    //preprocessing
-                    $scope.dataset.ndx = crossfilter(data);
-                    $scope.dataset.chartgroup = new ChartGroup($scope.dataset.name);
-                });
-            };
-
-            $scope.loadFields = function()
-            {
-                $scope.fields = Object.keys($scope.data[0]);
-            };
-
-            $scope.$parent.title = 'Explorer';
-
-            $scope.datasets = datasets;
-            $scope.fields = [];
-
-            $scope.dataset.chartTypes = [
-            {
-                Type: 'Bubble',
-                Icon: '/css/images/bubble.png',
-                Dimensions: 1,
-                Measures: 2,
-                Create: $scope.createBubbleChart
-            },
-            {
-                Type: 'Bar',
-                Dimensions: 1,
-                Icon: '/css/images/bar.png',
-                Measures: 0,
-                Create: $scope.createBarChart
-            },
-            {
-                Type: 'Line',
-                Icon: '/css/images/line.png',
-                Dimensions: 1,
-                Measures: 1,
-                Create: $scope.createLineChart
-            }];
-
-
-            $scope.loadData(datasets[0]);
-        }
-    ]);
 }());
 
 (function()
@@ -428,61 +102,59 @@
     ]);
 }());
 
-(function()
-{
+(function () {
     'use strict';
 
-    angular.module('insightChartsControllers').controller('GettingStarted', ['$scope', 'Examples', '$http',
-        function($scope, Examples, $http)
-        {
-            $scope.examples = Examples.query();
-            $scope.$parent.title = 'Getting Started - InsightJS';
+    function gettingStartedController($scope, Examples, $http) {
+        $scope.examples = Examples.query();
+        $scope.$parent.title = 'Getting Started - InsightJS';
 
-            Prism.highlightAll();
+        Prism.highlightAll();
 
-            var data = [
-                { "name": "Michelle Hopper", "age": 26, "eyeColor": "green" },
-                { "name": "Cochran Mcfadden", "age": 22, "eyeColor": "green" },
-                { "name": "Jessie Mckinney", "age": 23, "eyeColor": "brown" },
-                { "name": "Rhoda Reyes", "age": 40, "eyeColor": "brown" },
-                { "name": "Hawkins Wolf", "age": 26, "eyeColor": "green" },
-                { "name": "Lynne O'neill", "age": 39, "eyeColor": "green" },
-                { "name": "Twila Melendez", "age": 26, "eyeColor": "blue" },
-                { "name": "Courtney Diaz", "age": 20, "eyeColor": "brown" },
-                { "name": "Burton Beasley", "age": 36, "eyeColor": "green" },
-                { "name": "Mccoy Gray", "age": 25, "eyeColor": "brown" },
-                { "name": "Janie Benson", "age": 30, "eyeColor": "green" },
-                { "name": "Cherie Wilder", "age": 30, "eyeColor": "green" }
-            ];
+        var data = [
+            { "name": "Michelle Hopper", "age": 26, "eyeColor": "green" },
+            { "name": "Cochran Mcfadden", "age": 22, "eyeColor": "green" },
+            { "name": "Jessie Mckinney", "age": 23, "eyeColor": "brown" },
+            { "name": "Rhoda Reyes", "age": 40, "eyeColor": "brown" },
+            { "name": "Hawkins Wolf", "age": 26, "eyeColor": "green" },
+            { "name": "Lynne O'neill", "age": 39, "eyeColor": "green" },
+            { "name": "Twila Melendez", "age": 26, "eyeColor": "blue" },
+            { "name": "Courtney Diaz", "age": 20, "eyeColor": "brown" },
+            { "name": "Burton Beasley", "age": 36, "eyeColor": "green" },
+            { "name": "Mccoy Gray", "age": 25, "eyeColor": "brown" },
+            { "name": "Janie Benson", "age": 30, "eyeColor": "green" },
+            { "name": "Cherie Wilder", "age": 30, "eyeColor": "green" }
+        ];
 
-            var dataset = new insight.DataSet(data);
+        var dataset = new insight.DataSet(data);
 
-            var chart = new insight.Chart('Ages', '#chart')
-                .width(500)
-                .height(350)
-                .title('Ages of People');
+        var chart = new insight.Chart('Ages', '#chart')
+            .width(500)
+            .height(350)
+            .title('Ages of People');
 
-            var x = new insight.Axis('Age', insight.scales.linear);
-            var y = new insight.Axis('', insight.scales.ordinal);
+        var x = new insight.Axis('Age', insight.scales.linear);
+        var y = new insight.Axis('', insight.scales.ordinal);
 
-            chart.xAxis(x);
-            chart.yAxis(y);
+        chart.xAxis(x);
+        chart.yAxis(y);
 
 
-            var rows = new insight.RowSeries('rows', dataset, x, y)
-                .keyFunction(function(person) {
-                    return person.name;
-                })
-                .valueFunction(function(person){
-                    return person.age;
-                });
+        var rows = new insight.RowSeries('rows', dataset, x, y)
+            .keyFunction(function (person) {
+                return person.name;
+            })
+            .valueFunction(function (person) {
+                return person.age;
+            });
 
 
-            chart.series([rows]);
+        chart.series([rows]);
 
-            chart.draw();
-        }
-    ]);
+        chart.draw();
+    }
+
+    angular.module('insightChartsControllers').controller('GettingStarted', ['$scope', 'Examples', '$http', gettingStartedController]);
 }());
 
 (function()
@@ -502,108 +174,108 @@
         });
     }
 
-    angular.module('insightChartsControllers').controller('Index', ['$scope', 'Examples', '$http',
-        function($scope, Examples, $http)
-        {
-            $scope.examples = Examples.query();
-            $scope.$parent.title = 'InsightJS - Open Source Analytics and Visualization for JavaScript';
+    function indexController($scope, Examples, $http)
+    {
+        $scope.examples = Examples.query();
+        $scope.$parent.title = 'InsightJS - Open Source Analytics and Visualization for JavaScript';
 
-            var chartGroup, genreGrouping, languageGrouping;
+        var chartGroup, genreGrouping, languageGrouping;
 
-            var tooltip = d3.tip();
-            var visibleButton = null;
+        var tooltip = d3.tip();
+        var visibleButton = null;
 
-            $scope.filter = function(genres, languages) {
+        $scope.filter = function(genres, languages) {
 
-                chartGroup.clearFilters();
+            chartGroup.clearFilters();
 
-                if (genres) {
-                    genres.forEach(function(genre) {
-                        chartGroup.filterByGrouping(genreGrouping, genre);
-                    });
-                }
+            if (genres) {
+                genres.forEach(function(genre) {
+                    chartGroup.filterByGrouping(genreGrouping, genre);
+                });
+            }
 
-                if (languages) {
+            if (languages) {
 
-                    languages.forEach(function(language) {
-                        chartGroup.filterByGrouping(languageGrouping, language);
-                    });
-
-                }
-
-            };
-
-            $scope.clearFilters = function() {
-                chartGroup.clearFilters();
-            };
-
-
-            $scope.prepareTooltip = function (filePath, targetId) {
-
-                $http.get(filePath).success(function(content) {
-
-                    var codedContent = '<pre class="language-javascript">' + content + '</pre>';
-
-                    tooltip.html(d3.functor(codedContent));
-
-                    var element = d3.select(targetId)
-                        .call(tooltip)
-                        .on('click', $scope.toggleTooltipVisibilty);
-
+                languages.forEach(function(language) {
+                    chartGroup.filterByGrouping(languageGrouping, language);
                 });
 
-            };
+            }
 
-            $scope.$on('$routeChangeStart', function(next, current) {
-                tooltip.hide();
+        };
+
+        $scope.clearFilters = function() {
+            chartGroup.clearFilters();
+        };
+
+
+        $scope.prepareTooltip = function (filePath, targetId) {
+
+            $http.get(filePath).success(function(content) {
+
+                var codedContent = '<pre class="language-javascript">' + content + '</pre>';
+
+                tooltip.html(d3.functor(codedContent));
+
+                var element = d3.select(targetId)
+                    .call(tooltip)
+                    .on('click', $scope.toggleTooltipVisibilty);
+
             });
 
-            $scope.toggleTooltipVisibilty = function() {
-                var textElement = d3.select(this.previousElementSibling);
-                if (visibleButton) {
-                    visibleButton.text("See the code");
-                }
+        };
 
-                if (tooltip.style('opacity') === "0") {
-                    tooltip.show();
-                    textElement.text("Hide the code");
-                    visibleButton = textElement;
-                }
-                else {
-                    tooltip.hide();
-                }
-            };
+        $scope.$on('$routeChangeStart', function(next, current) {
+            tooltip.hide();
+        });
 
-            // need to improve dependency management here, to allow the controller to know that it will need to load d3 and insight instead of just assuming they'll be there
-            d3.json('datasets/appstore.json', function(data)
+        $scope.toggleTooltipVisibilty = function() {
+            var textElement = d3.select(this.previousElementSibling);
+            if (visibleButton) {
+                visibleButton.text("See the code");
+            }
+
+            if (tooltip.style('opacity') === "0") {
+                tooltip.show();
+                textElement.text("Hide the code");
+                visibleButton = textElement;
+            }
+            else {
+                tooltip.hide();
+            }
+        };
+
+        // need to improve dependency management here, to allow the controller to know that it will need to load d3 and insight instead of just assuming they'll be there
+        d3.json('datasets/appstore.json', function(data)
+        {
+            preprocess(data);
+
+            var dataset = new insight.DataSet(data);
+            chartGroup = new insight.ChartGroup();
+
+            genreGrouping = dataset.group('genre', function(d)
             {
-                preprocess(data);                
+                return d.primaryGenreName;
+            })
+                .sum(['userRatingCount'])
+                .mean(['price', 'averageUserRating', 'userRatingCount', 'fileSizeBytes']);
 
-                var dataset = new insight.DataSet(data);
-                chartGroup = new insight.ChartGroup();
-
-                genreGrouping = dataset.group('genre', function(d)
-                    {
-                        return d.primaryGenreName;
-                    })
-                    .sum(['userRatingCount'])
-                    .mean(['price', 'averageUserRating', 'userRatingCount', 'fileSizeBytes']);
-
-                languageGrouping = dataset.group('languages', function(d)
-                {
-                    return d.languageCodesISO2A;
-                }, true)
+            languageGrouping = dataset.group('languages', function(d)
+            {
+                return d.languageCodesISO2A;
+            }, true)
                 .count(['languageCodesISO2A']);
 
-                var genreChart = createGenreCountChart(chartGroup, genreGrouping);
-                var bubbleChart = createBubbleChart(chartGroup, genreGrouping);
-                var languageChart = createLanguageChart(chartGroup, languageGrouping);
-                
-                chartGroup.draw();
+            var genreChart = createGenreCountChart(chartGroup, genreGrouping);
+            var bubbleChart = createBubbleChart(chartGroup, genreGrouping);
+            var languageChart = createLanguageChart(chartGroup, languageGrouping);
 
-            });
-        }
-    ]);
+            chartGroup.draw();
+
+        });
+    }
+
+    angular.module('insightChartsControllers').controller('Index', ['$scope', 'Examples', '$http', indexController]);
 }());
 (function()
 {
@@ -618,6 +290,7 @@
         .controller('MainCtrl', ['$scope', 'Examples', MainCtrl]);
 
 }());
+
 
 function createBubbleChart(chartGroup, bubbleData) {
 

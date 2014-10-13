@@ -20,11 +20,6 @@
                         templateUrl: 'app/partials/gettingStarted.html',
                         controller: 'GettingStarted'
                     })
-                    .when('/explorer',
-                    {
-                        templateUrl: 'app/partials/explorer.html',
-                        controller: 'Explorer'
-                    })
                     .when('/how-to',
                     {
                         templateUrl: 'app/partials/how-to-index.html',
