@@ -26,6 +26,11 @@
                     templateUrl: 'partials/example.html',
                     controller: 'Example'
                 })
+                .when('/gettingStarted',
+                {
+                    templateUrl: 'partials/gettingStarted.html',
+                    controller: 'GettingStarted'
+                })
                 .when('/explorer',
                 {
                     templateUrl: 'partials/explorer.html',
