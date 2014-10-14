@@ -342,11 +342,11 @@ h4,h5,h6,.h4,.h5,.h6 {
 /* How To Styles */
 
 .how-to-divider {
-    color: #FF4D00;
+    color: #FF9100;
 }
 
 .how-to-header {
-    border-left-color: #FF4D00;
+    border-left-color: #FF9100;
     border-left-style: solid;
     border-left-width: 2px;
     padding-left: 10px;
