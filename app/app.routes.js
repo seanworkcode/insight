@@ -17,7 +17,7 @@
                     })
                     .when('/gettingStarted',
                     {
-                        templateUrl: 'app/partials/gettingStarted.html',
+                        templateUrl: 'app/getting-started/getting-started.html',
                         controller: 'GettingStarted'
                     })
                     .when('/how-to',
