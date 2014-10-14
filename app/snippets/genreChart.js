@@ -1,3 +1,4 @@
+
 function createGenreCountChart(chartGroup, genreData){
 
     var chart = new insight.Chart('Genre Chart', "#genre-count")
@@ -26,3 +27,4 @@ function createGenreCountChart(chartGroup, genreData){
     chart.series([series]);
     chartGroup.add(chart);
 }
+
