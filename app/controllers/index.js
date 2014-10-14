@@ -19,10 +19,10 @@
     {
         $scope.examples = ExamplesResource.query();
         $scope.$parent.title = 'InsightJS - Open Source Analytics and Visualization for JavaScript';
+        $scope.selectedId = '';
 
         var chartGroup, genreGrouping, languageGrouping;
 
-        var tooltip = d3.tip();
         var visibleButton = null;
 
         $scope.filter = function(genres, languages) {
@@ -47,43 +47,6 @@
 
         $scope.clearFilters = function() {
             chartGroup.clearFilters();
-        };
-
-
-        $scope.prepareTooltip = function (filePath, targetId) {
-
-            $http.get(filePath).success(function(content) {
-
-                var codedContent = '<pre class="language-javascript">' + content + '</pre>';
-
-                tooltip.html(d3.functor(codedContent));
-
-                var element = d3.select(targetId)
-                    .call(tooltip)
-                    .on('click', $scope.toggleTooltipVisibilty);
-
-            });
-
-        };
-
-        $scope.$on('$routeChangeStart', function(next, current) {
-            tooltip.hide();
-        });
-
-        $scope.toggleTooltipVisibilty = function() {
-            var textElement = d3.select(this.previousElementSibling);
-            if (visibleButton) {
-                visibleButton.text("See the code");
-            }
-
-            if (tooltip.style('opacity') === "0") {
-                tooltip.show();
-                textElement.text("Hide the code");
-                visibleButton = textElement;
-            }
-            else {
-                tooltip.hide();
-            }
         };
 
         // need to improve dependency management here, to allow the controller to know that it will need to load d3 and insight instead of just assuming they'll be there
@@ -114,6 +77,21 @@
             chartGroup.draw();
 
         });
+
+        $scope.showChartCode = function(buttonId, filePath) {
+            $scope.selectedId = buttonId;
+            $scope.loadCodeIntoContainer(filePath);
+        };
+
+
+
+        $scope.loadCodeIntoContainer = function(filePath) {
+            $http({method: 'GET', url: filePath, cache: true}).
+                success(function(data) {
+                    angular.element('#codeContainer').html('<code id="codeItem" class="language-javascript loading">' + data + '</code>');
+                    $scope.showCode = true;
+                });
+        };
     }
 
     angular.module('insightChartsControllers').controller('Index', ['$scope', 'ExamplesResource', '$http', indexController]);

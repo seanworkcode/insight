@@ -116,10 +116,10 @@
     {
         $scope.examples = ExamplesResource.query();
         $scope.$parent.title = 'InsightJS - Open Source Analytics and Visualization for JavaScript';
+        $scope.selectedId = '';
 
         var chartGroup, genreGrouping, languageGrouping;
 
-        var tooltip = d3.tip();
         var visibleButton = null;
 
         $scope.filter = function(genres, languages) {
@@ -144,43 +144,6 @@
 
         $scope.clearFilters = function() {
             chartGroup.clearFilters();
-        };
-
-
-        $scope.prepareTooltip = function (filePath, targetId) {
-
-            $http.get(filePath).success(function(content) {
-
-                var codedContent = '<pre class="language-javascript">' + content + '</pre>';
-
-                tooltip.html(d3.functor(codedContent));
-
-                var element = d3.select(targetId)
-                    .call(tooltip)
-                    .on('click', $scope.toggleTooltipVisibilty);
-
-            });
-
-        };
-
-        $scope.$on('$routeChangeStart', function(next, current) {
-            tooltip.hide();
-        });
-
-        $scope.toggleTooltipVisibilty = function() {
-            var textElement = d3.select(this.previousElementSibling);
-            if (visibleButton) {
-                visibleButton.text("See the code");
-            }
-
-            if (tooltip.style('opacity') === "0") {
-                tooltip.show();
-                textElement.text("Hide the code");
-                visibleButton = textElement;
-            }
-            else {
-                tooltip.hide();
-            }
         };
 
         // need to improve dependency management here, to allow the controller to know that it will need to load d3 and insight instead of just assuming they'll be there
@@ -211,6 +174,21 @@
             chartGroup.draw();
 
         });
+
+        $scope.showChartCode = function(buttonId, filePath) {
+            $scope.selectedId = buttonId;
+            $scope.loadCodeIntoContainer(filePath);
+        };
+
+
+
+        $scope.loadCodeIntoContainer = function(filePath) {
+            $http({method: 'GET', url: filePath, cache: true}).
+                success(function(data) {
+                    angular.element('#codeContainer').html('<code id="codeItem" class="language-javascript loading">' + data + '</code>');
+                    $scope.showCode = true;
+                });
+        };
     }
 
     angular.module('insightChartsControllers').controller('Index', ['$scope', 'ExamplesResource', '$http', indexController]);
@@ -306,6 +284,24 @@
     'use strict';
 
     /*
+     * Listens to elements that change content and highlights the syntax
+     */
+    function codeHighlightDirective() {
+        return function (scope) {
+            scope.$watch(function () {
+                Prism.highlightElement(angular.element('#codeItem')[0]);
+            });
+        };
+    }
+
+    angular.module('insightCharts').directive('codeHighlightRedraw', codeHighlightDirective);
+})();
+
+(function() {
+
+    'use strict';
+
+    /*
      * Allows a controller to do something when the user presses the escape key.
      */
      function escapeKeyDirective($document) {
@@ -326,6 +322,7 @@
 
     angular.module('insightCharts').directive('ngEscapeKey', escapeKeyDirective);
 })();
+
 
 function createBubbleChart(chartGroup, bubbleData) {
 
@@ -363,6 +360,8 @@ function createBubbleChart(chartGroup, bubbleData) {
     chartGroup.add(bubbleChart);
 }
 
+
+
 function createGenreCountChart(chartGroup, genreData){
 
     var chart = new insight.Chart('Genre Chart', "#genre-count")
@@ -392,6 +391,8 @@ function createGenreCountChart(chartGroup, genreData){
     chartGroup.add(chart);
 }
 
+
+
 function createLanguageChart(chartGroup, languages){
 
     var chart = new insight.Chart('Language Chart', '#languages')
@@ -413,6 +414,7 @@ function createLanguageChart(chartGroup, languages){
     chart.series([lSeries]);
     chartGroup.add(chart);
 }
+
 
 (function () {
     'use strict';

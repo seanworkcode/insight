@@ -1,3 +1,4 @@
+
 function createLanguageChart(chartGroup, languages){
 
     var chart = new insight.Chart('Language Chart', '#languages')
@@ -19,3 +20,4 @@ function createLanguageChart(chartGroup, languages){
     chart.series([lSeries]);
     chartGroup.add(chart);
 }
+
