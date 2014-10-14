@@ -2,10 +2,10 @@
 {
     'use strict';
 
-    angular.module('insightChartsControllers').controller('GettingStartedWithGroupings', ['$scope', 'Examples', '$http',
-        function($scope, Examples, $http)
+    angular.module('insightChartsControllers').controller('GettingStartedWithGroupings', ['$scope', 'ExamplesResource', '$http',
+        function($scope, ExamplesResource, $http)
         {
-            $scope.examples = Examples.query();
+            $scope.examples = ExamplesResource.query();
             $scope.$parent.title = 'Getting Started - InsightJS';
 
             Prism.highlightAll();
