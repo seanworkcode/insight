@@ -25,6 +25,11 @@
                         templateUrl: 'app/partials/how-to-index.html',
                         controller: 'HowTo'
                     })
+                    .when('/how-to/legend',
+                    {
+                        templateUrl: 'app/how-to/legend.html',
+                        controller: 'HowToLegend'
+                    })
                     .otherwise(
                     {
                         redirectTo: '/'
