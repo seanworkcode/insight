@@ -83,11 +83,14 @@
             $scope.loadCodeIntoContainer(filePath);
         };
 
+
+
         $scope.loadCodeIntoContainer = function(filePath) {
-            $http.get(filePath).success(function(content) {
-                angular.element('#codeContainer').html('<code id="codeItem" class="language-javascript loading">' + content + '</code>');
-                $scope.showCode = true;
-            });
+            $http({method: 'GET', url: filePath, cache: true}).
+                success(function(data) {
+                    angular.element('#codeContainer').html('<code id="codeItem" class="language-javascript loading">' + data + '</code>');
+                    $scope.showCode = true;
+                });
         };
     }
 
