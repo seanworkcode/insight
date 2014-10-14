@@ -228,6 +228,7 @@
     {
         $scope.examples = ExamplesResource.query();
         $scope.$parent.title = 'InsightJS - Open Source Analytics and Visualization for JavaScript';
+        $scope.selectedId = '';
 
         var chartGroup, genreGrouping, languageGrouping;
 
@@ -323,6 +324,18 @@
             chartGroup.draw();
 
         });
+
+        $scope.showChartCode = function(buttonId, filePath) {
+            $scope.selectedId = buttonId;
+            $scope.loadCodeIntoContainer(filePath);
+        };
+
+        $scope.loadCodeIntoContainer = function(filePath) {
+            $http.get(filePath).success(function(content) {
+                angular.element('#codeContainer').html('<code id="codeItem" class="language-javascript loading">' + content + '</code>');
+                $scope.showCode = true;
+            });
+        };
     }
 
     angular.module('insightChartsControllers').controller('Index', ['$scope', 'ExamplesResource', '$http', indexController]);
@@ -418,6 +431,24 @@
     'use strict';
 
     /*
+     * Listens to elements that change content and highlights the syntax
+     */
+    function codeHighlightDirective() {
+        return function (scope) {
+            scope.$watch(function () {
+                Prism.highlightElement(angular.element('#codeItem')[0]);
+            });
+        };
+    }
+
+    angular.module('insightCharts').directive('codeHighlightRedraw', codeHighlightDirective);
+})();
+
+(function() {
+
+    'use strict';
+
+    /*
      * Allows a controller to do something when the user presses the escape key.
      */
      function escapeKeyDirective($document) {
@@ -438,6 +469,7 @@
 
     angular.module('insightCharts').directive('ngEscapeKey', escapeKeyDirective);
 })();
+
 
 function createBubbleChart(chartGroup, bubbleData) {
 
@@ -475,6 +507,8 @@ function createBubbleChart(chartGroup, bubbleData) {
     chartGroup.add(bubbleChart);
 }
 
+
+
 function createGenreCountChart(chartGroup, genreData){
 
     var chart = new insight.Chart('Genre Chart', "#genre-count")
@@ -504,6 +538,8 @@ function createGenreCountChart(chartGroup, genreData){
     chartGroup.add(chart);
 }
 
+
+
 function createLanguageChart(chartGroup, languages){
 
     var chart = new insight.Chart('Language Chart', '#languages')
@@ -525,3 +561,4 @@ function createLanguageChart(chartGroup, languages){
     chart.series([lSeries]);
     chartGroup.add(chart);
 }
+

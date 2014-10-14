@@ -19,6 +19,7 @@
     {
         $scope.examples = ExamplesResource.query();
         $scope.$parent.title = 'InsightJS - Open Source Analytics and Visualization for JavaScript';
+        $scope.selectedId = '';
 
         var chartGroup, genreGrouping, languageGrouping;
 
@@ -114,6 +115,18 @@
             chartGroup.draw();
 
         });
+
+        $scope.showChartCode = function(buttonId, filePath) {
+            $scope.selectedId = buttonId;
+            $scope.loadCodeIntoContainer(filePath);
+        };
+
+        $scope.loadCodeIntoContainer = function(filePath) {
+            $http.get(filePath).success(function(content) {
+                angular.element('#codeContainer').html('<code id="codeItem" class="language-javascript loading">' + content + '</code>');
+                $scope.showCode = true;
+            });
+        };
     }
 
     angular.module('insightChartsControllers').controller('Index', ['$scope', 'ExamplesResource', '$http', indexController]);

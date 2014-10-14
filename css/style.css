@@ -13,7 +13,46 @@ img
     max-width: 100%; 
 }
 
+.show-code-button {
+    position: relative;
+    left: 94px;
+    top: 20px;
+    background: #C2D7F9;
+    width: 170px;
+    height: 30px;
+    border-radius: 8px;
+    font-weight: bold;
+    padding: 4px 0px 0px 14px;
 
+}
+
+.show-code-button.selected {
+    color: #fff;
+    background: #0C254D;
+}
+
+.language-javascript.loading {
+    -webkit-animation: showCode 1s;
+    animation: showCode 1s;
+}
+
+@-webkit-keyframes showCode {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes showCode {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+.code-viewer {
+    margin-top: 20px;
+}
+
+.hover:hover .tooltip {
+    opacity:1;
+}
 
 /* Index Styles */
 

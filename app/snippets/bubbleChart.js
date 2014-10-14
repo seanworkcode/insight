@@ -1,3 +1,4 @@
+
 function createBubbleChart(chartGroup, bubbleData) {
 
     var bubbleChart = new insight.Chart('Bubble Chart', '#bubble-chart')
@@ -33,3 +34,4 @@ function createBubbleChart(chartGroup, bubbleData) {
     bubbleChart.series([bubbles]);
     chartGroup.add(bubbleChart);
 }
+
