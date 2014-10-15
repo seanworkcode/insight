@@ -25,6 +25,11 @@
                         templateUrl: 'app/partials/how-to-index.html',
                         controller: 'HowTo'
                     })
+                    .when('/how-to/interactive',
+                    {
+                        templateUrl: 'app/how-to/interactive.html',
+                        controller: 'HowToInteractiveAxis'
+                    })
                     .otherwise(
                     {
                         redirectTo: '/'
