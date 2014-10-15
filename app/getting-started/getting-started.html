@@ -56,8 +56,7 @@
 
 <p>
     In order to chart this data, we will first need to create an
-    <a target="_blank" href="InsightJS/dist/docs/insight.DataSet.html">insight.DataSet<span class="badge">API</span></a>
-    object.
+    <api-docs page="insight.DataSet">insight.DataSet</api-docs> object.
     The data we use to initialise the data set should be an array of objects.
 </p>
 
@@ -100,12 +99,9 @@
     The first decision we need to make is which scale to use for each axis. There are three options:
 </p>
 <ul>
-    <li><a target="_blank" href="InsightJS/dist/docs/insight.scales.html#insight.scales.linear">insight.scales.linear
-        <span class="badge">API</span></a></li>
-    <li><a target="_blank" href="InsightJS/dist/docs/insight.scales.html#insight.scales.ordinal">insight.scales.ordinal
-        <span class="badge">API</span></a></li>
-    <li><a target="_blank" href="InsightJS/dist/docs/insight.scales.html#insight.scales.time">insight.scales.time <span
-            class="badge">API</span></a></li>
+    <li><api-docs page="insight.scales" anchor="insight.scales.linear">insight.scales.linear</api-docs></li>
+    <li><api-docs page="insight.scales" anchor="insight.scales.ordinal">insight.scales.ordinal</api-docs></li>
+    <li><api-docs page="insight.scales" anchor="insight.scales.time">insight.scales.time</api-docs></li>
 
 </ul>
 <p>
@@ -123,7 +119,7 @@
 </code>
 
 <p>
-    We have provided an <a href="#" class="disabled-link">Axis Styling <span class="badge">How To Guide</span></a>, to explain how to carry
+    We have provided an <how-to-guide page="axis-customisation">Axis Styling</how-to-guide>, to explain how to carry
     out more advanced customisations.
 </p>
 
@@ -144,11 +140,8 @@
 </p>
 
 <p>
-    For this chart, we will use an
-    <a target="_blank" href="InsightJS/dist/docs/insight.RowSeries.html">insight.RowSeries <span
-            class="badge">API</span></a>.
-    In the code below we have called this series <code>'rows'</code> and provided it with our previously created data
-    set and axes.
+    For this chart, we will use an <api-docs page="insight.RowSeries">insight.RowSeries</api-docs>. In the code below
+    we have called this series <code>'rows'</code> and provided it with our previously created data set and axes.
 </p>
 
 <code class="language-javascript">
@@ -164,16 +157,14 @@
 
 <p>
     The x value of a row series is given by
-    <a target="_blank" href="InsightJS/dist/docs/insight.RowSeries.html##self.valueFunction">insight.RowSeries.valueFunction
-        <span class="badge">API</span></a>. In this case we used the <code>age</code> property to get the age of each
-    person in our data set.
+    <api-docs page="insight.RowSeries" anchor="#self.valueFunction">insight.RowSeries.valueFunction</api-docs>.
+    In this case we used the <code>age</code> property to get the age of each person in our data set.
 </p>
 
 <p>
     Similarly, the y value of a row series is given by
-    <a target="_blank" href="InsightJS/dist/docs/insight.RowSeries.html##self.keyFunction">insight.RowSeries.keyFunction
-        <span class="badge">API</span></a>. In this case we used the <code>name</code> property to get the name of each
-    person in our data set.
+    <api-docs page="insight.RowSeries" anchor="#self.keyFunction">insight.RowSeries.keyFunction</api-docs>.
+    In this case we used the <code>name</code> property to get the name of each person in our data set.
 </p>
 
 <p>
@@ -214,7 +205,7 @@
 
 <ul>
     <li><a class="disabled-link" href="#">How-to Guides</a></li>
-    <li><a target="_blank" href="InsightJS/dist/docs/index.html">API Documentation</a></li>
+    <li><api-docs page="index">Documentation</api-docs></li>
     <li><a class="disabled-link" href="#">InsightJS Gallery</a></li>
 </ul>
 </div>
