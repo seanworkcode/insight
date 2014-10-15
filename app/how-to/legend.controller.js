@@ -5,7 +5,7 @@
 {
     'use strict';
 
-    function LegendController () {
+    function LegendController ($scope) {
         Prism.highlightAll();
 
         var data = [
@@ -52,5 +52,5 @@
         chart.draw();
     }
 
-    angular.module('insightChartsControllers').controller('HowToLegend', [LegendController]);
+    angular.module('insightChartsControllers').controller('HowToLegend', ['$scope', LegendController]);
 }());

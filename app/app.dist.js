@@ -540,7 +540,7 @@ function createLanguageChart(chartGroup, languages){
 {
     'use strict';
 
-    function LegendController () {
+    function LegendController ($scope) {
         Prism.highlightAll();
 
         var data = [
@@ -587,5 +587,5 @@ function createLanguageChart(chartGroup, languages){
         chart.draw();
     }
 
-    angular.module('insightChartsControllers').controller('HowToLegend', [LegendController]);
+    angular.module('insightChartsControllers').controller('HowToLegend', ['$scope', LegendController]);
 }());
