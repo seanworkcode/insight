@@ -44,6 +44,11 @@
                         templateUrl: 'app/how-to/interactive.html',
                         controller: 'HowToInteractiveAxis'
                     })
+                    .when('/how-to/multipleseries',
+                    {
+                        templateUrl: 'app/how-to/multipleseries.html',
+                        controller: 'HowToMultipleSeries'
+                    })
                     .otherwise(
                     {
                         redirectTo: '/'
@@ -629,3 +634,16 @@ function createLanguageChart(chartGroup, languages){
         .controller('HowToInteractiveAxis', ['$scope', howToInteractiveAxis]);
 
 }());
+
+(function() {
+
+    'use strict';
+
+    function howToMultipleSeries($scope) {
+    }
+
+    angular.module('insightChartsControllers')
+        .controller('HowToMultipleSeries', ['$scope', howToMultipleSeries]);
+
+}());
+
