@@ -1,3 +1,180 @@
 <div id="container-body" class="container">
-    <h2>How to : Make a Chart with Multiple Series</h2>
+    <h2>How to : Make a chart with multiple series</h2>
+
+    <h3>Prerequisites</h3>
+    <ul>
+        <li><a target="_blank" href="#/gettingStarted">Getting Started</a></li>
+    </ul>
+
+    <h3>Objective</h3>
+    <p>
+        This guide explains how to create a chart with more than one series like the one below.
+    </p>
+
+    <div id="chart" class="chart-centre"></div>
+
+    <h3>Why use multiple series?</h3>
+    <p>
+        Sometimes we will want to display more than one value for each key in our chart. For example, we may want
+        to know how our current performance compares to the past or some aim in the future.
+    </p>
+
+    <h3>The data</h3>
+    <p>
+        The data below shows the performance and aspirations of teams in a very serious, competitive football league.
+        We wrap this data in an InsightJS DataSet object.
+    </p>
+
+    <code class="language-javascript">
+        var leaguePlaces = [
+        {
+        teamName: 'Chuffed FC',
+        currentPosition: 5,
+        targetPoints: 50,
+        currentPoints: 18
+        },
+        {
+        teamName: 'Old Boys',
+        currentPosition: 3,
+        targetPoints: 45,
+        currentPoints: 27
+        },
+        {
+        teamName: 'Hairy Harriers',
+        currentPosition: 1,
+        targetPoints: 90,
+        currentPoints: 35
+        },
+        {
+        teamName: 'Kings Arms',
+        currentPosition: 2,
+        targetPoints: 40,
+        currentPoints: 34
+        },
+        {
+        teamName: 'YMCA Athletic',
+        currentPosition: 6,
+        targetPoints: 35,
+        currentPoints: 18
+        },
+        {
+        teamName: 'Wasters',
+        currentPosition: 7,
+        targetPoints: 3,
+        currentPoints: 10
+        },
+        {
+        teamName: 'Dreamers',
+        currentPosition: 8,
+        targetPoints: 74,
+        currentPoints: 2
+        },
+        {
+        teamName: 'Posers',
+        currentPosition: 4,
+        targetPoints: 65,
+        currentPoints: 20
+        },
+        {
+        teamName: 'Hackney Hackers',
+        currentPosition: 3,
+        targetPoints: 38,
+        currentPoints: 22
+        }];
+
+        var dataset = new insight.DataSet(leaguePlaces);
+
+    </code>
+
+    <h3>Creating the chart</h3>
+    <p>Our chart is created with a custom width and height, as well as including a <how-to-guide>legend</how-to-guide>.</p>
+
+    <code class="language-javascript">
+        var chart = new insight.Chart('League', '#chart')
+            .width(500)
+            .height(500)
+            .legend(new insight.Legend());
+
+    </code>
+
+    <h3>Creating the axes</h3>
+    <p>
+        We add an ordinal x-axis and linear y-axis to the chart. See <how-to-guide>axis customisation</how-to-guide>
+        if you are unfamiliar with formatting like we have used below.
+    </p>
+
+    <code class="language-javascript">
+        var x = new insight.Axis('Team', insight.scales.ordinal)
+            .tickLabelRotation(45)
+            .isOrdered(true);
+
+        var y = new insight.Axis('Points', insight.scales.linear);
+
+        chart.xAxis(x);
+        chart.yAxis(y);
+
+    </code>
+
+    <h3>Create the column series</h3>
+    <p>
+        Create a column series using the team name and current number of points as key and value functions.
+        Notice that we have abstracted the key function into <code>teamNameFunc</code> as we will be reusing this in
+        the next step.
+    </p>
+
+    <code class="language-javascript">
+        var teamNameFunc = function(d) {
+            return d.teamName;
+        };
+
+        var currentPoints = new insight.ColumnSeries('Current', dataset, x, y)
+            .keyFunction(teamNameFunc)
+            .valueFunction(function(d){
+                return d.currentPoints;
+            });
+
+    </code>
+
+    <h3>Create the marker series</h3>
+    <p>
+        Here, we create a <how-to-guide>marker series</how-to-guide> using the team name and target number of points as key and value functions.
+        Notice the call to <code>teamNameFunc</code> in the key function.
+    </p>
+
+    <code class="language-javascript">
+        var targetPoints = new insight.MarkerSeries('Target', dataset, x, y)
+            .keyFunction(teamNameFunc)
+            .valueFunction(function(d) {
+                return d.targetPoints;
+            })
+            .widthFactor(0.7);
+
+        chart.series([currentPoints, targetPoints]);
+
+    </code>
+
+    <h3>Add the series</h3>
+    <p>
+        Add the column and maker series to the chart as an array.
+    </p>
+
+    <code class="language-javascript">
+        chart.series([currentPoints, targetPoints]);
+
+    </code>
+
+
+    <p>
+        See <api-docs page="insight.ColumnSeries">insight.ColumnSeries</api-docs> and
+        <api-docs page="insight.MarkerSeries">insight.MarkerSeries</api-docs>
+        for more detail about what you can do with these series.
+    </p>
+
+    <h3>Don't forget to draw the chart!</h3>
+    <p>If you don't draw the chart then you will not see it.</p>
+
+    <code class="language-javascript">
+        chart.draw();
+
+    </code>
 </div>
