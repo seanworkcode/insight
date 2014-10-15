@@ -69,7 +69,10 @@
 </code>
 
 <h3>Setting the interactive axis</h3>
-<p>The interactive axis is set using the <code>chart.setInteractiveAxis</code> function.</p>
+<p>
+    The interactive axis is set using
+    <api-docs page="insight.Chart" anchor="#self.setInteractiveAxis">Chart.setInteractiveAxis</api-docs>.
+</p>
 
 <code class="language-javascript">
     chart.setInteractiveAxis(x);
@@ -77,10 +80,7 @@
 </code>
 
 <h3>Add the line series</h3>
-<p>
-    We create a <code>LineSeries</code>, set its <code>keyFunction</code> and <code>valueFunction</code>
-    and set the chart's series.
-</p>
+<p>Create a line series using the x and y values as key and value functions, then add it to the chart.</p>
 
 <code class="language-javascript">
     var line = new insight.LineSeries('sin-x', dataset, x, y)
@@ -94,6 +94,10 @@
     chart.series([line]);
 
 </code>
+
+<p>
+    See <api-docs page="insight.LineSeries">LineSeries</api-docs> for more detail about what you can do with a line series
+</p>
 
 <h3>Don't forget to draw the chart!</h3>
 <p>If you don't draw the chart then you will not see it.</p>
