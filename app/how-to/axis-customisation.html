@@ -1,12 +1,17 @@
 <div id="container-body" class="container">
     <h2>How To: Customise an Axis</h2>
 
-    <p>By then end of this guide, you should be able to:</p>
+    <p>In this guide we cover how to style an axis:</p>
 
     <ol>
         <li>Show gridlines for an axis</li>
         <li>Reverse the position of an axis in a chart</li>
         <li>Change the rotation and alignment of tick labels</li>
+    </ol>
+
+    <p>We also cover how to format the data displayed by an axis:</p>
+
+    <ol>
         <li>Change content of tick labels</li>
         <li>Setting the maximum and minimum bounds for an axis</li>
         <li>Define the tick frequency</li>
@@ -31,9 +36,7 @@
         <!--</div>-->
     </p>
     <hr/>
-    <h3>Styling the Axis</h3>
-
-    <p><small><i class="fa fa-hand-o-right heading-emphasis"></i> How to add a gridline</small></p>
+    <h3>How to style an axis</h3>
     <p>
         An axis allows you to add gridlines to the chart using
         <api-docs page="insight.Axis" anchor="#self.shouldShowGridlines">insight.Axis.shouldShowGridlines</api-docs>.
@@ -45,21 +48,17 @@
         x.shouldShowGridlines(true);
     </code>
 
-    <p><small><i class="fa fa-hand-o-right heading-emphasis"></i> How to reverse the position of an axis</small></p>
-
     <p>
         To change the position of an axis, the
         <api-docs page="insight.Axis" anchor="#self.hasReversedPosition">insight.Axis.hasReversedPosition</api-docs>
         function can be invoked.
     </p>
 
-    <p>To bring the vertical y axis to the top:</p>
+    <p>We can bring the vertical y axis to the top by calling:</p>
 
     <code class="language-javascript">
         x.hasReversedPosition(true);
     </code>
-
-    <p><small><i class="fa fa-hand-o-right heading-emphasis"></i> How to rotate and align tick labels</small></p>
 
     <p>The offset and rotation of tick labels is also configurable:</p>
 
@@ -98,12 +97,10 @@
 
     <hr/>
 
-    <h3>Formatting the Data</h3>
-
-    <p><small><i class="fa fa-hand-o-right heading-emphasis"></i> How to change tick label content</small></p>
+    <h3>How to format the data displayed by an axis</h3>
 
     <p>
-        The content of a tick label can changed by setting the
+        The content of a tick label can changed by assigning a formatting function to
         <api-docs page="insight.Axis" anchor="#self.tickLabelFormat">insight.Axis.tickLabelFormat</api-docs>.
     </p>
 
@@ -114,9 +111,6 @@
             return tickValue.toUpperCase();
         });
     </code>
-
-
-    <p><small><i class="fa fa-hand-o-right heading-emphasis"></i> How to set maximum and minimum bounds</small></p>
 
     <p>
         By default, InsightJS will analyse the data provided in the chart to identify the minimum and maximum bounds.
@@ -130,28 +124,22 @@
         x.axisRange(0, 50);
     </code>
 
-
-    <p><small><i class="fa fa-hand-o-right heading-emphasis"></i> How to define tick frequency</small></p>
-
     <p>
-        The tick frequency on the axis automatically calculated by default so that there is no more than 10 tick labels.
-        This can be overridden using
+        The tick frequency on the axis automatically calculated by default, so that there is no more than 10 tick
+        labels shown. This can be overridden using
         <api-docs page="insight.Axis" anchor="#self.tickFrequency">insight.Axis.tickFrequency</api-docs>.
     </p>
 
-    <p>Tell the x axis that the tick values should go up by 4, we can call:</p>
+    <p>To tell the x axis that the tick values should go up by 4, we can call:</p>
 
     <code class="language-javascript">
         x.tickFrequency(4);
     </code>
 
-
-    <p><small><i class="fa fa-hand-o-right heading-emphasis"></i> How to specify a tick ordering</small></p>
-
     <p>
-        When the axis is ordinal, it is possible to change the ordering of the tick values using
+        For an ordinal axis, it is possible to change the ordering of the tick labels using
         <api-docs page="insight.Axis" anchor="#self.orderingFunction">insight.Axis.orderingFunction</api-docs>.
-        In order for this to have any affect, you also need to use
+        In order for this to have any affect, you also need to call
         <api-docs page="insight.Axis" anchor="#self.isOrdered">insight.Axis.isOrdered</api-docs>
     </p>
 
