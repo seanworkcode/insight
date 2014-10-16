@@ -29,7 +29,8 @@
             initialized = false,
             zoomAxis = null,
             titlePadding = 20,
-            highlightSelector = insight.utils.highlightSelector();
+            highlightSelector = insight.utils.highlightSelector(),
+            seriesPalette = [];
 
         var margin = {
             top: 0,
@@ -46,7 +47,6 @@
         self.container = null;
         self.chart = null;
         self.measureCanvas = document.createElement('canvas');
-        self.seriesPalette = [];
         self.legendView = null;
 
         // Private functions ------------------------------------------------------------------------------------------
@@ -345,7 +345,7 @@
 
             self.series()
                 .forEach(function(series, index) {
-                    series.color = d3.functor(self.seriesPalette[index % self.seriesPalette.length]);
+                    series.color = d3.functor(seriesPalette[index % seriesPalette.length]);
                     series.draw(self, isDragging);
                 });
 
@@ -808,6 +808,28 @@
             return self;
         };
 
+        /**
+         * The color of each series in the chart.
+         * @memberof! insight.Chart
+         * @instance
+         * @returns {Array<Color>} - The color of each series in the chart.
+         *
+         * @also
+         *
+         * Sets the color of each series in the chart.
+         * @memberof! insight.Chart
+         * @instance
+         * @param {Array<Color>} newSeriesPalette The new color of each series the chart.
+         * @returns {this}
+         */
+        self.seriesPalette = function(newSeriesPalette) {
+            if (!arguments.length) {
+                return seriesPalette;
+            }
+            seriesPalette = newSeriesPalette;
+            return self;
+        };
+
         //Apply the default look-and-feel
         self.applyTheme(insight.defaultTheme);
     };
@@ -876,7 +898,7 @@
             axis.applyTheme(theme);
         });
 
-        this.seriesPalette = theme.chartStyle.seriesPalette;
+        this.seriesPalette(theme.chartStyle.seriesPalette);
 
         this.series()
             .forEach(function(series) {
