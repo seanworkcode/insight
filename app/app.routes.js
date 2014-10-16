@@ -30,6 +30,11 @@
                         templateUrl: 'app/how-to/interactive.html',
                         controller: 'HowToInteractiveAxis'
                     })
+                    .when('/how-to/multipleseries',
+                    {
+                        templateUrl: 'app/how-to/multipleseries.html',
+                        controller: 'HowToMultipleSeries'
+                    })
                     .otherwise(
                     {
                         redirectTo: '/'
