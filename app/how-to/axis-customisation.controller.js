@@ -45,16 +45,62 @@
         return chart;
     }
 
-    function gettingStartedController($scope, ExamplesResource, $http) {
+    function applyStylingChanges(chart) {
+
+        var x = chart.xAxis();
+        var y = chart.yAxis();
+
+        x.shouldShowGridlines(true);
+
+        x.hasReversedPosition(true);
+
+        x.tickPadding(5);
+
+        y.tickLabelRotation(30);
+
+    }
+
+    function applyDataFormattingChanges(chart) {
+
+        var x = chart.xAxis();
+        var y = chart.yAxis();
+
+        y.tickLabelFormat(function(tickValue) {
+            return tickValue.toUpperCase();
+        });
+
+        x.axisRange(0, 50);
+
+        x.tickFrequency(4);
+
+        y.orderingFunction(function(a, b)
+        {
+            return a.age - b.age;
+        });
+
+        y.isOrdered(true);
+
+    }
+
+    function axisCustomisationController($scope, ExamplesResource, $http, $location, $anchorScroll) {
         $scope.examples = ExamplesResource.query();
-        $scope.$parent.title = 'Getting Started - InsightJS';
+        $scope.$parent.title = 'How To: Customise an Axis';
 
         Prism.highlightAll();
 
-        var chart = createGettingStartedChart('#chart');
+        var stylingChart = createGettingStartedChart('#stylingchart');
 
-        chart.draw();
+        applyStylingChanges(stylingChart);
+
+        stylingChart.draw();
+
+        var dataFormattingChart = createGettingStartedChart('#dataformattingchart');
+
+        applyStylingChanges(dataFormattingChart);
+        applyDataFormattingChanges(dataFormattingChart);
+
+        dataFormattingChart.draw();
     }
 
-    angular.module('insightChartsControllers').controller('GettingStarted', ['$scope', 'ExamplesResource', '$http', gettingStartedController]);
+    angular.module('insightChartsControllers').controller('AxisCustomisation', ['$scope', 'ExamplesResource', '$http', axisCustomisationController]);
 }());
