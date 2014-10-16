@@ -25,10 +25,15 @@
                         templateUrl: 'app/partials/how-to-index.html',
                         controller: 'HowTo'
                     })
-                    .when('/how-to/legend',
+                    .when('/how-to/chart',
                     {
-                        templateUrl: 'app/how-to/legend.html',
-                        controller: 'HowToLegend'
+                        templateUrl: 'app/how-to/chart.html',
+                        controller: 'HowToChartController'
+                    })
+                    .when('/how-to/interactive',
+                    {
+                        templateUrl: 'app/how-to/interactive.html',
+                        controller: 'HowToInteractiveAxis'
                     })
                     .otherwise(
                     {

@@ -39,10 +39,15 @@
                         templateUrl: 'app/partials/how-to-index.html',
                         controller: 'HowTo'
                     })
-                    .when('/how-to/legend',
+                    .when('/how-to/chart',
                     {
-                        templateUrl: 'app/how-to/legend.html',
-                        controller: 'HowToLegend'
+                        templateUrl: 'app/how-to/chart.html',
+                        controller: 'HowToChartController'
+                    })
+                    .when('/how-to/interactive',
+                    {
+                        templateUrl: 'app/how-to/interactive.html',
+                        controller: 'HowToInteractiveAxis'
                     })
                     .otherwise(
                     {
@@ -421,6 +426,49 @@ function createLanguageChart(chartGroup, languages){
 }
 
 
+(function() {
+
+    'use strict';
+
+    /*
+     * Listens to elements that change content and highlights the syntax
+     */
+    function apiDocsDirective() {
+        return {
+            restrict: 'E',
+            transclude: true,
+            scope: {
+                page: '@',
+                anchor: '@'
+            },
+            templateUrl: '/app/components/api-docs.directive.html'
+        };
+    }
+
+    angular.module('insightCharts').directive('apiDocs', apiDocsDirective);
+})();
+
+(function() {
+
+    'use strict';
+
+    /*
+     * Listens to elements that change content and highlights the syntax
+     */
+    function howToGuideDirective() {
+        return {
+            restrict: 'E',
+            transclude: true,
+            scope: {
+                page: '@'
+            },
+            templateUrl: '/app/components/how-to-guide.directive.html'
+        };
+    }
+
+    angular.module('insightCharts').directive('howToGuide', howToGuideDirective);
+})();
+
 (function () {
     'use strict';
 
@@ -480,6 +528,127 @@ function createLanguageChart(chartGroup, languages){
 {
     'use strict';
 
+    function ChartController ($scope, $location, $anchorScroll) {
+        Prism.highlightAll();
+
+        $scope.scrollTo = function (id) {
+            console.log('got this far');
+            $location.hash(id);
+            $anchorScroll();
+        };
+
+
+        $scope.getLegendChart = function() {
+            var populationData = [
+                {
+                    "country": "England",
+                    "population": 53012456
+                },
+                {
+                    "country": "Scotland",
+                    "population": 5295000
+                },
+                {
+                    "country": "Wales",
+                    "population": 3063456
+                },
+                {
+                    "country": "Northern Ireland",
+                    "population": 1810863
+                }];
+
+            var chart = new insight.Chart('Population', "#legend-chart")
+                .width(500)
+                .height(400);
+
+            var x = new insight.Axis('Country', insight.scales.ordinal)
+                .title('')
+                .textAnchor('middle');
+
+            var y = new insight.Axis('Population', insight.scales.linear)
+                .title('Population')
+                .tickLabelFormat(function(tickValue)
+                {
+                    var millions = tickValue / 1000000;
+                    return millions + 'M';
+                })
+                .shouldShowGridlines(true);
+
+            chart.xAxis(x);
+            chart.yAxis(y);
+
+            var populations = new insight.ColumnSeries('Population', populationData, x, y)
+                .keyFunction(function(d)
+                {
+                    return d.country;
+                })
+                .valueFunction(function(d)
+                {
+                    return d.population;
+                })
+                .tooltipFormat(insight.formatters.numberFormatter);
+
+            chart.series([populations]);
+
+            return chart;
+        };
+
+        $scope.getInteractiveChart = function() {
+            var sinData = [];
+            for (var degrees = 0; degrees < 360 * 3; degrees += 15) {
+
+                var radians = degrees * Math.PI / 180;
+
+                sinData.push({
+                    x: degrees,
+                    y: Math.sin(radians) + 1
+                });
+            }
+
+            var dataset = new insight.DataSet(sinData);
+
+            var chart = new insight.Chart('sin', '#interactive-chart')
+                .width(450)
+                .height(250)
+                .title('y = sin(x) + 1');
+
+            var x = new insight.Axis('x', insight.scales.linear);
+            var y = new insight.Axis('y', insight.scales.linear);
+
+            chart.xAxis(x);
+            chart.yAxis(y);
+
+            chart.setInteractiveAxis(x);
+
+            var line = new insight.LineSeries('sin-x', dataset, x, y)
+                .keyFunction(function(d){
+                    return d.x;
+                })
+                .valueFunction(function(d){
+                    return d.y;
+                });
+
+            chart.series([line]);
+
+            return chart;
+        };
+
+        var legendChart = $scope.getLegendChart();
+        legendChart.draw();
+
+        var interactiveChart = $scope.getInteractiveChart();
+        interactiveChart.draw();
+
+    }
+
+
+    angular.module('insightChartsControllers').controller('HowToChartController', ['$scope', '$location', '$anchorScroll', ChartController]);
+}());
+
+(function()
+{
+    'use strict';
+
     angular.module('insightChartsControllers').controller('GettingStartedWithGroupings', ['$scope', 'ExamplesResource', '$http',
         function($scope, ExamplesResource, $http)
         {
@@ -533,59 +702,56 @@ function createLanguageChart(chartGroup, languages){
     ]);
 }());
 
-/**
- * Created by soneill on 14/10/14.
- */
-(function()
-{
+(function() {
+
     'use strict';
 
-    function LegendController ($scope) {
+    function howToInteractiveAxis($scope) {
+
+        $scope.$parent.title = 'How to - Use an interactive axis';
+
         Prism.highlightAll();
 
-        var data = [
-            { "name": "Michelle Hopper", "age": 26, "eyeColor": "green" },
-            { "name": "Cochran Mcfadden", "age": 22, "eyeColor": "green" },
-            { "name": "Jessie Mckinney", "age": 23, "eyeColor": "brown" },
-            { "name": "Rhoda Reyes", "age": 40, "eyeColor": "brown" },
-            { "name": "Hawkins Wolf", "age": 26, "eyeColor": "green" },
-            { "name": "Lynne O'neill", "age": 39, "eyeColor": "green" },
-            { "name": "Twila Melendez", "age": 26, "eyeColor": "blue" },
-            { "name": "Courtney Diaz", "age": 20, "eyeColor": "brown" },
-            { "name": "Burton Beasley", "age": 36, "eyeColor": "green" },
-            { "name": "Mccoy Gray", "age": 25, "eyeColor": "brown" },
-            { "name": "Janie Benson", "age": 30, "eyeColor": "green" },
-            { "name": "Cherie Wilder", "age": 30, "eyeColor": "green" }
-        ];
+        var sinData = [];
+        for (var degrees = 0; degrees < 360 * 3; degrees += 15) {
 
-        var dataset = new insight.DataSet(data);
+            var radians = degrees * Math.PI / 180;
 
-        var chart = new insight.Chart('Ages', '#chart')
-            .width(500)
-            .height(350)
-            .title('Ages of People')
-            .legend(new insight.Legend());
+            sinData.push({
+                x: degrees,
+                y: Math.sin(radians) + 1
+            });
+        }
 
-        var x = new insight.Axis('Age', insight.scales.linear);
-        var y = new insight.Axis('', insight.scales.ordinal);
+        var dataset = new insight.DataSet(sinData);
+
+        var chart = new insight.Chart('sin', '#chart')
+            .width(450)
+            .height(250)
+            .title('y = sin(x) + 1');
+
+        var x = new insight.Axis('x', insight.scales.linear);
+        var y = new insight.Axis('y', insight.scales.linear);
 
         chart.xAxis(x);
         chart.yAxis(y);
 
+        chart.setInteractiveAxis(x);
 
-        var rows = new insight.RowSeries('rows', dataset, x, y)
-            .keyFunction(function (person) {
-                return person.name;
+        var line = new insight.LineSeries('sin-x', dataset, x, y)
+            .keyFunction(function(d){
+                return d.x;
             })
-            .valueFunction(function (person) {
-                return person.age;
+            .valueFunction(function(d){
+                return d.y;
             });
 
-
-        chart.series([rows]);
+        chart.series([line]);
 
         chart.draw();
     }
 
-    angular.module('insightChartsControllers').controller('HowToLegend', ['$scope', LegendController]);
+    angular.module('insightChartsControllers')
+        .controller('HowToInteractiveAxis', ['$scope', howToInteractiveAxis]);
+
 }());
