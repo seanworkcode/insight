@@ -4,178 +4,178 @@
 
     function HowToDataCorrelationController ($scope, $location, $anchorScroll, $timeout) {
 
-        $scope.loadData = function() {
-            d3.json('datasets/appstore.json', function(data)
+
+        d3.json('datasets/appstore.json', function(data)
+        {
+            data.forEach(function(d)
             {
-                data.forEach(function(d)
+                d.releaseDate = new Date(d.releaseDate);
+                d.fileSizeBytes = +d.fileSizeBytes;
+            });
+
+            var chartGroup = new insight.ChartGroup();
+
+            var dataset = new insight.DataSet(data);
+
+            var genres = dataset.group('genre', function(d)
+            {
+                return d.primaryGenreName;
+            })
+                .sum(['userRatingCount'])
+                .mean(['price', 'averageUserRating', 'userRatingCount', 'fileSizeBytes']);
+
+            var scatterChart = new insight.Chart('Chart 3', '#bubbleChart')
+                .width(500)
+                .height(400)
+                .margin(
                 {
-                    d.releaseDate = new Date(d.releaseDate);
-                    d.fileSizeBytes = +d.fileSizeBytes;
+                    top: 50,
+                    left: 160,
+                    right: 40,
+                    bottom: 80
                 });
 
-                var chartGroup = new insight.ChartGroup();
+            var xAxis = new insight.Axis('Average Number of Ratings', insight.scales.linear)
+                .tickSize(2);
 
-                var dataset = new insight.DataSet(data);
+            var yAxis = new insight.Axis('Average Price', insight.scales.linear);
 
-                var genres = dataset.group('genre', function(d)
+            scatterChart.xAxis(xAxis);
+            scatterChart.yAxis(yAxis);
+
+            var scatter = new insight.ScatterSeries('bubbles', genres, xAxis, yAxis)
+                .keyFunction(function(d)
                 {
-                    return d.primaryGenreName;
+                    return d.value.userRatingCount.mean;
                 })
-                    .sum(['userRatingCount'])
-                    .mean(['price', 'averageUserRating', 'userRatingCount', 'fileSizeBytes']);
-
-                var scatterChart = new insight.Chart('Chart 3', '#bubbleChart')
-                    .width(500)
-                    .height(400)
-                    .margin(
-                    {
-                        top: 50,
-                        left: 160,
-                        right: 40,
-                        bottom: 80
-                    });
-
-                var xAxis = new insight.Axis('Average Number of Ratings', insight.scales.linear)
-                    .tickSize(2);
-
-                var yAxis = new insight.Axis('Average Price', insight.scales.linear);
-
-                scatterChart.xAxis(xAxis);
-                scatterChart.yAxis(yAxis);
-
-                var scatter = new insight.ScatterSeries('bubbles', genres, xAxis, yAxis)
-                    .keyFunction(function(d)
-                    {
-                        return d.value.userRatingCount.mean;
-                    })
-                    .valueFunction(function(d)
-                    {
-                        return d.value.price.mean;
-                    })
-                    .tooltipFunction(function(d)
-                    {
-                        return d.key;
-                    });
-
-                scatterChart.series([scatter]);
-                buttonClick();
-
-
-
-
-
-
-                $('.btn')
-                    .button();
-
-                function buttonClick()
+                .valueFunction(function(d)
                 {
-                    var correlation = insight.correlation.fromDataProvider(genres, scatter.keyFunction(), scatter.valueFunction());
-                    var coefficientDiv = document.getElementById('correlationCoefficient');
-                    coefficientDiv.innerHTML = correlation.toFixed(3);
+                    return d.value.price.mean;
+                })
+                .tooltipFunction(function(d)
+                {
+                    return d.key;
+                });
 
-                    scatterChart.draw();
+            scatterChart.series([scatter]);
+            buttonClick();
+
+
+
+
+
+
+            $('.btn')
+                .button();
+
+            function buttonClick()
+            {
+                var correlation = insight.correlation.fromDataProvider(genres, scatter.keyFunction(), scatter.valueFunction());
+                var coefficientDiv = document.getElementById('correlationCoefficient');
+                coefficientDiv.innerHTML = correlation.toFixed(3);
+
+                scatterChart.draw();
+            }
+
+            function selectButton(selectedButton, deselectedButtons)
+            {
+                //Select the selected button
+                if (!$(selectedButton)
+                    .hasClass('selected'))
+                {
+                    $(selectedButton)
+                        .addClass('selected');
                 }
 
-                function selectButton(selectedButton, deselectedButtons)
+                //Deselect the other buttons
+                deselectedButtons.forEach(function(button)
                 {
-                    //Select the selected button
-                    if (!$(selectedButton)
+                    if ($(button)
                         .hasClass('selected'))
                     {
-                        $(selectedButton)
-                            .addClass('selected');
+                        $(button)
+                            .removeClass('selected');
                     }
+                });
 
-                    //Deselect the other buttons
-                    deselectedButtons.forEach(function(button)
+                buttonClick();
+            }
+
+            $('#yavgrating')
+                .click(function()
+                {
+                    scatter.valueFunction(function(d)
                     {
-                        if ($(button)
-                            .hasClass('selected'))
-                        {
-                            $(button)
-                                .removeClass('selected');
-                        }
+                        return d.value.averageUserRating.mean;
                     });
+                    yAxis.title('Average Rating');
 
-                    buttonClick();
-                }
+                    selectButton('#yavgrating', ['#yavgratings', '#yavgprice']);
+                });
 
-                $('#yavgrating')
-                    .click(function()
+
+            $('#yavgratings')
+                .click(function()
+                {
+                    scatter.valueFunction(function(d)
                     {
-                        scatter.valueFunction(function(d)
-                        {
-                            return d.value.averageUserRating.mean;
-                        });
-                        yAxis.title('Average Rating');
-
-                        selectButton('#yavgrating', ['#yavgratings', '#yavgprice']);
+                        return d.value.userRatingCount.mean;
                     });
+                    yAxis.title('Average # Ratings');
 
+                    selectButton('#yavgratings', ['#yavgrating', '#yavgprice']);
+                });
 
-                $('#yavgratings')
-                    .click(function()
+            $('#yavgprice')
+                .click(function()
+                {
+                    scatter.valueFunction(function(d)
                     {
-                        scatter.valueFunction(function(d)
-                        {
-                            return d.value.userRatingCount.mean;
-                        });
-                        yAxis.title('Average # Ratings');
-
-                        selectButton('#yavgratings', ['#yavgrating', '#yavgprice']);
+                        return d.value.price.mean;
                     });
+                    yAxis.title('Average Price');
 
-                $('#yavgprice')
-                    .click(function()
+                    selectButton('#yavgprice', ['#yavgrating', '#yavgratings']);
+                });
+
+            $('#xsumrating')
+                .click(function()
+                {
+                    scatter.keyFunction(function(d)
                     {
-                        scatter.valueFunction(function(d)
-                        {
-                            return d.value.price.mean;
-                        });
-                        yAxis.title('Average Price');
-
-                        selectButton('#yavgprice', ['#yavgrating', '#yavgratings']);
+                        return d.value.userRatingCount.sum;
                     });
+                    xAxis.title('Total Ratings');
 
-                $('#xsumrating')
-                    .click(function()
+                    selectButton('#xsumrating', ['#xavgrating', '#xavgsize']);
+                });
+
+            $('#xavgrating')
+                .click(function()
+                {
+                    scatter.keyFunction(function(d)
                     {
-                        scatter.keyFunction(function(d)
-                        {
-                            return d.value.userRatingCount.sum;
-                        });
-                        xAxis.title('Total Ratings');
-
-                        selectButton('#xsumrating', ['#xavgrating', '#xavgsize']);
+                        return d.value.averageUserRating.mean;
                     });
+                    xAxis.title('Average Rating');
 
-                $('#xavgrating')
-                    .click(function()
+                    selectButton('#xavgrating', ['#xsumrating', '#xavgsize']);
+                });
+
+            $('#xavgsize')
+                .click(function()
+                {
+
+                    scatter.keyFunction(function(d)
                     {
-                        scatter.keyFunction(function(d)
-                        {
-                            return d.value.averageUserRating.mean;
-                        });
-                        xAxis.title('Average Rating');
-
-                        selectButton('#xavgrating', ['#xsumrating', '#xavgsize']);
+                        return d.value.fileSizeBytes.mean / 1024 / 1024;
                     });
+                    xAxis.title('Average File Size (Mb)');
 
-                $('#xavgsize')
-                    .click(function()
-                    {
+                    selectButton('#xavgsize', ['#xavgrating', '#xsumrating']);
+                });
+        });
 
-                        scatter.keyFunction(function(d)
-                        {
-                            return d.value.fileSizeBytes.mean / 1024 / 1024;
-                        });
-                        xAxis.title('Average File Size (Mb)');
-
-                        selectButton('#xavgsize', ['#xavgrating', '#xsumrating']);
-                    });
-            });
-        };
     }
 
     angular.module('insightChartsControllers').controller('HowToDataCorrelationController', ['$scope', '$location', '$anchorScroll', '$timeout', HowToDataCorrelationController]);

@@ -610,45 +610,44 @@ function createLanguageChart(chartGroup, languages){
 
         Prism.highlightAll();
 
-        $scope.loadChart = function() {
-            var sinData = [];
-            for (var degrees = 0; degrees < 360 * 3; degrees += 15) {
+        var sinData = [];
+        for (var degrees = 0; degrees < 360 * 3; degrees += 15) {
 
-                var radians = degrees * Math.PI / 180;
+            var radians = degrees * Math.PI / 180;
 
-                sinData.push({
-                    x: degrees,
-                    y: Math.sin(radians) + 1
-                });
-            }
+            sinData.push({
+                x: degrees,
+                y: Math.sin(radians) + 1
+            });
+        }
 
-            var dataset = new insight.DataSet(sinData);
+        var dataset = new insight.DataSet(sinData);
 
-            var chart = new insight.Chart('sin', '#interactive-chart')
-                .width(450)
-                .height(250)
-                .title('y = sin(x) + 1');
+        var chart = new insight.Chart('sin', '#interactive-chart')
+            .width(450)
+            .height(250)
+            .title('y = sin(x) + 1');
 
-            var x = new insight.Axis('x', insight.scales.linear);
-            var y = new insight.Axis('y', insight.scales.linear);
+        var x = new insight.Axis('x', insight.scales.linear);
+        var y = new insight.Axis('y', insight.scales.linear);
 
-            chart.xAxis(x);
-            chart.yAxis(y);
+        chart.xAxis(x);
+        chart.yAxis(y);
 
-            chart.setInteractiveAxis(x);
+        chart.setInteractiveAxis(x);
 
-            var line = new insight.LineSeries('sin-x', dataset, x, y)
-                .keyFunction(function(d){
-                    return d.x;
-                })
-                .valueFunction(function(d){
-                    return d.y;
-                });
+        var line = new insight.LineSeries('sin-x', dataset, x, y)
+            .keyFunction(function(d){
+                return d.x;
+            })
+            .valueFunction(function(d){
+                return d.y;
+            });
 
-            chart.series([line]);
+        chart.series([line]);
 
-            chart.draw();
-        };
+        chart.draw();
+
     }
 
     angular.module('insightChartsControllers')
@@ -666,50 +665,50 @@ function createLanguageChart(chartGroup, languages){
     function LegendController ($scope) {
         Prism.highlightAll();
 
-        $scope.loadChart = function() {
-            var data = [
-                { "name": "Michelle Hopper", "age": 26, "eyeColor": "green" },
-                { "name": "Cochran Mcfadden", "age": 22, "eyeColor": "green" },
-                { "name": "Jessie Mckinney", "age": 23, "eyeColor": "brown" },
-                { "name": "Rhoda Reyes", "age": 40, "eyeColor": "brown" },
-                { "name": "Hawkins Wolf", "age": 26, "eyeColor": "green" },
-                { "name": "Lynne O'neill", "age": 39, "eyeColor": "green" },
-                { "name": "Twila Melendez", "age": 26, "eyeColor": "blue" },
-                { "name": "Courtney Diaz", "age": 20, "eyeColor": "brown" },
-                { "name": "Burton Beasley", "age": 36, "eyeColor": "green" },
-                { "name": "Mccoy Gray", "age": 25, "eyeColor": "brown" },
-                { "name": "Janie Benson", "age": 30, "eyeColor": "green" },
-                { "name": "Cherie Wilder", "age": 30, "eyeColor": "green" }
-            ];
 
-            var dataset = new insight.DataSet(data);
+        var data = [
+            { "name": "Michelle Hopper", "age": 26, "eyeColor": "green" },
+            { "name": "Cochran Mcfadden", "age": 22, "eyeColor": "green" },
+            { "name": "Jessie Mckinney", "age": 23, "eyeColor": "brown" },
+            { "name": "Rhoda Reyes", "age": 40, "eyeColor": "brown" },
+            { "name": "Hawkins Wolf", "age": 26, "eyeColor": "green" },
+            { "name": "Lynne O'neill", "age": 39, "eyeColor": "green" },
+            { "name": "Twila Melendez", "age": 26, "eyeColor": "blue" },
+            { "name": "Courtney Diaz", "age": 20, "eyeColor": "brown" },
+            { "name": "Burton Beasley", "age": 36, "eyeColor": "green" },
+            { "name": "Mccoy Gray", "age": 25, "eyeColor": "brown" },
+            { "name": "Janie Benson", "age": 30, "eyeColor": "green" },
+            { "name": "Cherie Wilder", "age": 30, "eyeColor": "green" }
+        ];
 
-            var chart = new insight.Chart('Ages', '#legend-chart')
-                .width(500)
-                .height(350)
-                .title('Ages of People')
-                .legend(new insight.Legend());
+        var dataset = new insight.DataSet(data);
 
-            var x = new insight.Axis('Age', insight.scales.linear);
-            var y = new insight.Axis('', insight.scales.ordinal);
+        var chart = new insight.Chart('Ages', '#legend-chart')
+            .width(500)
+            .height(350)
+            .title('Ages of People')
+            .legend(new insight.Legend());
 
-            chart.xAxis(x);
-            chart.yAxis(y);
+        var x = new insight.Axis('Age', insight.scales.linear);
+        var y = new insight.Axis('', insight.scales.ordinal);
 
-
-            var rows = new insight.RowSeries('rows', dataset, x, y)
-                .keyFunction(function (person) {
-                    return person.name;
-                })
-                .valueFunction(function (person) {
-                    return person.age;
-                });
+        chart.xAxis(x);
+        chart.yAxis(y);
 
 
-            chart.series([rows]);
+        var rows = new insight.RowSeries('rows', dataset, x, y)
+            .keyFunction(function (person) {
+                return person.name;
+            })
+            .valueFunction(function (person) {
+                return person.age;
+            });
 
-            chart.draw();
-        };
+
+        chart.series([rows]);
+
+        chart.draw();
+
     }
 
     angular.module('insightChartsControllers').controller('HowToLegend', ['$scope', LegendController]);
@@ -724,103 +723,103 @@ function createLanguageChart(chartGroup, languages){
 
         Prism.highlightAll();
 
-        $scope.loadChart = function() {
-            var leaguePlaces = [
-                {
-                    teamName: 'Chuffed FC',
-                    currentPosition: 5,
-                    targetPoints: 50,
-                    currentPoints: 18
-                },
-                {
-                    teamName: 'Old Boys',
-                    currentPosition: 3,
-                    targetPoints: 45,
-                    currentPoints: 27
-                },
-                {
-                    teamName: 'Hairy Harriers',
-                    currentPosition: 1,
-                    targetPoints: 90,
-                    currentPoints: 35
-                },
-                {
-                    teamName: 'Kings Arms',
-                    currentPosition: 2,
-                    targetPoints: 40,
-                    currentPoints: 34
-                },
-                {
-                    teamName: 'YMCA Athletic',
-                    currentPosition: 6,
-                    targetPoints: 35,
-                    currentPoints: 18
-                },
-                {
-                    teamName: 'Wasters',
-                    currentPosition: 7,
-                    targetPoints: 3,
-                    currentPoints: 10
-                },
-                {
-                    teamName: 'Dreamers',
-                    currentPosition: 8,
-                    targetPoints: 74,
-                    currentPoints: 2
-                },
-                {
-                    teamName: 'Posers',
-                    currentPosition: 4,
-                    targetPoints: 65,
-                    currentPoints: 20
-                },
-                {
-                    teamName: 'Hackney Hackers',
-                    currentPosition: 3,
-                    targetPoints: 38,
-                    currentPoints: 22
-                }];
 
-            var dataset = new insight.DataSet(leaguePlaces);
-
-            var chart = new insight.Chart('League', '#multiple-chart')
-                .width(500)
-                .height(500)
-                .legend(new insight.Legend());
-
-            var x = new insight.Axis('Team', insight.scales.ordinal)
-                .tickLabelRotation(45)
-                .isOrdered(true);
-
-            var y = new insight.Axis('Points', insight.scales.linear);
-
-            chart.xAxis(x);
-            chart.yAxis(y);
-
-            var teamNameFunc = function(d)
+        var leaguePlaces = [
             {
-                return d.teamName;
-            };
+                teamName: 'Chuffed FC',
+                currentPosition: 5,
+                targetPoints: 50,
+                currentPoints: 18
+            },
+            {
+                teamName: 'Old Boys',
+                currentPosition: 3,
+                targetPoints: 45,
+                currentPoints: 27
+            },
+            {
+                teamName: 'Hairy Harriers',
+                currentPosition: 1,
+                targetPoints: 90,
+                currentPoints: 35
+            },
+            {
+                teamName: 'Kings Arms',
+                currentPosition: 2,
+                targetPoints: 40,
+                currentPoints: 34
+            },
+            {
+                teamName: 'YMCA Athletic',
+                currentPosition: 6,
+                targetPoints: 35,
+                currentPoints: 18
+            },
+            {
+                teamName: 'Wasters',
+                currentPosition: 7,
+                targetPoints: 3,
+                currentPoints: 10
+            },
+            {
+                teamName: 'Dreamers',
+                currentPosition: 8,
+                targetPoints: 74,
+                currentPoints: 2
+            },
+            {
+                teamName: 'Posers',
+                currentPosition: 4,
+                targetPoints: 65,
+                currentPoints: 20
+            },
+            {
+                teamName: 'Hackney Hackers',
+                currentPosition: 3,
+                targetPoints: 38,
+                currentPoints: 22
+            }];
 
-            var currentPoints = new insight.ColumnSeries('Current', dataset, x, y)
-                .keyFunction(teamNameFunc)
-                .valueFunction(function(d)
-                {
-                    return d.currentPoints;
-                });
+        var dataset = new insight.DataSet(leaguePlaces);
 
-            var targetPoints = new insight.MarkerSeries('Target', dataset, x, y)
-                .keyFunction(teamNameFunc)
-                .valueFunction(function(d)
-                {
-                    return d.targetPoints;
-                })
-                .widthFactor(0.7);
+        var chart = new insight.Chart('League', '#multiple-chart')
+            .width(500)
+            .height(500)
+            .legend(new insight.Legend());
 
-            chart.series([currentPoints, targetPoints]);
+        var x = new insight.Axis('Team', insight.scales.ordinal)
+            .tickLabelRotation(45)
+            .isOrdered(true);
 
-            chart.draw();
+        var y = new insight.Axis('Points', insight.scales.linear);
+
+        chart.xAxis(x);
+        chart.yAxis(y);
+
+        var teamNameFunc = function(d)
+        {
+            return d.teamName;
         };
+
+        var currentPoints = new insight.ColumnSeries('Current', dataset, x, y)
+            .keyFunction(teamNameFunc)
+            .valueFunction(function(d)
+            {
+                return d.currentPoints;
+            });
+
+        var targetPoints = new insight.MarkerSeries('Target', dataset, x, y)
+            .keyFunction(teamNameFunc)
+            .valueFunction(function(d)
+            {
+                return d.targetPoints;
+            })
+            .widthFactor(0.7);
+
+        chart.series([currentPoints, targetPoints]);
+
+        chart.draw();
+
     }
 
     angular.module('insightChartsControllers')
@@ -835,178 +834,178 @@ function createLanguageChart(chartGroup, languages){
 
     function HowToDataCorrelationController ($scope, $location, $anchorScroll, $timeout) {
 
-        $scope.loadData = function() {
-            d3.json('datasets/appstore.json', function(data)
+
+        d3.json('datasets/appstore.json', function(data)
+        {
+            data.forEach(function(d)
             {
-                data.forEach(function(d)
+                d.releaseDate = new Date(d.releaseDate);
+                d.fileSizeBytes = +d.fileSizeBytes;
+            });
+
+            var chartGroup = new insight.ChartGroup();
+
+            var dataset = new insight.DataSet(data);
+
+            var genres = dataset.group('genre', function(d)
+            {
+                return d.primaryGenreName;
+            })
+                .sum(['userRatingCount'])
+                .mean(['price', 'averageUserRating', 'userRatingCount', 'fileSizeBytes']);
+
+            var scatterChart = new insight.Chart('Chart 3', '#bubbleChart')
+                .width(500)
+                .height(400)
+                .margin(
                 {
-                    d.releaseDate = new Date(d.releaseDate);
-                    d.fileSizeBytes = +d.fileSizeBytes;
+                    top: 50,
+                    left: 160,
+                    right: 40,
+                    bottom: 80
                 });
 
-                var chartGroup = new insight.ChartGroup();
+            var xAxis = new insight.Axis('Average Number of Ratings', insight.scales.linear)
+                .tickSize(2);
 
-                var dataset = new insight.DataSet(data);
+            var yAxis = new insight.Axis('Average Price', insight.scales.linear);
 
-                var genres = dataset.group('genre', function(d)
+            scatterChart.xAxis(xAxis);
+            scatterChart.yAxis(yAxis);
+
+            var scatter = new insight.ScatterSeries('bubbles', genres, xAxis, yAxis)
+                .keyFunction(function(d)
                 {
-                    return d.primaryGenreName;
+                    return d.value.userRatingCount.mean;
                 })
-                    .sum(['userRatingCount'])
-                    .mean(['price', 'averageUserRating', 'userRatingCount', 'fileSizeBytes']);
-
-                var scatterChart = new insight.Chart('Chart 3', '#bubbleChart')
-                    .width(500)
-                    .height(400)
-                    .margin(
-                    {
-                        top: 50,
-                        left: 160,
-                        right: 40,
-                        bottom: 80
-                    });
-
-                var xAxis = new insight.Axis('Average Number of Ratings', insight.scales.linear)
-                    .tickSize(2);
-
-                var yAxis = new insight.Axis('Average Price', insight.scales.linear);
-
-                scatterChart.xAxis(xAxis);
-                scatterChart.yAxis(yAxis);
-
-                var scatter = new insight.ScatterSeries('bubbles', genres, xAxis, yAxis)
-                    .keyFunction(function(d)
-                    {
-                        return d.value.userRatingCount.mean;
-                    })
-                    .valueFunction(function(d)
-                    {
-                        return d.value.price.mean;
-                    })
-                    .tooltipFunction(function(d)
-                    {
-                        return d.key;
-                    });
-
-                scatterChart.series([scatter]);
-                buttonClick();
-
-
-
-
-
-
-                $('.btn')
-                    .button();
-
-                function buttonClick()
+                .valueFunction(function(d)
                 {
-                    var correlation = insight.correlation.fromDataProvider(genres, scatter.keyFunction(), scatter.valueFunction());
-                    var coefficientDiv = document.getElementById('correlationCoefficient');
-                    coefficientDiv.innerHTML = correlation.toFixed(3);
+                    return d.value.price.mean;
+                })
+                .tooltipFunction(function(d)
+                {
+                    return d.key;
+                });
 
-                    scatterChart.draw();
+            scatterChart.series([scatter]);
+            buttonClick();
+
+
+
+
+
+
+            $('.btn')
+                .button();
+
+            function buttonClick()
+            {
+                var correlation = insight.correlation.fromDataProvider(genres, scatter.keyFunction(), scatter.valueFunction());
+                var coefficientDiv = document.getElementById('correlationCoefficient');
+                coefficientDiv.innerHTML = correlation.toFixed(3);
+
+                scatterChart.draw();
+            }
+
+            function selectButton(selectedButton, deselectedButtons)
+            {
+                //Select the selected button
+                if (!$(selectedButton)
+                    .hasClass('selected'))
+                {
+                    $(selectedButton)
+                        .addClass('selected');
                 }
 
-                function selectButton(selectedButton, deselectedButtons)
+                //Deselect the other buttons
+                deselectedButtons.forEach(function(button)
                 {
-                    //Select the selected button
-                    if (!$(selectedButton)
+                    if ($(button)
                         .hasClass('selected'))
                     {
-                        $(selectedButton)
-                            .addClass('selected');
+                        $(button)
+                            .removeClass('selected');
                     }
+                });
 
-                    //Deselect the other buttons
-                    deselectedButtons.forEach(function(button)
+                buttonClick();
+            }
+
+            $('#yavgrating')
+                .click(function()
+                {
+                    scatter.valueFunction(function(d)
                     {
-                        if ($(button)
-                            .hasClass('selected'))
-                        {
-                            $(button)
-                                .removeClass('selected');
-                        }
+                        return d.value.averageUserRating.mean;
                     });
+                    yAxis.title('Average Rating');
 
-                    buttonClick();
-                }
+                    selectButton('#yavgrating', ['#yavgratings', '#yavgprice']);
+                });
 
-                $('#yavgrating')
-                    .click(function()
+
+            $('#yavgratings')
+                .click(function()
+                {
+                    scatter.valueFunction(function(d)
                     {
-                        scatter.valueFunction(function(d)
-                        {
-                            return d.value.averageUserRating.mean;
-                        });
-                        yAxis.title('Average Rating');
-
-                        selectButton('#yavgrating', ['#yavgratings', '#yavgprice']);
+                        return d.value.userRatingCount.mean;
                     });
+                    yAxis.title('Average # Ratings');
 
+                    selectButton('#yavgratings', ['#yavgrating', '#yavgprice']);
+                });
 
-                $('#yavgratings')
-                    .click(function()
+            $('#yavgprice')
+                .click(function()
+                {
+                    scatter.valueFunction(function(d)
                     {
-                        scatter.valueFunction(function(d)
-                        {
-                            return d.value.userRatingCount.mean;
-                        });
-                        yAxis.title('Average # Ratings');
-
-                        selectButton('#yavgratings', ['#yavgrating', '#yavgprice']);
+                        return d.value.price.mean;
                     });
+                    yAxis.title('Average Price');
 
-                $('#yavgprice')
-                    .click(function()
+                    selectButton('#yavgprice', ['#yavgrating', '#yavgratings']);
+                });
+
+            $('#xsumrating')
+                .click(function()
+                {
+                    scatter.keyFunction(function(d)
                     {
-                        scatter.valueFunction(function(d)
-                        {
-                            return d.value.price.mean;
-                        });
-                        yAxis.title('Average Price');
-
-                        selectButton('#yavgprice', ['#yavgrating', '#yavgratings']);
+                        return d.value.userRatingCount.sum;
                     });
+                    xAxis.title('Total Ratings');
 
-                $('#xsumrating')
-                    .click(function()
+                    selectButton('#xsumrating', ['#xavgrating', '#xavgsize']);
+                });
+
+            $('#xavgrating')
+                .click(function()
+                {
+                    scatter.keyFunction(function(d)
                     {
-                        scatter.keyFunction(function(d)
-                        {
-                            return d.value.userRatingCount.sum;
-                        });
-                        xAxis.title('Total Ratings');
-
-                        selectButton('#xsumrating', ['#xavgrating', '#xavgsize']);
+                        return d.value.averageUserRating.mean;
                     });
+                    xAxis.title('Average Rating');
 
-                $('#xavgrating')
-                    .click(function()
+                    selectButton('#xavgrating', ['#xsumrating', '#xavgsize']);
+                });
+
+            $('#xavgsize')
+                .click(function()
+                {
+
+                    scatter.keyFunction(function(d)
                     {
-                        scatter.keyFunction(function(d)
-                        {
-                            return d.value.averageUserRating.mean;
-                        });
-                        xAxis.title('Average Rating');
-
-                        selectButton('#xavgrating', ['#xsumrating', '#xavgsize']);
+                        return d.value.fileSizeBytes.mean / 1024 / 1024;
                     });
+                    xAxis.title('Average File Size (Mb)');
 
-                $('#xavgsize')
-                    .click(function()
-                    {
+                    selectButton('#xavgsize', ['#xavgrating', '#xsumrating']);
+                });
+        });
 
-                        scatter.keyFunction(function(d)
-                        {
-                            return d.value.fileSizeBytes.mean / 1024 / 1024;
-                        });
-                        xAxis.title('Average File Size (Mb)');
-
-                        selectButton('#xavgsize', ['#xavgrating', '#xsumrating']);
-                    });
-            });
-        };
     }
 
     angular.module('insightChartsControllers').controller('HowToDataCorrelationController', ['$scope', '$location', '$anchorScroll', '$timeout', HowToDataCorrelationController]);
@@ -1061,21 +1060,21 @@ function createLanguageChart(chartGroup, languages){
             return chart;
         };
 
-        $scope.loadData = function() {
-            var defaultThemeChart = $scope.getNewChart('#theme-chart-default-theme');
-            defaultThemeChart.draw();
 
-            var titleThemeChart = $scope.getNewChart('#theme-chart-title-theme');
-            titleThemeChart.titleFont('bold 11pt Helvetica');
-            titleThemeChart.draw();
+        var defaultThemeChart = $scope.getNewChart('#theme-chart-default-theme');
+        defaultThemeChart.draw();
 
-            var fullThemeChart = $scope.getNewChart('#theme-chart-full-theme');
-            fullThemeChart.titleFont('bold 11pt Helvetica');
-            fullThemeChart.titleColor('#081717');
-            fullThemeChart.seriesPalette(['#A60303', '#FFAD00', '#FF2F00', '#BD7217', '#873300']);
-            fullThemeChart.draw();
+        var titleThemeChart = $scope.getNewChart('#theme-chart-title-theme');
+        titleThemeChart.titleFont('bold 11pt Helvetica');
+        titleThemeChart.draw();
 
-        };
+        var fullThemeChart = $scope.getNewChart('#theme-chart-full-theme');
+        fullThemeChart.titleFont('bold 11pt Helvetica');
+        fullThemeChart.titleColor('#081717');
+        fullThemeChart.seriesPalette(['#A60303', '#FFAD00', '#FF2F00', '#BD7217', '#873300']);
+        fullThemeChart.draw();
+
+
     }
 
     angular.module('insightChartsControllers').controller('HowToStyleChartController', ['$scope', HowToStyleChartController]);
