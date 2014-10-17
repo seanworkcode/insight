@@ -25,15 +25,20 @@
                         templateUrl: 'app/partials/how-to-index.html',
                         controller: 'HowTo'
                     })
-                    .when('/how-to/interactive',
+                    .when('/how-to/chart',
                     {
-                        templateUrl: 'app/how-to/interactive.html',
-                        controller: 'HowToInteractiveAxis'
+                        templateUrl: 'app/how-to/chart/chart.html',
+                        controller: 'HowToChartController'
                     })
-                    .when('/how-to/multipleseries',
+                    .when('/how-to/style',
                     {
-                        templateUrl: 'app/how-to/multipleseries.html',
-                        controller: 'HowToMultipleSeries'
+                        templateUrl: 'app/how-to/style/style.html',
+                        controller: 'HowToStyleController'
+                    })
+                    .when('/how-to/data',
+                    {
+                        templateUrl: 'app/how-to/data/data.html',
+                        controller: 'HowToDataController'
                     })
                     .when('/how-to/axis-customisation',
                     {

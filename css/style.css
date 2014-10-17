@@ -339,6 +339,44 @@ h4,h5,h6,.h4,.h5,.h6 {
     margin-top: 30px;
 }
 
+/* How To Styles */
+
+.how-to-divider {
+    background: #DDD;
+    height: 1px;
+    width: 100%;
+}
+
+.how-to-arrow {
+    color: #FF9100;
+}
+
+.how-to-header {
+    border-left-color: #FF9100;
+    border-left-style: solid;
+    border-left-width: 2px;
+    padding-left: 10px;
+}
+
+.how-to-indent {
+    margin-left: 13px;
+}
+
+.how-to-section {
+    padding-top: 50px;
+}
+
+.anchor-button {
+    font-size: 20pt;
+    cursor: pointer;
+}
+
+.top-anchor-button {
+    float: right;
+    font-size: 14pt;
+    padding-top: 20px;
+    cursor: pointer;
+}
 
 .heading-emphasis {
     color: #FF9100;

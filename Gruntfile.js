@@ -19,7 +19,8 @@ module.exports = function(grunt) {
                   'app/snippets/*.js',
                   'app/components/*.js',
                   'app/getting-started/*.js',
-                  'app/how-to/*.js'
+                  'app/how-to/*/*.js',
+                  'app/how-to/*/*/*.js'
               ],
               dest: 'app/app.dist.js'
           }

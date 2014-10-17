@@ -1,0 +1,104 @@
+<h2>How to <span class="how-to-arrow">&#10132;</span> Use an interactive axis<span data-ng-click="scrollTo('top-anchor')" class="top-anchor-button"><span class="how-to-arrow">&#9650;</span>Back To Top</span></h2>
+<div class="how-to-divider"></div>
+
+<h4 class="how-to-header">Prerequisites</h4>
+<ul>
+    <li><a href="#/gettingStarted">Getting Started</a></li>
+</ul>
+
+<h4 class="how-to-header">Objective</h4>
+<p class="how-to-indent">
+    This guide explains how to create a chart with an interactive axis like the one below.
+</p>
+<p class="how-to-indent">
+    Try using the mouse wheel to zoom in/out of the chart, and click-drag to pan through the data.
+    You can also zoom and pan using touch gestures.
+</p>
+
+
+<div id="interactive-chart" class="chart-centre" data-ng-init="loadChart()"></div>
+
+<h4 class="how-to-header">Why use an interactive axis?</h4>
+<p class="how-to-indent">
+    Sometimes it can be easier to display a small window of the data, and allow the user to pan the window through
+    the data.
+</p>
+
+<h4 class="how-to-header">Preparing the data</h4>
+<p class="how-to-indent">
+    For this guide we are generating a data set that consists of a section of a sine wave.
+</p>
+
+<code class="language-javascript">
+    var sinData = [];
+    for (var degrees = 0; degrees < 360 * 3; degrees += 15) {
+
+    var radians = degrees * Math.PI / 180;
+
+    sinData.push({
+    x: degrees,
+    y: Math.sin(radians) + 1
+    });
+    }
+
+    var dataset = new insight.DataSet(sinData);
+
+</code>
+
+<h4 class="how-to-header">Creating the chart</h4>
+<p class="how-to-indent">Our chart is created with a custom width, height and title.</p>
+
+<code class="language-javascript">
+    var chart = new insight.Chart('sin', '#chart')
+    .width(450)
+    .height(250)
+    .title('y = sin(x) + 1');
+</code>
+
+<h4 class="how-to-header">Creating the axes</h4>
+<p class="how-to-indent">We add two linear axes to the chart.</p>
+
+<code class="language-javascript">
+    var x = new insight.Axis('x', insight.scales.linear);
+    var y = new insight.Axis('y', insight.scales.linear);
+
+    chart.xAxis(x);
+    chart.yAxis(y);
+</code>
+
+<h4 class="how-to-header">Setting the interactive axis</h4>
+<p class="how-to-indent">
+    The interactive axis is set using
+    <api-docs page="insight.Chart" anchor="#self.setInteractiveAxis">insight.Chart.setInteractiveAxis</api-docs>.
+</p>
+
+<code class="language-javascript">
+    chart.setInteractiveAxis(x);
+</code>
+
+<h4 class="how-to-header">Add the line series</h4>
+<p class="how-to-indent">Create a line series using the x and y values as key and value functions, then add it to the chart.</p>
+
+<code class="language-javascript">
+    var line = new insight.LineSeries('sin-x', dataset, x, y)
+    .keyFunction(function(d){
+    return d.x;
+    })
+    .valueFunction(function(d){
+    return d.y;
+    });
+
+    chart.series([line]);
+</code>
+
+<p class="how-to-indent">
+    See <api-docs page="insight.LineSeries">insight.LineSeries</api-docs>
+    for more detail about what you can do with a line series.
+</p>
+
+<h4 class="how-to-header">Draw the chart</h4>
+
+<code class="language-javascript">
+    chart.draw();
+</code>
+
