@@ -35,15 +35,10 @@
                         templateUrl: 'app/how-to/style/style.html',
                         controller: 'HowToChartController'
                     })
-                    .when('/how-to/interactive',
+                    .when('/how-to/data',
                     {
-                        templateUrl: 'app/how-to/interactive.html',
-                        controller: 'HowToInteractiveAxis'
-                    })
-                    .when('/how-to/multipleseries',
-                    {
-                        templateUrl: 'app/how-to/multipleseries.html',
-                        controller: 'HowToMultipleSeries'
+                        templateUrl: 'app/how-to/data/data.html',
+                        controller: 'HowToChartController'
                     })
                     .when('/how-to/axis-customisation',
                     {
