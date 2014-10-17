@@ -1042,7 +1042,6 @@ function createLanguageChart(chartGroup, languages){
                 .width(500)
                 .height(350)
                 .title('Ages of People');
-
             var x = new insight.Axis('Age', insight.scales.linear);
             var y = new insight.Axis('', insight.scales.ordinal);
 
@@ -1063,7 +1062,7 @@ function createLanguageChart(chartGroup, languages){
             return chart;
         };
 
-        $scope.loadChart = function() {
+        $scope.loadData = function() {
             var defaultThemeChart = $scope.getNewChart('#theme-chart-default-theme');
             defaultThemeChart.draw();
 

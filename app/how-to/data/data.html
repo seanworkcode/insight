@@ -4,28 +4,13 @@
         <div id="top-anchor">
             <h1>How To Guides For Chart Data</h1>
             <div class="how-to-divider"></div>
-            <div data-ng-click="scrollTo('legend-anchor')" class="anchor-button"><span class="how-to-arrow">&#10132;</span> Add a legend</div>
-            <div data-ng-click="scrollTo('interactive-anchor')" class="anchor-button"><span class="how-to-arrow">&#10132;</span> Use an interactive axis</div>
-            <div data-ng-click="scrollTo('theme-anchor')" class="anchor-button"><span class="how-to-arrow">&#10132;</span> Theme a chart</div>
-            <div data-ng-click="scrollTo('multiple-anchor')" class="anchor-button"><span class="how-to-arrow">&#10132;</span> Add multiple series</div>
+            <div data-ng-click="scrollTo('correlate-anchor')" class="anchor-button"><span class="how-to-arrow">&#10132;</span> Correlate data</div>
         </div>
 
-        <div id="legend-anchor" class="how-to-section" >
-            <!--<div data-ng-include src="'app/how-to/chart/items/legend.html'" data-ng-controller="HowToLegend"></div>-->
+        <div id="correlate-anchor" class="how-to-section" >
+            <div data-ng-include src="'app/how-to/data/items/correlation.html'" data-ng-controller="HowToDataCorrelationController"></div>
         </div>
 
-        <div id="interactive-anchor" class="how-to-section">
-            <!--<div data-ng-include src="'app/how-to/chart/items/interactive.html'" data-ng-controller="HowToInteractiveAxis"></div>-->
-        </div>
-
-        <div id="theme-anchor" class="how-to-section">
-            <h2>How to <span class="how-to-arrow">&#10132;</span> Theme a chart<span data-ng-click="scrollTo('top-anchor')" class="top-anchor-button"><span class="how-to-arrow">&#9650;</span>Back To Top</span></h2>
-            <div class="how-to-divider"></div>
-        </div>
-
-        <div id="multiple-anchor" class="how-to-section">
-            <!--<div data-ng-include src="'app/how-to/chart/items/multipleseries.html'" data-ng-controller="HowToMultipleSeries"></div>-->
-        </div>
     </div>
 </section>
 <div id="footer" class="container">

@@ -16,7 +16,7 @@
 <h4 class="how-to-header">Why use multiple series?</h4>
 <p>
     Sometimes we will want to display more than one value for each key in our chart. For example, we may want
-    to know how our current performance compares to the past or some aim in the future.
+    to see how our current performance compares to the past or some aim in the future.
 </p>
 
 <h4 class="how-to-header">The data</h4>
@@ -28,58 +28,31 @@
 <code class="language-javascript">
     var leaguePlaces = [
     {
-        teamName: 'Chuffed FC',
-        currentPosition: 5,
-        targetPoints: 50,
-        currentPoints: 18
+        teamName: 'Chuffed FC', currentPosition: 5, targetPoints: 50, currentPoints: 18
     },
     {
-        teamName: 'Old Boys',
-        currentPosition: 3,
-        targetPoints: 45,
-        currentPoints: 27
+        teamName: 'Old Boys', currentPosition: 3, targetPoints: 45, currentPoints: 27
     },
     {
-        teamName: 'Hairy Harriers',
-        currentPosition: 1,
-        targetPoints: 90,
-        currentPoints: 35
+        teamName: 'Hairy Harriers', currentPosition: 1, targetPoints: 90, currentPoints: 35
     },
     {
-        teamName: 'Kings Arms',
-        currentPosition: 2,
-        targetPoints: 40,
-        currentPoints: 34
+        teamName: 'Kings Arms', currentPosition: 2, targetPoints: 40, currentPoints: 34
     },
     {
-        teamName: 'YMCA Athletic',
-        currentPosition: 6,
-        targetPoints: 35,
-        currentPoints: 18
+        teamName: 'YMCA Athletic', currentPosition: 6, targetPoints: 35, currentPoints: 18
     },
     {
-        teamName: 'Wasters',
-        currentPosition: 7,
-        targetPoints: 3,
-        currentPoints: 10
+        teamName: 'Wasters', currentPosition: 7, targetPoints: 3, currentPoints: 10
     },
     {
-        teamName: 'Dreamers',
-        currentPosition: 8,
-        targetPoints: 74,
-        currentPoints: 2
+        teamName: 'Dreamers', currentPosition: 8, targetPoints: 74, currentPoints: 2
     },
     {
-        teamName: 'Posers',
-        currentPosition: 4,
-        targetPoints: 65,
-        currentPoints: 20
+        teamName: 'Posers', currentPosition: 4, targetPoints: 65, currentPoints: 20
     },
     {
-        teamName: 'Hackney Hackers',
-        currentPosition: 3,
-        targetPoints: 38,
-        currentPoints: 22
+        teamName: 'Hackney Hackers', currentPosition: 3, targetPoints: 38, currentPoints: 22
     }];
 
     var dataset = new insight.DataSet(leaguePlaces);
@@ -100,7 +73,7 @@
 <h4 class="how-to-header">Creating the axes</h4>
 <p>
     We add an ordinal x-axis and linear y-axis to the chart. See <how-to-guide>axis customisation</how-to-guide>
-    if you are unfamiliar with formatting like we have used below.
+    if you are unfamiliar with axis formatting.
 </p>
 
 <code class="language-javascript">
@@ -124,13 +97,13 @@
 
 <code class="language-javascript">
     var teamNameFunc = function(d) {
-    return d.teamName;
+        return d.teamName;
     };
 
     var currentPoints = new insight.ColumnSeries('Current', dataset, x, y)
-    .keyFunction(teamNameFunc)
-    .valueFunction(function(d){
-    return d.currentPoints;
+        .keyFunction(teamNameFunc)
+        .valueFunction(function(d){
+        return d.currentPoints;
     });
 
 </code>
@@ -143,9 +116,9 @@
 
 <code class="language-javascript">
     var targetPoints = new insight.MarkerSeries('Target', dataset, x, y)
-    .keyFunction(teamNameFunc)
-    .valueFunction(function(d) {
-    return d.targetPoints;
+        .keyFunction(teamNameFunc)
+        .valueFunction(function(d) {
+        return d.targetPoints;
     })
     .widthFactor(0.7);
 
