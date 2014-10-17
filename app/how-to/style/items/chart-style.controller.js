@@ -47,21 +47,21 @@
             return chart;
         };
 
-        $scope.loadData = function() {
-            var defaultThemeChart = $scope.getNewChart('#theme-chart-default-theme');
-            defaultThemeChart.draw();
 
-            var titleThemeChart = $scope.getNewChart('#theme-chart-title-theme');
-            titleThemeChart.titleFont('bold 11pt Helvetica');
-            titleThemeChart.draw();
+        var defaultThemeChart = $scope.getNewChart('#theme-chart-default-theme');
+        defaultThemeChart.draw();
 
-            var fullThemeChart = $scope.getNewChart('#theme-chart-full-theme');
-            fullThemeChart.titleFont('bold 11pt Helvetica');
-            fullThemeChart.titleColor('#081717');
-            fullThemeChart.seriesPalette(['#A60303', '#FFAD00', '#FF2F00', '#BD7217', '#873300']);
-            fullThemeChart.draw();
+        var titleThemeChart = $scope.getNewChart('#theme-chart-title-theme');
+        titleThemeChart.titleFont('bold 11pt Helvetica');
+        titleThemeChart.draw();
 
-        };
+        var fullThemeChart = $scope.getNewChart('#theme-chart-full-theme');
+        fullThemeChart.titleFont('bold 11pt Helvetica');
+        fullThemeChart.titleColor('#081717');
+        fullThemeChart.seriesPalette(['#A60303', '#FFAD00', '#FF2F00', '#BD7217', '#873300']);
+        fullThemeChart.draw();
+
+
     }
 
     angular.module('insightChartsControllers').controller('HowToStyleChartController', ['$scope', HowToStyleChartController]);
