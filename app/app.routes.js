@@ -33,12 +33,12 @@
                     .when('/how-to/style',
                     {
                         templateUrl: 'app/how-to/style/style.html',
-                        controller: 'HowToChartController'
+                        controller: 'HowToStyleController'
                     })
                     .when('/how-to/data',
                     {
                         templateUrl: 'app/how-to/data/data.html',
-                        controller: 'HowToChartController'
+                        controller: 'HowToDataController'
                     })
                     .when('/how-to/axis-customisation',
                     {
