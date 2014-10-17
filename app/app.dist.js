@@ -59,6 +59,11 @@
                         templateUrl: 'app/how-to/multipleseries.html',
                         controller: 'HowToMultipleSeries'
                     })
+                    .when('/how-to/axis-customisation',
+                    {
+                        templateUrl: 'app/how-to/axis-customisation.html',
+                        controller: 'AxisCustomisation'
+                    })
                     .otherwise(
                     {
                         redirectTo: '/'
@@ -482,12 +487,7 @@ function createLanguageChart(chartGroup, languages){
 (function () {
     'use strict';
 
-    function gettingStartedController($scope, ExamplesResource, $http) {
-        $scope.examples = ExamplesResource.query();
-        $scope.$parent.title = 'Getting Started - InsightJS';
-
-        Prism.highlightAll();
-
+    function createGettingStartedChart(domSelector) {
         var data = [
             { "name": "Michelle Hopper", "age": 26, "eyeColor": "green" },
             { "name": "Cochran Mcfadden", "age": 22, "eyeColor": "green" },
@@ -505,7 +505,7 @@ function createLanguageChart(chartGroup, languages){
 
         var dataset = new insight.DataSet(data);
 
-        var chart = new insight.Chart('Ages', '#chart')
+        var chart = new insight.Chart('Ages', domSelector)
             .width(500)
             .height(350)
             .title('Ages of People');
@@ -527,6 +527,17 @@ function createLanguageChart(chartGroup, languages){
 
 
         chart.series([rows]);
+
+        return chart;
+    }
+
+    function gettingStartedController($scope, ExamplesResource, $http) {
+        $scope.examples = ExamplesResource.query();
+        $scope.$parent.title = 'Getting Started - InsightJS';
+
+        Prism.highlightAll();
+
+        var chart = createGettingStartedChart('#chart');
 
         chart.draw();
     }

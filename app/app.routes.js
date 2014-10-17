@@ -45,6 +45,11 @@
                         templateUrl: 'app/how-to/multipleseries.html',
                         controller: 'HowToMultipleSeries'
                     })
+                    .when('/how-to/axis-customisation',
+                    {
+                        templateUrl: 'app/how-to/axis-customisation.html',
+                        controller: 'AxisCustomisation'
+                    })
                     .otherwise(
                     {
                         redirectTo: '/'

@@ -377,3 +377,7 @@ h4,h5,h6,.h4,.h5,.h6 {
     padding-top: 20px;
     cursor: pointer;
 }
+
+.heading-emphasis {
+    color: #FF9100;
+}
