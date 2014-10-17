@@ -36,8 +36,7 @@
                     })
                     .when('/how-to',
                     {
-                        templateUrl: 'app/partials/how-to-index.html',
-                        controller: 'HowTo'
+                        templateUrl: 'app/partials/how-to-index.html'
                     })
                     .when('/how-to/chart',
                     {
