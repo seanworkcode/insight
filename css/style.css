@@ -361,3 +361,19 @@ h4,h5,h6,.h4,.h5,.h6 {
 .how-to-indent {
     margin-left: 13px;
 }
+
+.how-to-section {
+    padding-top: 50px;
+}
+
+.anchor-button {
+    font-size: 20pt;
+    cursor: pointer;
+}
+
+.top-anchor-button {
+    float: right;
+    font-size: 14pt;
+    padding-top: 20px;
+    cursor: pointer;
+}

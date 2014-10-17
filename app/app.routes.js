@@ -27,7 +27,12 @@
                     })
                     .when('/how-to/chart',
                     {
-                        templateUrl: 'app/how-to/chart.html',
+                        templateUrl: 'app/how-to/chart/chart.html',
+                        controller: 'HowToChartController'
+                    })
+                    .when('/how-to/style',
+                    {
+                        templateUrl: 'app/how-to/style/style.html',
                         controller: 'HowToChartController'
                     })
                     .when('/how-to/interactive',

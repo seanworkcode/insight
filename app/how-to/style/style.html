@@ -1,0 +1,18 @@
+<section>
+    <div id="container-body" class="container">
+        <div id="top-anchor">
+            <h1>How To Guides For Styling</h1>
+            <div class="how-to-divider"></div>
+            <div data-ng-click="scrollTo('chart-anchor')" class="anchor-button"><span class="how-to-arrow">&#10132;</span> Style a chart</div>
+        </div>
+
+        <div id="chart-anchor" class="how-to-section" >
+            <div data-ng-include src="'app/how-to/style/items/chart-style.html'" data-ng-controller="HowToStyleChartController"></div>
+        </div>
+    </div>
+</section>
+<div id="footer" class="container">
+    <footer>Insight.js is an open source project created and maintained by <a target="_blank" href="//scottlogic.com">Scott
+        Logic</a>
+    </footer>
+</div>

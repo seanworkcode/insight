@@ -1,0 +1,29 @@
+<section>
+    <div id="container-body" class="container">
+
+        <div id="top-anchor">
+            <h1>How To Guides For Charts</h1>
+            <div class="how-to-divider"></div>
+            <div data-ng-click="scrollTo('legend-anchor')" class="anchor-button"><span class="how-to-arrow">&#10132;</span> Add a legend</div>
+            <div data-ng-click="scrollTo('interactive-anchor')" class="anchor-button"><span class="how-to-arrow">&#10132;</span> Use an interactive axis</div>
+            <div data-ng-click="scrollTo('multiple-anchor')" class="anchor-button"><span class="how-to-arrow">&#10132;</span> Add multiple series</div>
+        </div>
+
+        <div id="legend-anchor" class="how-to-section" >
+            <div data-ng-include src="'app/how-to/chart/items/legend.html'" data-ng-controller="HowToLegend"></div>
+        </div>
+
+        <div id="interactive-anchor" class="how-to-section">
+            <div data-ng-include src="'app/how-to/chart/items/interactive.html'" data-ng-controller="HowToInteractiveAxis"></div>
+        </div>
+
+        <div id="multiple-anchor" class="how-to-section">
+            <div data-ng-include src="'app/how-to/chart/items/multipleseries.html'" data-ng-controller="HowToMultipleSeries"></div>
+        </div>
+    </div>
+</section>
+<div id="footer" class="container">
+    <footer>Insight.js is an open source project created and maintained by <a target="_blank" href="//scottlogic.com">Scott
+        Logic</a>
+    </footer>
+</div>

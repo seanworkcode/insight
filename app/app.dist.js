@@ -41,7 +41,12 @@
                     })
                     .when('/how-to/chart',
                     {
-                        templateUrl: 'app/how-to/chart.html',
+                        templateUrl: 'app/how-to/chart/chart.html',
+                        controller: 'HowToChartController'
+                    })
+                    .when('/how-to/style',
+                    {
+                        templateUrl: 'app/how-to/style/style.html',
                         controller: 'HowToChartController'
                     })
                     .when('/how-to/interactive',
@@ -533,72 +538,74 @@ function createLanguageChart(chartGroup, languages){
 {
     'use strict';
 
-    function ChartController ($scope, $location, $anchorScroll) {
-        Prism.highlightAll();
+    function ChartController ($scope, $location, $anchorScroll, $timeout) {
 
         $scope.scrollTo = function (id) {
-            console.log('got this far');
             $location.hash(id);
             $anchorScroll();
         };
 
+        // to-do think of a better way - maybe find last loading element?
+        $timeout(function(){
+            Prism.highlightAll();
+        }, 200);
+    }
 
-        $scope.getLegendChart = function() {
-            var populationData = [
-                {
-                    "country": "England",
-                    "population": 53012456
-                },
-                {
-                    "country": "Scotland",
-                    "population": 5295000
-                },
-                {
-                    "country": "Wales",
-                    "population": 3063456
-                },
-                {
-                    "country": "Northern Ireland",
-                    "population": 1810863
-                }];
 
-            var chart = new insight.Chart('Population', "#legend-chart")
-                .width(500)
-                .height(400);
+    angular.module('insightChartsControllers').controller('HowToChartController', ['$scope', '$location', '$anchorScroll', '$timeout', ChartController]);
+}());
 
-            var x = new insight.Axis('Country', insight.scales.ordinal)
-                .title('')
-                .textAnchor('middle');
+(function()
+{
+    'use strict';
 
-            var y = new insight.Axis('Population', insight.scales.linear)
-                .title('Population')
-                .tickLabelFormat(function(tickValue)
-                {
-                    var millions = tickValue / 1000000;
-                    return millions + 'M';
-                })
-                .shouldShowGridlines(true);
+    function DataController ($scope, $location, $anchorScroll, $timeout) {
 
-            chart.xAxis(x);
-            chart.yAxis(y);
-
-            var populations = new insight.ColumnSeries('Population', populationData, x, y)
-                .keyFunction(function(d)
-                {
-                    return d.country;
-                })
-                .valueFunction(function(d)
-                {
-                    return d.population;
-                })
-                .tooltipFormat(insight.formatters.numberFormatter);
-
-            chart.series([populations]);
-
-            return chart;
+        $scope.scrollTo = function (id) {
+            $location.hash(id);
+            $anchorScroll();
         };
 
-        $scope.getInteractiveChart = function() {
+        // to-do think of a better way - maybe find last loading element?
+        $timeout(function(){
+            Prism.highlightAll();
+        }, 200);
+    }
+
+    angular.module('insightChartsControllers').controller('HowToDataController', ['$scope', '$location', '$anchorScroll', '$timeout', DataController]);
+}());
+
+(function()
+{
+    'use strict';
+
+    function HowToStyleController ($scope, $location, $anchorScroll, $timeout) {
+
+        $scope.scrollTo = function (id) {
+            $location.hash(id);
+            $anchorScroll();
+        };
+
+        // to-do think of a better way - maybe find last loading element?
+        $timeout(function(){
+            Prism.highlightAll();
+        }, 200);
+    }
+
+    angular.module('insightChartsControllers').controller('HowToStyleController', ['$scope', '$location', '$anchorScroll', '$timeout', HowToStyleController]);
+}());
+
+(function() {
+
+    'use strict';
+
+    function howToInteractiveAxis($scope) {
+
+        $scope.$parent.title = 'How to - Use an interactive axis';
+
+        Prism.highlightAll();
+
+        $scope.loadChart = function() {
             var sinData = [];
             for (var degrees = 0; degrees < 360 * 3; degrees += 15) {
 
@@ -635,33 +642,26 @@ function createLanguageChart(chartGroup, languages){
 
             chart.series([line]);
 
-            return chart;
+            chart.draw();
         };
-
-        var legendChart = $scope.getLegendChart();
-        legendChart.draw();
-
-        var interactiveChart = $scope.getInteractiveChart();
-        interactiveChart.draw();
-
     }
 
+    angular.module('insightChartsControllers')
+        .controller('HowToInteractiveAxis', ['$scope', howToInteractiveAxis]);
 
-    angular.module('insightChartsControllers').controller('HowToChartController', ['$scope', '$location', '$anchorScroll', ChartController]);
 }());
 
+/**
+ * Created by soneill on 14/10/14.
+ */
 (function()
 {
     'use strict';
 
-    angular.module('insightChartsControllers').controller('GettingStartedWithGroupings', ['$scope', 'ExamplesResource', '$http',
-        function($scope, ExamplesResource, $http)
-        {
-            $scope.examples = ExamplesResource.query();
-            $scope.$parent.title = 'Getting Started - InsightJS';
+    function LegendController ($scope) {
+        Prism.highlightAll();
 
-            Prism.highlightAll();
-
+        $scope.loadChart = function() {
             var data = [
                 { "name": "Michelle Hopper", "age": 26, "eyeColor": "green" },
                 { "name": "Cochran Mcfadden", "age": 22, "eyeColor": "green" },
@@ -679,86 +679,35 @@ function createLanguageChart(chartGroup, languages){
 
             var dataset = new insight.DataSet(data);
 
-            var eyeColorGrouping = dataset.group('eye-color', function(d) { return d.eyeColor; });
-
-            var chart = new insight.Chart('EyeColors', '#chart')
-                .width(350)
+            var chart = new insight.Chart('Ages', '#legend-chart')
+                .width(500)
                 .height(350)
-                .title('Number of People by Eye Color');
+                .title('Ages of People')
+                .legend(new insight.Legend());
 
-            var x = new insight.Axis('Eye Color', insight.scales.ordinal);
-
-            var y = new insight.Axis('', insight.scales.linear);
+            var x = new insight.Axis('Age', insight.scales.linear);
+            var y = new insight.Axis('', insight.scales.ordinal);
 
             chart.xAxis(x);
             chart.yAxis(y);
 
 
-            var columns = new insight.ColumnSeries('columns', eyeColorGrouping, x, y)
-                .valueFunction(function(d){
-                    return d.value.Count;
+            var rows = new insight.RowSeries('rows', dataset, x, y)
+                .keyFunction(function (person) {
+                    return person.name;
+                })
+                .valueFunction(function (person) {
+                    return person.age;
                 });
 
 
-            chart.series([columns]);
+            chart.series([rows]);
 
             chart.draw();
-        }
-    ]);
-}());
-
-(function() {
-
-    'use strict';
-
-    function howToInteractiveAxis($scope) {
-
-        $scope.$parent.title = 'How to - Use an interactive axis';
-
-        Prism.highlightAll();
-
-        var sinData = [];
-        for (var degrees = 0; degrees < 360 * 3; degrees += 15) {
-
-            var radians = degrees * Math.PI / 180;
-
-            sinData.push({
-                x: degrees,
-                y: Math.sin(radians) + 1
-            });
-        }
-
-        var dataset = new insight.DataSet(sinData);
-
-        var chart = new insight.Chart('sin', '#chart')
-            .width(450)
-            .height(250)
-            .title('y = sin(x) + 1');
-
-        var x = new insight.Axis('x', insight.scales.linear);
-        var y = new insight.Axis('y', insight.scales.linear);
-
-        chart.xAxis(x);
-        chart.yAxis(y);
-
-        chart.setInteractiveAxis(x);
-
-        var line = new insight.LineSeries('sin-x', dataset, x, y)
-            .keyFunction(function(d){
-                return d.x;
-            })
-            .valueFunction(function(d){
-                return d.y;
-            });
-
-        chart.series([line]);
-
-        chart.draw();
+        };
     }
 
-    angular.module('insightChartsControllers')
-        .controller('HowToInteractiveAxis', ['$scope', howToInteractiveAxis]);
-
+    angular.module('insightChartsControllers').controller('HowToLegend', ['$scope', LegendController]);
 }());
 
 (function () {
@@ -770,101 +719,103 @@ function createLanguageChart(chartGroup, languages){
 
         Prism.highlightAll();
 
-        var leaguePlaces = [
-            {
-                teamName: 'Chuffed FC',
-                currentPosition: 5,
-                targetPoints: 50,
-                currentPoints: 18
-            },
-            {
-                teamName: 'Old Boys',
-                currentPosition: 3,
-                targetPoints: 45,
-                currentPoints: 27
-            },
-            {
-                teamName: 'Hairy Harriers',
-                currentPosition: 1,
-                targetPoints: 90,
-                currentPoints: 35
-            },
-            {
-                teamName: 'Kings Arms',
-                currentPosition: 2,
-                targetPoints: 40,
-                currentPoints: 34
-            },
-            {
-                teamName: 'YMCA Athletic',
-                currentPosition: 6,
-                targetPoints: 35,
-                currentPoints: 18
-            },
-            {
-                teamName: 'Wasters',
-                currentPosition: 7,
-                targetPoints: 3,
-                currentPoints: 10
-            },
-            {
-                teamName: 'Dreamers',
-                currentPosition: 8,
-                targetPoints: 74,
-                currentPoints: 2
-            },
-            {
-                teamName: 'Posers',
-                currentPosition: 4,
-                targetPoints: 65,
-                currentPoints: 20
-            },
-            {
-                teamName: 'Hackney Hackers',
-                currentPosition: 3,
-                targetPoints: 38,
-                currentPoints: 22
-            }];
+        $scope.loadChart = function() {
+            var leaguePlaces = [
+                {
+                    teamName: 'Chuffed FC',
+                    currentPosition: 5,
+                    targetPoints: 50,
+                    currentPoints: 18
+                },
+                {
+                    teamName: 'Old Boys',
+                    currentPosition: 3,
+                    targetPoints: 45,
+                    currentPoints: 27
+                },
+                {
+                    teamName: 'Hairy Harriers',
+                    currentPosition: 1,
+                    targetPoints: 90,
+                    currentPoints: 35
+                },
+                {
+                    teamName: 'Kings Arms',
+                    currentPosition: 2,
+                    targetPoints: 40,
+                    currentPoints: 34
+                },
+                {
+                    teamName: 'YMCA Athletic',
+                    currentPosition: 6,
+                    targetPoints: 35,
+                    currentPoints: 18
+                },
+                {
+                    teamName: 'Wasters',
+                    currentPosition: 7,
+                    targetPoints: 3,
+                    currentPoints: 10
+                },
+                {
+                    teamName: 'Dreamers',
+                    currentPosition: 8,
+                    targetPoints: 74,
+                    currentPoints: 2
+                },
+                {
+                    teamName: 'Posers',
+                    currentPosition: 4,
+                    targetPoints: 65,
+                    currentPoints: 20
+                },
+                {
+                    teamName: 'Hackney Hackers',
+                    currentPosition: 3,
+                    targetPoints: 38,
+                    currentPoints: 22
+                }];
 
-        var dataset = new insight.DataSet(leaguePlaces);
+            var dataset = new insight.DataSet(leaguePlaces);
 
-        var chart = new insight.Chart('League', '#chart')
-            .width(500)
-            .height(500)
-            .legend(new insight.Legend());
+            var chart = new insight.Chart('League', '#multiple-chart')
+                .width(500)
+                .height(500)
+                .legend(new insight.Legend());
 
-        var x = new insight.Axis('Team', insight.scales.ordinal)
-            .tickLabelRotation(45)
-            .isOrdered(true);
+            var x = new insight.Axis('Team', insight.scales.ordinal)
+                .tickLabelRotation(45)
+                .isOrdered(true);
 
-        var y = new insight.Axis('Points', insight.scales.linear);
+            var y = new insight.Axis('Points', insight.scales.linear);
 
-        chart.xAxis(x);
-        chart.yAxis(y);
+            chart.xAxis(x);
+            chart.yAxis(y);
 
-        var teamNameFunc = function(d)
-        {
-            return d.teamName;
+            var teamNameFunc = function(d)
+            {
+                return d.teamName;
+            };
+
+            var currentPoints = new insight.ColumnSeries('Current', dataset, x, y)
+                .keyFunction(teamNameFunc)
+                .valueFunction(function(d)
+                {
+                    return d.currentPoints;
+                });
+
+            var targetPoints = new insight.MarkerSeries('Target', dataset, x, y)
+                .keyFunction(teamNameFunc)
+                .valueFunction(function(d)
+                {
+                    return d.targetPoints;
+                })
+                .widthFactor(0.7);
+
+            chart.series([currentPoints, targetPoints]);
+
+            chart.draw();
         };
-
-        var currentPoints = new insight.ColumnSeries('Current', dataset, x, y)
-            .keyFunction(teamNameFunc)
-            .valueFunction(function(d)
-            {
-                return d.currentPoints;
-            });
-
-        var targetPoints = new insight.MarkerSeries('Target', dataset, x, y)
-            .keyFunction(teamNameFunc)
-            .valueFunction(function(d)
-            {
-                return d.targetPoints;
-            })
-            .widthFactor(0.7);
-
-        chart.series([currentPoints, targetPoints]);
-
-        chart.draw();
     }
 
     angular.module('insightChartsControllers')
@@ -872,3 +823,73 @@ function createLanguageChart(chartGroup, languages){
 
 }());
 
+
+(function()
+{
+    'use strict';
+
+    function HowToStyleChartController ($scope) {
+        Prism.highlightAll();
+
+        $scope.getNewChart = function(elementId) {
+            var data = [
+                { "name": "Michelle Hopper", "age": 26, "eyeColor": "green" },
+                { "name": "Cochran Mcfadden", "age": 22, "eyeColor": "green" },
+                { "name": "Jessie Mckinney", "age": 23, "eyeColor": "brown" },
+                { "name": "Rhoda Reyes", "age": 40, "eyeColor": "brown" },
+                { "name": "Hawkins Wolf", "age": 26, "eyeColor": "green" },
+                { "name": "Lynne O'neill", "age": 39, "eyeColor": "green" },
+                { "name": "Twila Melendez", "age": 26, "eyeColor": "blue" },
+                { "name": "Courtney Diaz", "age": 20, "eyeColor": "brown" },
+                { "name": "Burton Beasley", "age": 36, "eyeColor": "green" },
+                { "name": "Mccoy Gray", "age": 25, "eyeColor": "brown" },
+                { "name": "Janie Benson", "age": 30, "eyeColor": "green" },
+                { "name": "Cherie Wilder", "age": 30, "eyeColor": "green" }
+            ];
+
+            var dataset = new insight.DataSet(data);
+
+            var chart = new insight.Chart('Ages', elementId)
+                .width(500)
+                .height(350)
+                .title('Ages of People');
+
+            var x = new insight.Axis('Age', insight.scales.linear);
+            var y = new insight.Axis('', insight.scales.ordinal);
+
+            chart.xAxis(x);
+            chart.yAxis(y);
+
+
+            var rows = new insight.RowSeries('rows', dataset, x, y)
+                .keyFunction(function (person) {
+                    return person.name;
+                })
+                .valueFunction(function (person) {
+                    return person.age;
+                });
+
+
+            chart.series([rows]);
+            return chart;
+        };
+
+        $scope.loadChart = function() {
+            var defaultThemeChart = $scope.getNewChart('#theme-chart-default-theme');
+            defaultThemeChart.draw();
+
+            var titleThemeChart = $scope.getNewChart('#theme-chart-title-theme');
+            titleThemeChart.titleFont('bold 11pt Helvetica');
+            titleThemeChart.draw();
+
+            var fullThemeChart = $scope.getNewChart('#theme-chart-full-theme');
+            fullThemeChart.titleFont('bold 11pt Helvetica');
+            fullThemeChart.titleColor('#081717');
+            fullThemeChart.seriesPalette(['#A60303', '#FFAD00', '#FF2F00', '#BD7217', '#873300']);
+            fullThemeChart.draw();
+
+        };
+    }
+
+    angular.module('insightChartsControllers').controller('HowToStyleChartController', ['$scope', HowToStyleChartController]);
+}());
