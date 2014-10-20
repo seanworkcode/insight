@@ -6,7 +6,7 @@
         function($scope, ExamplesResource, $http)
         {
             $scope.examples = ExamplesResource.query();
-            $scope.$parent.title = 'Getting Started - InsightJS';
+            $scope.$parent.title = 'How To : Group Data - InsightJS';
 
             Prism.highlightAll();
 
@@ -27,28 +27,36 @@
 
             var dataset = new insight.DataSet(data);
 
-            var eyeColorGrouping = dataset.group('eye-color', function(d) { return d.eyeColor; });
+            var eyeColorGrouping = dataset.group('eye-color', function(d) { return d.eyeColor; })
+                                          .mean(['age']);
+
 
             var chart = new insight.Chart('EyeColors', '#chart')
                 .width(350)
                 .height(350)
-                .title('Number of People by Eye Color');
+                .legend(new insight.Legend());
 
             var x = new insight.Axis('Eye Color', insight.scales.ordinal);
-
-            var y = new insight.Axis('', insight.scales.linear);
+            var y1 = new insight.Axis('', insight.scales.linear);
+            var y2 = new insight.Axis('', insight.scales.linear)
+                .hasReversedPosition(true);
 
             chart.xAxis(x);
-            chart.yAxis(y);
+            chart.yAxes([y1, y2]);
 
 
-            var columns = new insight.ColumnSeries('columns', eyeColorGrouping, x, y)
+            var columns = new insight.ColumnSeries('People', eyeColorGrouping, x, y1)
                 .valueFunction(function(d){
-                    return d.value.Count;
+                    return d.value.count;
+                });
+
+            var markers = new insight.MarkerSeries('Age', eyeColorGrouping, x, y2)
+                .valueFunction(function(d){
+                    return d.value.age.mean;
                 });
 
 
-            chart.series([columns]);
+            chart.series([columns, markers]);
 
             chart.draw();
         }
