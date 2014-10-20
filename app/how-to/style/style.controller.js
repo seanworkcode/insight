@@ -3,6 +3,7 @@
     'use strict';
 
     function HowToStyleController ($scope, $location, $anchorScroll, $timeout) {
+        $scope.$parent.title = 'How To Guides For Styling';
 
         $scope.scrollTo = function (id) {
             $location.hash(id);
