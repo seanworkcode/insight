@@ -39,10 +39,10 @@
                         templateUrl: 'app/how-to/data/data.html',
                         controller: 'HowToDataController'
                     })
-                    .when('/how-to/axis/customisation',
+                    .when('/how-to/axis',
                     {
-                        templateUrl: 'app/how-to/axis/customisation.html',
-                        controller: 'AxisCustomisation'
+                        templateUrl: 'app/how-to/axis/axis.html',
+                        controller: 'HowToDataController'
                     })
                     .otherwise(
                     {

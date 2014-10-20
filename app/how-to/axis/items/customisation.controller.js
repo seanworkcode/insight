@@ -82,8 +82,7 @@
 
     }
 
-    function axisCustomisationController($scope, ExamplesResource, $http, $location, $anchorScroll) {
-        $scope.examples = ExamplesResource.query();
+    function howToAxisCustomisation($scope) {
         $scope.$parent.title = 'How To: Customise an Axis';
 
         Prism.highlightAll();
@@ -102,5 +101,5 @@
         dataFormattingChart.draw();
     }
 
-    angular.module('insightChartsControllers').controller('AxisCustomisation', ['$scope', 'ExamplesResource', '$http', axisCustomisationController]);
+    angular.module('insightChartsControllers').controller('HowToAxisCustomisationController', ['$scope', howToAxisCustomisation]);
 }());
