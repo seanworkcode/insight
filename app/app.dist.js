@@ -38,6 +38,11 @@
                     {
                         templateUrl: 'app/partials/how-to-index.html'
                     })
+                    .when('/how-to/axis',
+                    {
+                        templateUrl: 'app/how-to/axis/axis.html',
+                        controller: 'HowToAxisController'
+                    })
                     .when('/how-to/chart',
                     {
                         templateUrl: 'app/how-to/chart/chart.html',
@@ -52,11 +57,6 @@
                     {
                         templateUrl: 'app/how-to/data/data.html',
                         controller: 'HowToDataController'
-                    })
-                    .when('/how-to/axis-customisation',
-                    {
-                        templateUrl: 'app/how-to/axis-customisation.html',
-                        controller: 'AxisCustomisation'
                     })
                     .otherwise(
                     {
@@ -450,7 +450,7 @@ function createLanguageChart(chartGroup, languages){
                 page: '@',
                 anchor: '@'
             },
-            templateUrl: '/app/components/api-docs.directive.html'
+            templateUrl: 'app/components/api-docs.directive.html'
         };
     }
 
@@ -471,7 +471,7 @@ function createLanguageChart(chartGroup, languages){
             scope: {
                 page: '@'
             },
-            templateUrl: '/app/components/how-to-guide.directive.html'
+            templateUrl: 'app/components/how-to-guide.directive.html'
         };
     }
 
@@ -543,7 +543,29 @@ function createLanguageChart(chartGroup, languages){
 {
     'use strict';
 
+    function HowToAxisController ($scope, $location, $anchorScroll, $timeout) {
+        $scope.$parent.title = 'How To Guides For An Axis';
+
+        $scope.scrollTo = function (id) {
+            $location.hash(id);
+            $anchorScroll();
+        };
+
+        // to-do think of a better way - maybe find last loading element?
+        $timeout(function(){
+            Prism.highlightAll();
+        }, 200);
+    }
+
+    angular.module('insightChartsControllers').controller('HowToAxisController', ['$scope', '$location', '$anchorScroll', '$timeout', HowToAxisController]);
+}());
+
+(function()
+{
+    'use strict';
+
     function ChartController ($scope, $location, $anchorScroll, $timeout) {
+        $scope.$parent.title = 'How To Guides For Charts';
 
         $scope.scrollTo = function (id) {
             $location.hash(id);
@@ -565,6 +587,7 @@ function createLanguageChart(chartGroup, languages){
     'use strict';
 
     function DataController ($scope, $location, $anchorScroll, $timeout) {
+        $scope.$parent.title = 'How To Guides For Chart Data';
 
         $scope.scrollTo = function (id) {
             $location.hash(id);
@@ -585,6 +608,7 @@ function createLanguageChart(chartGroup, languages){
     'use strict';
 
     function HowToStyleController ($scope, $location, $anchorScroll, $timeout) {
+        $scope.$parent.title = 'How To Guides For Styling';
 
         $scope.scrollTo = function (id) {
             $location.hash(id);
@@ -598,6 +622,109 @@ function createLanguageChart(chartGroup, languages){
     }
 
     angular.module('insightChartsControllers').controller('HowToStyleController', ['$scope', '$location', '$anchorScroll', '$timeout', HowToStyleController]);
+}());
+
+(function () {
+    'use strict';
+
+    function createGettingStartedChart(domSelector) {
+        var data = [
+            { "name": "Michelle Hopper", "age": 26, "eyeColor": "green" },
+            { "name": "Cochran Mcfadden", "age": 22, "eyeColor": "green" },
+            { "name": "Jessie Mckinney", "age": 23, "eyeColor": "brown" },
+            { "name": "Rhoda Reyes", "age": 40, "eyeColor": "brown" },
+            { "name": "Hawkins Wolf", "age": 26, "eyeColor": "green" },
+            { "name": "Lynne O'neill", "age": 39, "eyeColor": "green" },
+            { "name": "Twila Melendez", "age": 26, "eyeColor": "blue" },
+            { "name": "Courtney Diaz", "age": 20, "eyeColor": "brown" },
+            { "name": "Burton Beasley", "age": 36, "eyeColor": "green" },
+            { "name": "Mccoy Gray", "age": 25, "eyeColor": "brown" },
+            { "name": "Janie Benson", "age": 30, "eyeColor": "green" },
+            { "name": "Cherie Wilder", "age": 30, "eyeColor": "green" }
+        ];
+
+        var dataset = new insight.DataSet(data);
+
+        var chart = new insight.Chart('Ages', domSelector)
+            .width(500)
+            .height(350)
+            .title('Ages of People');
+
+        var x = new insight.Axis('Age', insight.scales.linear);
+        var y = new insight.Axis('', insight.scales.ordinal);
+
+        chart.xAxis(x);
+        chart.yAxis(y);
+
+
+        var rows = new insight.RowSeries('rows', dataset, x, y)
+            .keyFunction(function (person) {
+                return person.name;
+            })
+            .valueFunction(function (person) {
+                return person.age;
+            });
+
+
+        chart.series([rows]);
+
+        return chart;
+    }
+
+    function applyStylingChanges(chart) {
+
+        var x = chart.xAxis();
+        var y = chart.yAxis();
+
+        x.shouldShowGridlines(true);
+
+        x.hasReversedPosition(true);
+
+        x.tickPadding(5);
+
+        y.tickLabelRotation(30);
+
+    }
+
+    function applyDataFormattingChanges(chart) {
+
+        var x = chart.xAxis();
+        var y = chart.yAxis();
+
+        y.tickLabelFormat(function(tickValue) {
+            return tickValue.toUpperCase();
+        });
+
+        x.axisRange(0, 50);
+
+        x.tickFrequency(4);
+
+        y.orderingFunction(function(a, b)
+        {
+            return a.age - b.age;
+        });
+
+        y.isOrdered(true);
+
+    }
+
+    function howToAxisCustomisation($scope) {
+
+        var stylingChart = createGettingStartedChart('#stylingchart');
+
+        applyStylingChanges(stylingChart);
+
+        stylingChart.draw();
+
+        var dataFormattingChart = createGettingStartedChart('#dataformattingchart');
+
+        applyStylingChanges(dataFormattingChart);
+        applyDataFormattingChanges(dataFormattingChart);
+
+        dataFormattingChart.draw();
+    }
+
+    angular.module('insightChartsControllers').controller('HowToAxisCustomisationController', ['$scope', howToAxisCustomisation]);
 }());
 
 (function() {
@@ -1074,6 +1201,118 @@ function createLanguageChart(chartGroup, languages){
             chart.draw();
         }
     ]);
+}());
+
+(function () {
+    'use strict';
+
+    function chartStuff() {
+
+        var data = [
+            { "currentRevenue": 2000, "year": 2014, "month": 7, "client": "Globex" },
+            { "currentRevenue": 2000, "year": 2014, "month": 7, "client": "Wayne Enterprises" },
+            { "currentRevenue": 2000, "year": 2014, "month": 7, "client": "Globex" },
+            { "currentRevenue": 1700, "year": 2014, "month": 8, "client": "Globex" },
+            { "currentRevenue": 1700, "year": 2014, "month": 8, "client": "Wayne Enterprises" },
+            { "currentRevenue": 1700, "year": 2014, "month": 8, "client": "Globex" },
+            { "currentRevenue": 1700, "year": 2014, "month": 8, "client": "Acme Corp" },
+            { "currentRevenue": 1700, "year": 2014, "month": 8, "client": "Globex" },
+            { "currentRevenue": 1700, "year": 2014, "month": 8, "client": "Cyberdyne Systems" },
+            { "currentRevenue": 1700, "year": 2014, "month": 8, "client": "Acme Corp" },
+            { "currentRevenue": 2000, "year": 2014, "month": 9, "client": "Acme Corp" },
+            { "currentRevenue": 2000, "year": 2014, "month": 9, "client": "Cyberdyne Systems" },
+            { "currentRevenue": 2000, "year": 2014, "month": 9, "client": "Globex" },
+            { "currentRevenue": 2000, "year": 2014, "month": 9, "client": "Acme Corp" },
+            { "currentRevenue": 2000, "year": 2014, "month": 9, "client": "Globex" },
+            { "currentRevenue": 2000, "year": 2014, "month": 9, "client": "Wayne Enterprises" },
+            { "currentRevenue": 2000, "year": 2014, "month": 9, "client": "Globex" },
+            { "currentRevenue": 2000, "year": 2014, "month": 10, "client": "Globex" },
+            { "currentRevenue": 2000, "year": 2014, "month": 10, "client": "Wayne Enterprises" },
+            { "currentRevenue": 2000, "year": 2014, "month": 10, "client": "Globex" },
+            { "currentRevenue": 2000, "year": 2014, "month": 10, "client": "Acme Corp" },
+            { "currentRevenue": 2000, "year": 2014, "month": 10, "client": "Globex" },
+            { "currentRevenue": 2000, "year": 2014, "month": 10, "client": "Cyberdyne Systems" },
+            { "currentRevenue": 2000, "year": 2014, "month": 10, "client": "Acme Corp" },
+            { "currentRevenue": 1800, "year": 2014, "month": 11, "client": "Acme Corp" },
+            { "currentRevenue": 1800, "year": 2014, "month": 11, "client": "Cyberdyne Systems" },
+            { "currentRevenue": 1800, "year": 2014, "month": 11, "client": "Globex" },
+            { "currentRevenue": 1800, "year": 2014, "month": 11, "client": "Acme Corp" },
+            { "currentRevenue": 1800, "year": 2014, "month": 11, "client": "Globex" },
+            { "currentRevenue": 1800, "year": 2014, "month": 11, "client": "Wayne Enterprises"  },
+            { "currentRevenue": 1800, "year": 2014, "month": 11, "client": "Globex" }
+        ];
+
+        var dataset = new insight.DataSet(data);
+
+        var clientGrouping = dataset.group('clients', function (d) { return d.client; })
+            .sum(['currentRevenue'])
+            .cumulative(['currentRevenue.sum'])
+            .orderingFunction(function (a, b) {
+                return b.value.currentRevenue.sum - a.value.currentRevenue.sum;
+            });
+
+        clientGrouping.postAggregation(function (grouping) {
+            var data = grouping.extractData();
+
+            var total = data.map(function(groupData) {
+                return groupData.value.currentRevenue.sum;
+            }).reduce(function(previousValue, currentValue) {
+                return previousValue + currentValue;
+            });
+
+            data.forEach(function (d) {
+                d.value.percentage = d.value.currentRevenue.sumCumulative / total;
+            });
+        });
+
+
+        var paretoChart = new insight.Chart('Pareto', "#pareto")
+            .width(500)
+            .height(400);
+
+        var clientAxis = new insight.Axis('', insight.scales.ordinal, 'bottom')
+            .tickLabelOrientation('tb')
+            .isOrdered(true);
+
+        var clientRevenueAxis = new insight.Axis('', insight.scales.linear)
+            .tickLabelFormat(insight.formatters.currencyFormatter);
+
+        var cumulativeRevenueAxis = new insight.Axis('', insight.scales.linear)
+            .tickLabelFormat(insight.formatters.percentageFormatter)
+            .hasReversedPosition(true);
+
+        paretoChart.xAxis(clientAxis);
+
+        paretoChart.yAxes([clientRevenueAxis, cumulativeRevenueAxis]);
+
+
+
+        var clientRevenues = new insight.ColumnSeries('clientColumn', clientGrouping, clientAxis, clientRevenueAxis)
+            .valueFunction(function (d) {
+                return d.value.currentRevenue.sum;
+            })
+            .tooltipFormat(insight.formatters.currencyFormatter);
+
+        var cumulativeRevenue = new insight.LineSeries('percentLine', clientGrouping, clientAxis, cumulativeRevenueAxis)
+            .tooltipFormat(insight.formatters.percentageFormatter)
+            .valueFunction(function (d) {
+                return d.value.percentage;
+            });
+
+        paretoChart.series([clientRevenues, cumulativeRevenue]);
+
+        paretoChart.draw();
+
+    }
+
+    function HowToDataProcessingController($scope) {
+
+        Prism.highlightAll();
+
+        chartStuff();
+    }
+
+    angular.module('insightChartsControllers').controller('HowToDataProcessingController', ['$scope', HowToDataProcessingController]);
 }());
 
 (function()

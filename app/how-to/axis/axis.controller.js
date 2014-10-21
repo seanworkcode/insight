@@ -2,8 +2,8 @@
 {
     'use strict';
 
-    function ChartController ($scope, $location, $anchorScroll, $timeout) {
-        $scope.$parent.title = 'How To Guides For Charts';
+    function HowToAxisController ($scope, $location, $anchorScroll, $timeout) {
+        $scope.$parent.title = 'How To Guides For An Axis';
 
         $scope.scrollTo = function (id) {
             $location.hash(id);
@@ -16,6 +16,5 @@
         }, 200);
     }
 
-
-    angular.module('insightChartsControllers').controller('HowToChartController', ['$scope', '$location', '$anchorScroll', '$timeout', ChartController]);
+    angular.module('insightChartsControllers').controller('HowToAxisController', ['$scope', '$location', '$anchorScroll', '$timeout', HowToAxisController]);
 }());

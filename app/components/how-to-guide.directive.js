@@ -12,7 +12,7 @@
             scope: {
                 page: '@'
             },
-            templateUrl: '/app/components/how-to-guide.directive.html'
+            templateUrl: 'app/components/how-to-guide.directive.html'
         };
     }
 

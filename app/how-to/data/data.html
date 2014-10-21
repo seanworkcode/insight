@@ -2,10 +2,11 @@
     <div id="container-body" class="container">
 
         <div id="top-anchor">
-            <h1>How To Guides For Chart Data</h1>
+            <h1>{{$parent.title}}</h1>
             <div class="how-to-divider"></div>
             <div data-ng-click="scrollTo('correlate-anchor')" class="anchor-button"><span class="how-to-arrow">&#10132;</span> Correlate data</div>
             <div data-ng-click="scrollTo('grouping-anchor')" class="anchor-button"><span class="how-to-arrow">&#10132;</span> Group Data</div>
+            <div data-ng-click="scrollTo('processing-anchor')" class="anchor-button"><span class="how-to-arrow">&#10132;</span> Further process data</div>
         </div>
 
         <div id="correlate-anchor" class="how-to-section" >
@@ -16,7 +17,9 @@
             <div data-ng-include src="'app/how-to/data/items/grouping.html'"></div>
         </div>
 
-
+        <div id="processing-anchor" class="how-to-section" >
+            <div data-ng-include src="'app/how-to/data/items/processing.html'"></div>
+        </div>
     </div>
 </section>
 <div id="footer" class="container">

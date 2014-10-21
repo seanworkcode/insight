@@ -3,6 +3,7 @@
     'use strict';
 
     function DataController ($scope, $location, $anchorScroll, $timeout) {
+        $scope.$parent.title = 'How To Guides For Chart Data';
 
         $scope.scrollTo = function (id) {
             $location.hash(id);

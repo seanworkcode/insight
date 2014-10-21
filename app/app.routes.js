@@ -24,6 +24,11 @@
                     {
                         templateUrl: 'app/partials/how-to-index.html'
                     })
+                    .when('/how-to/axis',
+                    {
+                        templateUrl: 'app/how-to/axis/axis.html',
+                        controller: 'HowToAxisController'
+                    })
                     .when('/how-to/chart',
                     {
                         templateUrl: 'app/how-to/chart/chart.html',
@@ -38,11 +43,6 @@
                     {
                         templateUrl: 'app/how-to/data/data.html',
                         controller: 'HowToDataController'
-                    })
-                    .when('/how-to/axis-customisation',
-                    {
-                        templateUrl: 'app/how-to/axis-customisation.html',
-                        controller: 'AxisCustomisation'
                     })
                     .otherwise(
                     {
