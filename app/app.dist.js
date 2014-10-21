@@ -38,6 +38,11 @@
                     {
                         templateUrl: 'app/partials/how-to-index.html'
                     })
+                    .when('/how-to/axis',
+                    {
+                        templateUrl: 'app/how-to/axis/axis.html',
+                        controller: 'HowToAxisController'
+                    })
                     .when('/how-to/chart',
                     {
                         templateUrl: 'app/how-to/chart/chart.html',
@@ -51,11 +56,6 @@
                     .when('/how-to/data',
                     {
                         templateUrl: 'app/how-to/data/data.html',
-                        controller: 'HowToDataController'
-                    })
-                    .when('/how-to/axis',
-                    {
-                        templateUrl: 'app/how-to/axis/axis.html',
                         controller: 'HowToDataController'
                     })
                     .otherwise(
@@ -709,9 +709,6 @@ function createLanguageChart(chartGroup, languages){
     }
 
     function howToAxisCustomisation($scope) {
-        $scope.$parent.title = 'How To: Customise an Axis';
-
-        Prism.highlightAll();
 
         var stylingChart = createGettingStartedChart('#stylingchart');
 

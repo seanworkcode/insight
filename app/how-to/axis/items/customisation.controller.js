@@ -83,9 +83,6 @@
     }
 
     function howToAxisCustomisation($scope) {
-        $scope.$parent.title = 'How To: Customise an Axis';
-
-        Prism.highlightAll();
 
         var stylingChart = createGettingStartedChart('#stylingchart');
 
