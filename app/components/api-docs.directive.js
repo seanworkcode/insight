@@ -13,7 +13,7 @@
                 page: '@',
                 anchor: '@'
             },
-            templateUrl: '/app/components/api-docs.directive.html'
+            templateUrl: 'app/components/api-docs.directive.html'
         };
     }
 

@@ -450,7 +450,7 @@ function createLanguageChart(chartGroup, languages){
                 page: '@',
                 anchor: '@'
             },
-            templateUrl: '/app/components/api-docs.directive.html'
+            templateUrl: 'app/components/api-docs.directive.html'
         };
     }
 
@@ -471,7 +471,7 @@ function createLanguageChart(chartGroup, languages){
             scope: {
                 page: '@'
             },
-            templateUrl: '/app/components/how-to-guide.directive.html'
+            templateUrl: 'app/components/how-to-guide.directive.html'
         };
     }
 
