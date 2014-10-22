@@ -45,8 +45,7 @@
         return chart;
     }
 
-    function gettingStartedController($scope, ExamplesResource, $http) {
-        $scope.examples = ExamplesResource.query();
+    function gettingStartedController($scope, $http) {
         $scope.$parent.title = 'Getting Started - InsightJS';
 
         Prism.highlightAll();
@@ -56,5 +55,5 @@
         chart.draw();
     }
 
-    angular.module('insightChartsControllers').controller('GettingStarted', ['$scope', 'ExamplesResource', '$http', gettingStartedController]);
+    angular.module('insightChartsControllers').controller('GettingStarted', ['$scope', '$http', gettingStartedController]);
 }());

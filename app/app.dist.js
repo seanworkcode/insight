@@ -24,11 +24,6 @@
                         templateUrl: 'app/partials/index.html',
                         controller: 'Index'
                     })
-                    .when('/example/:example',
-                    {
-                        templateUrl: 'app/partials/example.html',
-                        controller: 'Example'
-                    })
                     .when('/gettingStarted',
                     {
                         templateUrl: 'app/getting-started/getting-started.html',
@@ -131,9 +126,9 @@
         });
     }
 
-    function indexController($scope, ExamplesResource, $http)
+    function indexController($scope, $http)
     {
-        $scope.examples = ExamplesResource.query();
+
         $scope.$parent.title = 'InsightJS - Open Source Analytics and Visualization for JavaScript';
         $scope.selectedId = '';
 
@@ -210,16 +205,15 @@
         };
     }
 
-    angular.module('insightChartsControllers').controller('Index', ['$scope', 'ExamplesResource', '$http', indexController]);
+    angular.module('insightChartsControllers').controller('Index', ['$scope', '$http', indexController]);
 }());
 
 (function()
 {
     'use strict';
 
-    function MainCtrl ($scope, ExamplesResource) {
+    function MainCtrl ($scope) {
         $scope.title = "InsightJS";
-        $scope.examples = ExamplesResource.query();
 
         // Fix to allow dropdown menu to function with a single click
         $('.dropdown-toggle')
@@ -233,36 +227,13 @@
     }
 
     angular.module('insightChartsControllers')
-        .controller('MainCtrl', ['$scope', 'ExamplesResource', MainCtrl]);
+        .controller('MainCtrl', ['$scope', MainCtrl]);
 
 }());
 
 (function() {
     //This file has been prefixed with underscore so that insightChartsServices is concatenated in the correct order
     angular.module('insightChartsServices', ['ngResource']);
-})();
-
-(function () {
-
-    function examplesResource($resource)
-    {
-        return $resource(
-            'pages.json',
-            {},
-            {
-                query:
-                {
-                    method: 'GET',
-                    params:
-                    {},
-                    isArray: true
-                }
-            }
-        );
-    }
-
-    angular.module('insightChartsServices').factory('ExamplesResource', ['$resource', examplesResource]);
-
 })();
 
 (function() {
@@ -525,8 +496,7 @@ function createLanguageChart(chartGroup, languages){
         return chart;
     }
 
-    function gettingStartedController($scope, ExamplesResource, $http) {
-        $scope.examples = ExamplesResource.query();
+    function gettingStartedController($scope, $http) {
         $scope.$parent.title = 'Getting Started - InsightJS';
 
         Prism.highlightAll();
@@ -536,7 +506,7 @@ function createLanguageChart(chartGroup, languages){
         chart.draw();
     }
 
-    angular.module('insightChartsControllers').controller('GettingStarted', ['$scope', 'ExamplesResource', '$http', gettingStartedController]);
+    angular.module('insightChartsControllers').controller('GettingStarted', ['$scope', '$http', gettingStartedController]);
 }());
 
 (function()
@@ -1073,10 +1043,9 @@ function createLanguageChart(chartGroup, languages){
 {
     'use strict';
 
-    angular.module('insightChartsControllers').controller('GettingStartedWithGroupings', ['$scope', 'ExamplesResource', '$http',
-        function($scope, ExamplesResource, $http)
+    angular.module('insightChartsControllers').controller('GettingStartedWithGroupings', ['$scope', '$http',
+        function($scope, $http)
         {
-            $scope.examples = ExamplesResource.query();
             $scope.$parent.title = 'How To : Group Data - InsightJS';
 
             Prism.highlightAll();
