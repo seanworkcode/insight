@@ -66,49 +66,6 @@
     angular.module('insightChartsControllers', []);
 })();
 
-(function () {
-
-    'use strict';
-
-    function exampleController($scope, $http, $routeParams, ResolveExample) {
-
-        $scope.onHtmlLoaded = function () {
-            $scope.loadContent();
-        };
-
-        //This function is responsible for loading the script and CSS specific to the example
-        $scope.loadContent = function () {
-            var script = $scope.page.script;
-            var css = $scope.page.partialCSS;
-
-            $http.get(script).then(function (result) {
-                var script = document.createElement("script");
-                script.type = "text/javascript";
-                script.text = result.data;
-
-                var style = document.createElement("link");
-                style.type = "text/css";
-                style.rel = "stylesheet";
-                style.href = css;
-
-                document.body.appendChild(script);
-                document.body.appendChild(style);
-
-                Prism.highlightAll();
-            });
-        };
-
-        ResolveExample.get($routeParams.example, function (page) {
-            $scope.$parent.title = page.pageName;
-            $scope.page = page;
-        });
-    }
-
-    angular.module('insightChartsControllers')
-        .controller('Example', ['$scope', '$http', '$routeParams', 'ResolveExample', exampleController]);
-
-}());
-
 (function()
 {
     'use strict';
@@ -234,39 +191,6 @@
 (function() {
     //This file has been prefixed with underscore so that insightChartsServices is concatenated in the correct order
     angular.module('insightChartsServices', ['ngResource']);
-})();
-
-(function() {
-
-    'use strict';
-
-    function resolveExampleService($http)
-    {
-        var factory = {};
-
-        factory.get = function(input, callback)
-        {
-            $http.get('pages.json')
-                .success(function(data)
-                {
-                    var page = data.filter(function(item)
-                    {
-                        return item.name == input;
-                    });
-                    if (page.length == 1)
-                    {
-                        callback(page[0]);
-                    }
-
-                    return [];
-                });
-        };
-
-        return factory;
-    }
-
-    angular.module('insightChartsServices').factory('ResolveExample', ['$http', resolveExampleService]);
-
 })();
 
 (function() {
