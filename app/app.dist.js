@@ -1056,7 +1056,6 @@ function createLanguageChart(chartGroup, languages){
         $('.btn').button();
 
         [false, true].map(function(isX) {
-            // xAxis() or yAxis()
             var prefix = isX ? 'x' : 'y';
             bindButton(prefix + 'currentposition', selectCurrentPosition, chart, isX, 'Current Position');
             bindButton(prefix + 'currentpoints', selectCurrentPoints, chart, isX, 'Current Points');
