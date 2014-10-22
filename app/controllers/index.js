@@ -15,9 +15,9 @@
         });
     }
 
-    function indexController($scope, ExamplesResource, $http)
+    function indexController($scope, $http)
     {
-        $scope.examples = ExamplesResource.query();
+
         $scope.$parent.title = 'InsightJS - Open Source Analytics and Visualization for JavaScript';
         $scope.selectedId = '';
 
@@ -94,5 +94,5 @@
         };
     }
 
-    angular.module('insightChartsControllers').controller('Index', ['$scope', 'ExamplesResource', '$http', indexController]);
+    angular.module('insightChartsControllers').controller('Index', ['$scope', '$http', indexController]);
 }());

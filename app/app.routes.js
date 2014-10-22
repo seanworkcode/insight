@@ -10,11 +10,6 @@
                         templateUrl: 'app/partials/index.html',
                         controller: 'Index'
                     })
-                    .when('/example/:example',
-                    {
-                        templateUrl: 'app/partials/example.html',
-                        controller: 'Example'
-                    })
                     .when('/gettingStarted',
                     {
                         templateUrl: 'app/getting-started/getting-started.html',
