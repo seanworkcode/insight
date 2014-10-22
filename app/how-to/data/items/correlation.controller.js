@@ -2,181 +2,112 @@
 {
     'use strict';
 
-    function HowToDataCorrelationController ($scope, $location, $anchorScroll, $timeout) {
+    function createCorrelationChart() {
 
+        var leaguePlaces = [
+            { "currentPosition" : 5, "currentPoints" : 18, "targetPoints" : 50, "teamName" : 'Chuffed FC' },
+            { "currentPosition" : 3, "currentPoints" : 27, "targetPoints" : 45, "teamName" : 'Old Boys' },
+            { "currentPosition" : 1, "currentPoints" : 35, "targetPoints" : 90, "teamName" : 'Hairy Harriers' },
+            { "currentPosition" : 2, "currentPoints" : 34, "targetPoints" : 40, "teamName" : 'Kings Arms' },
+            { "currentPosition" : 6, "currentPoints" : 18, "targetPoints" : 35, "teamName" : 'YMCA Athletic' },
+            { "currentPosition" : 7, "currentPoints" : 10, "targetPoints" : 3,  "teamName" : 'Wasters' },
+            { "currentPosition" : 8, "currentPoints" : 2,  "targetPoints" : 74, "teamName" : 'Dreamers' },
+            { "currentPosition" : 4, "currentPoints" : 20, "targetPoints" : 65, "teamName" : 'Posers' },
+            { "currentPosition" : 3, "currentPoints" : 22, "targetPoints" : 38, "teamName" : 'Hackney Hackers' }
+        ];
 
-        d3.json('datasets/appstore.json', function(data)
-        {
-            data.forEach(function(d)
-            {
-                d.releaseDate = new Date(d.releaseDate);
-                d.fileSizeBytes = +d.fileSizeBytes;
-            });
+        var dataset = new insight.DataSet(leaguePlaces);
 
-            var chartGroup = new insight.ChartGroup();
+        var chart = new insight.Chart('Chart 3', '#bubbleChart')
+            .width(400)
+            .height(300);
 
-            var dataset = new insight.DataSet(data);
+        var xAxis = new insight.Axis('Current Position', insight.scales.linear)
+            .tickSize(2);
 
-            var genres = dataset.group('genre', function(d)
-            {
-                return d.primaryGenreName;
-            })
-                .sum(['userRatingCount'])
-                .mean(['price', 'averageUserRating', 'userRatingCount', 'fileSizeBytes']);
+        var yAxis = new insight.Axis('Current Points', insight.scales.linear);
 
-            var scatterChart = new insight.Chart('Chart 3', '#bubbleChart')
-                .width(500)
-                .height(400)
-                .margin(
-                {
-                    top: 50,
-                    left: 160,
-                    right: 40,
-                    bottom: 80
-                });
+        chart.xAxis(xAxis);
+        chart.yAxis(yAxis);
 
-            var xAxis = new insight.Axis('Average Number of Ratings', insight.scales.linear)
-                .tickSize(2);
+        var series = new insight.ScatterSeries('bubbles', dataset, xAxis, yAxis)
+            .keyFunction(selectCurrentPosition)
+            .valueFunction(selectCurrentPoints)
+            .tooltipFunction(selectTeamName);
 
-            var yAxis = new insight.Axis('Average Price', insight.scales.linear);
+        chart.series([series]);
 
-            scatterChart.xAxis(xAxis);
-            scatterChart.yAxis(yAxis);
+        return chart;
+    }
 
-            var scatter = new insight.ScatterSeries('bubbles', genres, xAxis, yAxis)
-                .keyFunction(function(d)
-                {
-                    return d.value.userRatingCount.mean;
-                })
-                .valueFunction(function(d)
-                {
-                    return d.value.price.mean;
-                })
-                .tooltipFunction(function(d)
-                {
-                    return d.key;
-                });
+    function selectCurrentPosition(d) {
+        return d.currentPosition;
+    }
 
-            scatterChart.series([scatter]);
-            buttonClick();
+    function selectCurrentPoints(d) {
+        return d.currentPoints;
+    }
 
+    function selectTargetPoints(d) {
+        return d.targetPoints;
+    }
 
+    function selectTeamName(d) {
+        return d.teamName;
+    }
 
+    function updateCorrelationLabel(dataset, series) {
+        var correlation = insight.correlation.fromDataProvider(dataset, series.keyFunction(), series.valueFunction());
+        var coefficientDiv = document.getElementById('correlationCoefficient');
+        coefficientDiv.innerHTML = correlation.toFixed(3);
+    }
 
+    function bindButton(cssSelector, dataSelector, chart, isX, axisLabel) {
+        var axis = isX ? chart.xAxis() : chart.yAxis();
+        var series = chart.series()[0];
+        var dataset = series.data;
 
+        var button = $('#' + cssSelector);
+        var label = $(isX ? '#xlabel' : '#ylabel');
 
-            $('.btn')
-                .button();
+        button.click(function() {
 
-            function buttonClick()
-            {
-                var correlation = insight.correlation.fromDataProvider(genres, scatter.keyFunction(), scatter.valueFunction());
-                var coefficientDiv = document.getElementById('correlationCoefficient');
-                coefficientDiv.innerHTML = correlation.toFixed(3);
-
-                scatterChart.draw();
+            if(isX) {
+                series.keyFunction(dataSelector);
+            } else {
+                series.valueFunction(dataSelector);
             }
 
-            function selectButton(selectedButton, deselectedButtons)
-            {
-                //Select the selected button
-                if (!$(selectedButton)
-                    .hasClass('selected'))
-                {
-                    $(selectedButton)
-                        .addClass('selected');
-                }
+            axis.title(axisLabel);
 
-                //Deselect the other buttons
-                deselectedButtons.forEach(function(button)
-                {
-                    if ($(button)
-                        .hasClass('selected'))
-                    {
-                        $(button)
-                            .removeClass('selected');
-                    }
-                });
+            updateCorrelationLabel(dataset, series);
+            chart.draw();
 
-                buttonClick();
-            }
-
-            $('#yavgrating')
-                .click(function()
-                {
-                    scatter.valueFunction(function(d)
-                    {
-                        return d.value.averageUserRating.mean;
-                    });
-                    yAxis.title('Average Rating');
-
-                    selectButton('#yavgrating', ['#yavgratings', '#yavgprice']);
-                });
-
-
-            $('#yavgratings')
-                .click(function()
-                {
-                    scatter.valueFunction(function(d)
-                    {
-                        return d.value.userRatingCount.mean;
-                    });
-                    yAxis.title('Average # Ratings');
-
-                    selectButton('#yavgratings', ['#yavgrating', '#yavgprice']);
-                });
-
-            $('#yavgprice')
-                .click(function()
-                {
-                    scatter.valueFunction(function(d)
-                    {
-                        return d.value.price.mean;
-                    });
-                    yAxis.title('Average Price');
-
-                    selectButton('#yavgprice', ['#yavgrating', '#yavgratings']);
-                });
-
-            $('#xsumrating')
-                .click(function()
-                {
-                    scatter.keyFunction(function(d)
-                    {
-                        return d.value.userRatingCount.sum;
-                    });
-                    xAxis.title('Total Ratings');
-
-                    selectButton('#xsumrating', ['#xavgrating', '#xavgsize']);
-                });
-
-            $('#xavgrating')
-                .click(function()
-                {
-                    scatter.keyFunction(function(d)
-                    {
-                        return d.value.averageUserRating.mean;
-                    });
-                    xAxis.title('Average Rating');
-
-                    selectButton('#xavgrating', ['#xsumrating', '#xavgsize']);
-                });
-
-            $('#xavgsize')
-                .click(function()
-                {
-
-                    scatter.keyFunction(function(d)
-                    {
-                        return d.value.fileSizeBytes.mean / 1024 / 1024;
-                    });
-                    xAxis.title('Average File Size (Mb)');
-
-                    selectButton('#xavgsize', ['#xavgrating', '#xsumrating']);
-                });
+            label.text(axisLabel);
         });
 
     }
 
-    angular.module('insightChartsControllers').controller('HowToDataCorrelationController', ['$scope', '$location', '$anchorScroll', '$timeout', HowToDataCorrelationController]);
+
+    function HowToDataCorrelationController ($scope) {
+
+        var chart = createCorrelationChart();
+        var series = chart.series()[0];
+        var dataset = series.data;
+
+
+        $('.btn').button();
+
+        [false, true].map(function(isX) {
+            var prefix = isX ? 'x' : 'y';
+            bindButton(prefix + 'currentposition', selectCurrentPosition, chart, isX, 'Current Position');
+            bindButton(prefix + 'currentpoints', selectCurrentPoints, chart, isX, 'Current Points');
+            bindButton(prefix + 'targetpoints', selectTargetPoints, chart, isX, 'Target Points');
+        });
+
+        updateCorrelationLabel(dataset, series);
+        chart.draw();
+    }
+
+    angular.module('insightChartsControllers').controller('HowToDataCorrelationController', ['$scope', HowToDataCorrelationController]);
 }());
