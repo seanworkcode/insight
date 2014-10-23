@@ -418,7 +418,7 @@
                 adjustedTickSize += self.lineWidth();
             }
 
-            var tickValues = self.tickValues(); 
+            var tickValues = self.tickValues();
 
             self.axis = d3.svg.axis()
                 .scale(self.scale)
