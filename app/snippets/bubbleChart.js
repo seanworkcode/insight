@@ -13,8 +13,7 @@ function createBubbleChart(chartGroup, bubbleData) {
 
     bubbleChart
         .xAxis(xAxis)
-        .yAxis(yAxis)
-        .title('App price vs. rating vs. filesize (radius)');
+        .yAxis(yAxis);
 
     var bubbles = new insight.BubbleSeries('bubbles', bubbleData, xAxis, yAxis)
         .keyFunction(function(d) {

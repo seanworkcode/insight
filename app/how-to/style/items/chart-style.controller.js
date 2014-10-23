@@ -25,8 +25,8 @@
 
             var chart = new insight.Chart('Ages', elementId)
                 .width(500)
-                .height(350)
-                .title('Ages of People');
+                .height(350);
+
             var x = new insight.Axis('Age', insight.scales.linear);
             var y = new insight.Axis('', insight.scales.ordinal);
 
@@ -51,13 +51,7 @@
         var defaultThemeChart = $scope.getNewChart('#theme-chart-default-theme');
         defaultThemeChart.draw();
 
-        var titleThemeChart = $scope.getNewChart('#theme-chart-title-theme');
-        titleThemeChart.titleFont('bold 11pt Helvetica');
-        titleThemeChart.draw();
-
         var fullThemeChart = $scope.getNewChart('#theme-chart-full-theme');
-        fullThemeChart.titleFont('bold 11pt Helvetica');
-        fullThemeChart.titleColor('#081717');
         fullThemeChart.seriesPalette(['#A60303', '#FFAD00', '#FF2F00', '#BD7217', '#873300']);
         fullThemeChart.draw();
 

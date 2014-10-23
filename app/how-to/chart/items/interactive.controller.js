@@ -23,8 +23,7 @@
 
         var chart = new insight.Chart('sin', '#interactive-chart')
             .width(450)
-            .height(250)
-            .title('y = sin(x) + 1');
+            .height(250);
 
         var x = new insight.Axis('x', insight.scales.linear);
         var y = new insight.Axis('y', insight.scales.linear);
