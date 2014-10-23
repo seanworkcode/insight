@@ -71,9 +71,7 @@
          */
         self.chartStyle = {
             seriesPalette: undefined,
-            fillColor: undefined,
-            titleFont: undefined,
-            titleColor: undefined
+            fillColor: undefined
         };
 
         /**
