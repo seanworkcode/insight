@@ -31,8 +31,6 @@
         //Configure for chart
         self.chartStyle.seriesPalette = ['#A60303', '#FFAD00', '#FF2F00', '#BD7217', '#873300'];
         self.chartStyle.fillColor = '#fff';
-        self.chartStyle.titleFont = 'bold 11pt Helvetica';
-        self.chartStyle.titleColor = '#081717';
 
         //Configure series
         self.seriesStyle.shouldShowPoints = true;

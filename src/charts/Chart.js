@@ -20,15 +20,11 @@
             series = [],
             xAxes = [],
             yAxes = [],
-            title = '',
-            titleColor = d3.functor('#000'),
-            titleFont = '16pt Helvetica Neue',
             shouldAutoMargin = true,
             legend = null,
             zoomInitialized = false,
             initialized = false,
             zoomAxis = null,
-            titlePadding = 20,
             highlightSelector = insight.utils.highlightSelector(),
             seriesPalette = [];
 
@@ -92,10 +88,6 @@
             self.labelMeasurer = self.container
                 .append('text')
                 .attr('class', insight.constants.AxisLabelClass);
-
-            self.titleContainer = self.container
-                .append('text')
-                .attr('class', insight.constants.ChartTitleClass);
 
             self.addClipPath();
 
@@ -188,17 +180,6 @@
             var seriesOfType = self.filterSeriesByType(targetSeries);
             return seriesOfType.length;
 
-        };
-
-        self.drawTitle = function() {
-            self.titleContainer
-                .style('position', 'absolute')
-                .style('left', self.margin().left + 'px')
-                .style('width', self.width() - self.margin().left - self.margin().right + 'px')
-                .style('text-align', 'center')
-                .style("font", self.titleFont())
-                .style("color", self.titleColor())
-                .text(title);
         };
 
         self.addClipPath = function() {
@@ -353,8 +334,6 @@
                 legend.draw(self, self.series());
             }
 
-            self.drawTitle();
-
             if (zoomable && !zoomInitialized) {
                 initZoom();
             }
@@ -413,97 +392,6 @@
             return self;
         };
 
-        /**
-         * The title of the chart.
-         * @memberof! insight.Chart
-         * @instance
-         * @returns {String} - The title of the chart.
-         *
-         * @also
-         *
-         * Sets the title of the chart.
-         * @memberof! insight.Chart
-         * @instance
-         * @param {String} chartTitle The new title of the chart.
-         * @returns {this}
-         */
-        self.title = function(chartTitle) {
-            if (!arguments.length) {
-                return title;
-            }
-
-            title = chartTitle;
-            return self;
-        };
-
-        /**
-         * The font of the chart title.
-         * @memberof! insight.Chart
-         * @instance
-         * @returns {String} - The font of the chart title.
-         *
-         * @also
-         *
-         * Sets the font of the chart title.
-         * @memberof! insight.Chart
-         * @instance
-         * @param {String} chartTitleFont The new font of the chart title.
-         * @returns {this}
-         */
-        self.titleFont = function(chartTitleFont) {
-            if (!arguments.length) {
-                return titleFont;
-            }
-
-            titleFont = chartTitleFont;
-            return self;
-        };
-
-        /**
-         * The text color of the chart title.
-         * @memberof! insight.Chart
-         * @instance
-         * @returns {Function} - The text color of the chart title.
-         *
-         * @also
-         *
-         * Sets the text color of the chart title.
-         * @memberof! insight.Chart
-         * @instance
-         * @param {Function} chartTitleColor The new text color of the chart title.
-         * @returns {this}
-         */
-        self.titleColor = function(chartTitleColor) {
-            if (!arguments.length) {
-                return titleColor;
-            }
-
-            titleColor = d3.functor(chartTitleColor);
-            return self;
-        };
-
-        /**
-         * The spacing between the chart title and the plot area.
-         * @memberof! insight.Chart
-         * @instance
-         * @returns {Number} - The padding in pixels between the chart title and the plot area.
-         *
-         * @also
-         *
-         * Sets the spacing between the chart title and the plot area.
-         * @memberof! insight.Chart
-         * @instance
-         * @param {Number} newTitlePadding The padding in pixels between the chart title and the plot area.
-         * @returns {this}
-         */
-        self.titlePadding = function(newTitlePadding) {
-            if (!arguments.length) {
-                return titlePadding;
-            }
-
-            titlePadding = newTitlePadding;
-            return self;
-        };
 
         /**
          * The width of the chart element, measured in pixels.
@@ -870,12 +758,6 @@
 
         });
 
-        //Adjust margins to fit the title
-        if (this.title() && this.title().length > 0) {
-            var textMeasurer = new insight.TextMeasurer(this.measureCanvas);
-            margin.top += textMeasurer.measureText(this.title(), this.titleFont()).height + this.titlePadding();
-        }
-
         this.margin(margin);
 
     };
@@ -890,9 +772,6 @@
     insight.Chart.prototype.applyTheme = function(theme) {
         var axes = this.xAxes()
             .concat(this.yAxes());
-
-        this.titleFont(theme.chartStyle.titleFont);
-        this.titleColor(theme.chartStyle.titleColor);
 
         axes.forEach(function(axis) {
             axis.applyTheme(theme);

@@ -3,7 +3,6 @@ insight.constants = (function() {
 
     exports.Behind = 'behind';
     exports.Front = 'front';
-    exports.ChartTitleClass = 'chart-title';
     exports.AxisTextClass = 'axis-text';
     exports.AxisLabelClass = 'axis-label';
     exports.YAxisClass = 'y-axis';

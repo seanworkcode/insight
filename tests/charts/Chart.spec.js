@@ -87,25 +87,6 @@ describe('Chart', function() {
             expect(chart.yAxes()).toEqual([]);
 
         });
-
-        it('title empty', function() {
-
-            expect(chart.title()).toBe('');
-
-        });
-
-
-        it('title color black', function() {
-
-            expect(chart.titleColor()()).toBe('#000');
-
-        });
-
-        it('title font 16pt Helvetica', function() {
-
-            expect(chart.titleFont()).toBe(insight.defaultTheme.chartStyle.titleFont);
-
-        });
     });
 
     describe('gets and sets', function() {
@@ -114,14 +95,6 @@ describe('Chart', function() {
 
         beforeEach(function() {
             chart = new insight.Chart('asda', 'asdads', 'ada');
-        });
-
-        it('title', function() {
-
-            var result = chart.title('Test Chart');
-
-            expect(chart.title()).toBe('Test Chart');
-            expect(result).toBe(chart);
         });
 
         it('width', function() {
@@ -632,40 +605,6 @@ describe('Chart', function() {
                 left: minimalMargins,
                 right: minimalMargins,
                 bottom: 230
-            });
-
-        });
-
-        it('expands top margin for title', function() {
-
-            // Given
-            var series = new insight.Series('testSeries', new insight.DataSet([]), xAxis, yAxis);
-
-            var titlePadding = 17;
-
-            spyOn(xAxis, 'calculateLabelDimensions').andReturn({ width: 0, height: 0});
-            spyOn(yAxis, 'calculateLabelDimensions').andReturn({ width: 0, height: 0});
-
-            spyOn(xAxis, 'calculateLabelOverhang').andReturn({ left: 0, right: 0, top: 20, bottom: 0});
-            spyOn(yAxis, 'calculateLabelOverhang').andReturn({ left: 0, right: 0, top: 25, bottom: 0});
-
-            chart.series([series]);
-            chart.title("ABC");
-            chart.titleFont("20pt Helvetica Neue");
-            chart.titlePadding(titlePadding);
-
-            // When
-            chart.calculateChartMargin();
-
-            // Then
-            var measurer = new insight.TextMeasurer(chart.measureCanvas);
-            var titleHeight = measurer.measureText(chart.title(), chart.titleFont()).height;
-
-            expect(chart.margin()).toEqual({
-                top: titlePadding + 25 + titleHeight,
-                left: minimalMargins,
-                right: minimalMargins,
-                bottom: minimalMargins
             });
 
         });
