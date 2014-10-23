@@ -3,7 +3,7 @@
     'use strict';
 
     function HowToAxisController ($scope, $location, $anchorScroll, $timeout) {
-        $scope.$parent.title = 'How To Guides For An Axis';
+        $scope.$parent.title = 'How-to guides for an axis';
 
         $scope.scrollTo = function (id) {
             $location.hash(id);

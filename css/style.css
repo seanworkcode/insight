@@ -420,11 +420,35 @@ h4,h5,h6,.h4,.h5,.h6 {
 
 .top-anchor-button {
     float: right;
-    font-size: 14pt;
-    padding-top: 20px;
+    font-size: 16pt;
+    padding-top: 17px;
     cursor: pointer;
 }
 
 .heading-emphasis {
     color: #FF9100;
 }
+
+.sticky {  
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 100;
+    border-top: 0;
+    margin-top: 110px;
+    display: block;
+}
+
+.sticky-nav {
+  width: 220px;
+  height: 60px;
+  padding-right: 10px;
+}
+
+.sticky-nav:hover {
+  background: #5FB6FF;
+  color: #fff;
+}
+
+
+

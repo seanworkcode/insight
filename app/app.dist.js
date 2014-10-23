@@ -466,6 +466,8 @@ function createLanguageChart(chartGroup, languages){
              $anchorScroll();
         };
 
+        
+
         // to-do think of a better way - maybe find last loading element?
         $timeout(function(){
             Prism.highlightAll();
