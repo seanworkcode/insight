@@ -346,6 +346,7 @@ h4,h5,h6,.h4,.h5,.h6 {
 
 .how-to-arrow {
     color: #FF9100;
+    font-family: monospace;
 }
 
 .how-to-header {
@@ -416,12 +417,18 @@ h4,h5,h6,.h4,.h5,.h6 {
 .anchor-button {
     font-size: 20pt;
     cursor: pointer;
+    width: 40%;
+}
+
+.anchor-button:hover {
+    background: #5FB6FF;
+    color: #fff;
 }
 
 .top-anchor-button {
     float: right;
     font-size: 16pt;
-    padding-top: 17px;
+    padding-top: 14px;
     cursor: pointer;
 }
 
@@ -435,8 +442,17 @@ h4,h5,h6,.h4,.h5,.h6 {
     top: 0;
     z-index: 100;
     border-top: 0;
-    margin-top: 110px;
     display: block;
+    cursor: pointer;
+}
+
+
+.first-sticky {
+    margin-top: 110px;
+}
+
+.second-sticky {
+    margin-top: 170px;
 }
 
 .sticky-nav {
@@ -450,5 +466,14 @@ h4,h5,h6,.h4,.h5,.h6 {
   color: #fff;
 }
 
-
+.how-to-step {
+  background: #2E9FDA;
+  color: #fff;
+  width: 25px;
+  display: inline-block;
+  text-align: center;
+  height: 25px;
+  margin-right: 18px;
+  font-size: 16pt;
+}
 

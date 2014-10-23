@@ -1,14 +1,14 @@
 <div data-ng-controller="GettingStartedWithGroupings">
-    <h2>How to <span class="how-to-arrow">&#10132;</span> Group Data</h2>
+    <h2>How to <span class="how-to-arrow">&#10132;</span> group data</h2>
     <div class="how-to-divider"></div>
 
     <h4 class="how-to-header">Prerequisites</h4>
     <ul>
         <li>
-            <a href="#/gettingStarted">Getting Started</a>
+            <a href="#/gettingStarted">Getting started</a>
         </li>
         <li>
-            <how-to-guide page="chart" anchor="#multiple-anchor">Multiple Series</how-to-guide>
+            <how-to-guide page="chart" anchor="#multiple-anchor">Multiple series</how-to-guide>
         </li>
     </ul>
 
@@ -18,8 +18,8 @@
 
     <div id="chart" class="chart-centre"></div>
 
-
-    <h4 class="how-to-header">The data</h4>
+    <h4 class="how-to-header">An example</h4>
+    <h4><span class="how-to-step">1</span>Prepare the data</h4>
 
     <p>
         The data below shows the eye colors and ages of 12 different people (you may recognise this data set from the
@@ -47,7 +47,7 @@
     </code>
 
 
-    <h4 class="how-to-header">Creating a group</h4>
+    <h4><span class="how-to-step">2</span>Create a group</h4>
 
     <p>
         If you look at the chart above, you will see that the data has been grouped by eye color.
@@ -120,7 +120,7 @@
 
     </p>
 
-    <h4 class="how-to-header">Creating the chart</h4>
+    <h4 ><span class="how-to-step">3</span>Create the chart</h4>
 
     <p>
         Our chart is created with a <how-to-guide page="chart">legend</how-to-guide>
@@ -135,7 +135,7 @@
 
     </code>
 
-    <h4 class="how-to-header">Creating the Axes</h4>
+    <h4><span class="how-to-step">4</span>Create the Axes</h4>
 
     <p>
         In this chart, we are using an ordinal x-axis for the eye colors, a linear y-axis for the number of
@@ -158,7 +158,7 @@
         out more advanced customisations.
     </p>
 
-    <h4 class="how-to-header">Add the column series</h4>
+    <h4><span class="how-to-step">5</span>Add the column series</h4>
 
     <p>
         We create a column series using the <code>value.count</code> property as the value function. The key function
@@ -173,7 +173,7 @@
 
     </code>
 
-    <h4 class="how-to-header">Add the marker series</h4>
+    <h4><span class="how-to-step">6</span>Add the marker series</h4>
 
     <p>
         We create a marker series using the <code>value.age.mean</code> property as the value function.</p>
@@ -189,7 +189,7 @@
 
     </code>
 
-    <h4 class="how-to-header">Draw the chart</h4>
+    <h4><span class="how-to-step">7</span>Draw the chart</h4>
 
     <code class="language-javascript">
         chart.draw();

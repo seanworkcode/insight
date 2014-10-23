@@ -20,7 +20,8 @@
         to see how our current performance compares to the past or some aim in the future.
     </p>
 
-    <h4 class="how-to-header">The data</h4>
+    <h4 class="how-to-header">Example</h4>
+    <h4><span class="how-to-step">1</span>Set the data</h4>
     <p>
         The data below shows the performance and aspirations of teams in a very serious, competitive football league.
         We wrap this data in an InsightJS DataSet object.
@@ -60,7 +61,7 @@
 
     </code>
 
-    <h4 class="how-to-header">Creating the chart</h4>
+    <h4><span class="how-to-step">2</span>Create the chart</h4>
     <p>Our chart is created with a custom width and height, as well as including a <how-to-guide>legend</how-to-guide>.</p>
 
     <code class="language-javascript">
@@ -71,7 +72,7 @@
 
     </code>
 
-    <h4 class="how-to-header">Creating the axes</h4>
+    <h4><span class="how-to-step">3</span>Create the axes</h4>
     <p>
         We add an ordinal x-axis and linear y-axis to the chart. See <how-to-guide>axis customisation</how-to-guide>
         if you are unfamiliar with axis formatting.
@@ -89,7 +90,7 @@
 
     </code>
 
-    <h4 class="how-to-header">Create the column series</h4>
+    <h4><span class="how-to-step">4</span>Create the column series</h4>
     <p>
         Create a column series using the team name and current number of points as key and value functions.
         Notice that we have abstracted the key function into <code>teamNameFunc</code> as we will be reusing this in
@@ -109,7 +110,7 @@
 
     </code>
 
-    <h4 class="how-to-header">Create the marker series</h4>
+    <h4><span class="how-to-step">5</span>Create the marker series</h4>
     <p>
         Here, we create a <how-to-guide>marker series</how-to-guide> using the team name and target number of points as key and value functions.
         Notice the call to <code>teamNameFunc</code> in the key function.
@@ -127,7 +128,7 @@
 
     </code>
 
-    <h4 class="how-to-header">Add the series</h4>
+    <h4><span class="how-to-step">6</span>Add the series</h4>
     <p>
         Add the column and maker series to the chart as an array.
     </p>
@@ -144,7 +145,7 @@
         for more detail about what you can do with these series.
     </p>
 
-    <h4 class="how-to-header">Don't forget to draw the chart!</h4>
+    <h4><span class="how-to-step">7</span>Don't forget to draw the chart!</h4>
     <p>If you don't draw the chart then you will not see it.</p>
 
     <code class="language-javascript">
