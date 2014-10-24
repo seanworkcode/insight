@@ -438,7 +438,7 @@ function createLanguageChart(chartGroup, languages){
     'use strict';
 
     function HowToAxisController ($scope, $location, $anchorScroll, $timeout) {
-        $scope.$parent.title = 'How-to guides for an axis';
+        $scope.$parent.title = 'How To Guides For An Axis';
 
         $scope.scrollTo = function (id) {
             $location.hash(id);
@@ -459,11 +459,11 @@ function createLanguageChart(chartGroup, languages){
     'use strict';
 
     function ChartController ($scope, $location, $anchorScroll, $timeout) {
-        $scope.$parent.title = 'How-to guides for charts';
-        
+        $scope.$parent.title = 'How To Guides For Charts';
+
         $scope.scrollTo = function (id) {
-             $location.hash(id);
-             $anchorScroll();
+            $location.hash(id);
+            $anchorScroll();
         };
 
         // to-do think of a better way - maybe find last loading element?
@@ -481,7 +481,7 @@ function createLanguageChart(chartGroup, languages){
     'use strict';
 
     function DataController ($scope, $location, $anchorScroll, $timeout) {
-        $scope.$parent.title = 'How-to guides for chart data';
+        $scope.$parent.title = 'How To Guides For Chart Data';
 
         $scope.scrollTo = function (id) {
             $location.hash(id);
@@ -502,7 +502,7 @@ function createLanguageChart(chartGroup, languages){
     'use strict';
 
     function HowToStyleController ($scope, $location, $anchorScroll, $timeout) {
-        $scope.$parent.title = 'How-to guides for styling';
+        $scope.$parent.title = 'How To Guides For Styling';
 
         $scope.scrollTo = function (id) {
             $location.hash(id);
@@ -707,7 +707,6 @@ function createLanguageChart(chartGroup, languages){
         var chart = new insight.Chart('Ages', '#legend-chart')
             .width(500)
             .height(350)
-            .title('Ages of People')
             .legend(new insight.Legend());
 
         var x = new insight.Axis('Age', insight.scales.linear);
@@ -723,7 +722,7 @@ function createLanguageChart(chartGroup, languages){
             })
             .valueFunction(function (person) {
                 return person.age;
-            });
+            }).title('bell end');
 
 
         chart.series([rows]);

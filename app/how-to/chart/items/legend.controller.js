@@ -29,7 +29,6 @@
         var chart = new insight.Chart('Ages', '#legend-chart')
             .width(500)
             .height(350)
-            .title('Ages of People')
             .legend(new insight.Legend());
 
         var x = new insight.Axis('Age', insight.scales.linear);
@@ -45,7 +44,7 @@
             })
             .valueFunction(function (person) {
                 return person.age;
-            });
+            }).title('bell end');
 
 
         chart.series([rows]);
