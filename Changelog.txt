@@ -8,6 +8,7 @@
     * Grouping.sum() stores sum in `value.propertyName.sum` rather than `value.propertyName.Sum`
   * Removed insight.Chart.title
   * Added insight.Series.title
+  * Updated library to work with crossfilter to 1.3.11
 
 
 
