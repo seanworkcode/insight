@@ -2,6 +2,8 @@ describe('Legend', function() {
 
     var chart,
         lineSeries,
+        markerSeries,
+        columnSeries,
         div;
 
     function setupDiv() {
@@ -56,6 +58,9 @@ describe('Legend', function() {
         ]);
 
         lineSeries = new insight.LineSeries('line', data, x, y);
+        markerSeries = new insight.MarkerSeries('marker', data, x, y);
+        columnSeries = new insight.ColumnSeries('column', data, x, y);
+
 
         mockTextMeasurer();
 
@@ -67,7 +72,7 @@ describe('Legend', function() {
 
         destroyDiv();
 
-    })
+    });
 
     it('legend size is 0,0 when no series on the chart', function() {
 
@@ -181,10 +186,10 @@ describe('Legend', function() {
         expect(allTexts).toEqual([d3.rgb(128, 0, 128), d3.rgb(128, 0, 128), d3.rgb(128, 0, 128)]);
     });
 
-    it('legend items contain series names', function() {
+    it('legend items contain series names by default', function() {
 
         //Given:
-        chart.series([lineSeries, lineSeries, lineSeries]);
+        chart.series([lineSeries, markerSeries, columnSeries]);
         var legend = new insight.Legend();
         chart.legend(legend);
 
@@ -197,6 +202,29 @@ describe('Legend', function() {
             return item.textContent;
         });
 
-        expect(allTexts).toEqual(["line", "line", "line"]);
+        expect(allTexts).toEqual(["line", "marker", "column"]);
+    });
+
+    it('legend items contain series titles', function() {
+
+        //Given:
+        lineSeries.title('I');
+        markerSeries.title('love');
+        columnSeries.title('tests');
+
+        chart.series([lineSeries, markerSeries, columnSeries]);
+        var legend = new insight.Legend();
+        chart.legend(legend);
+
+        //When:
+        legend.draw(chart);
+
+        //Then:
+        var allTextElements = chart.legendItems.selectAll('text')[0];
+        var allTexts = allTextElements.map(function(item) {
+            return item.textContent;
+        });
+
+        expect(allTexts).toEqual(["I", "love", "tests"]);
     });
 });
