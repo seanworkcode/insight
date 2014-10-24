@@ -139,7 +139,6 @@ img
 
 .container p
 {
-  font-weight: initial;
   line-height: 1.5em;
 }
 
@@ -434,6 +433,12 @@ h4,h5,h6,.h4,.h5,.h6 {
 
 .heading-emphasis {
     color: #FF9100;
+}
+
+.chart-title {
+    text-align: center;
+    font-weight: bold;
+
 }
 
 .sticky {  

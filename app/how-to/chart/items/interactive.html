@@ -19,7 +19,7 @@
         You can also zoom and pan using touch gestures.
     </p>
 
-
+    <h5 class="chart-title">y = sin(x) + 1</h5>
     <div id="interactive-chart" class="chart-centre"></div>
 
     <h4 class="how-to-header">Why use an interactive axis?</h4>
@@ -51,13 +51,12 @@
     </code>
 
     <h4><span class="how-to-step">2</span>Create the chart</h4>
-    <p class="how-to-indent">Our chart is created with a custom width, height and title.</p>
+    <p class="how-to-indent">Our chart is created with a custom width and height.</p>
 
     <code class="language-javascript">
         var chart = new insight.Chart('sin', '#chart')
-        .width(450)
-        .height(250)
-        .title('y = sin(x) + 1');
+            .width(450)
+            .height(250);
     </code>
 
     <h4><span class="how-to-step">3</span>Create the axes</h4>
