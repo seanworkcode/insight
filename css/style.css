@@ -394,12 +394,6 @@ h4,h5,h6,.h4,.h5,.h6 {
     border-left-width: 2px;
 }
 
-.how-to-index-link:hover {
-    text-decoration: none;
-    background: #2DA5E4;
-    color: #FFFFFF;
-}
-
 .how-to-index-link-item:hover {
     text-decoration: none;
     background: #2DA5E4;
@@ -434,36 +428,6 @@ h4,h5,h6,.h4,.h5,.h6 {
 
 .heading-emphasis {
     color: #FF9100;
-}
-
-.sticky {  
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 100;
-    border-top: 0;
-    display: block;
-    cursor: pointer;
-}
-
-
-.first-sticky {
-    margin-top: 110px;
-}
-
-.second-sticky {
-    margin-top: 170px;
-}
-
-.sticky-nav {
-  width: 220px;
-  height: 60px;
-  padding-right: 10px;
-}
-
-.sticky-nav:hover {
-  background: #5FB6FF;
-  color: #fff;
 }
 
 .how-to-step {
