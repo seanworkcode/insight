@@ -17,7 +17,7 @@
                     })
                     .when('/how-to',
                     {
-                        templateUrl: 'app/partials/how-to-index.html'
+                        templateUrl: 'app/how-to/how-to-index.html'
                     })
                     .when('/how-to/axis',
                     {

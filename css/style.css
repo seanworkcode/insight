@@ -335,13 +335,17 @@ h4,h5,h6,.h4,.h5,.h6 {
 /* How To Styles */
 
 .how-to-divider {
-    background: #DDD;
+    background: -webkit-linear-gradient(left, #ddd, white); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(right, #ddd, white); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(right, #ddd, white); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to right, #ddd, white); /* Standard syntax */
     height: 1px;
     width: 100%;
 }
 
 .how-to-arrow {
     color: #FF9100;
+    font-family: monospace;
 }
 
 .how-to-header {
@@ -355,19 +359,75 @@ h4,h5,h6,.h4,.h5,.h6 {
     margin-left: 13px;
 }
 
+.how-to-index-indent {
+    margin-left: 100px;
+}
+
 .how-to-section {
     padding-top: 50px;
+}
+
+.how-to-index-link-item {
+    font-size: 20px;
+    width: 260px;
+    height: 40px;
+    display: block;
+    margin-top: 4px;
+    text-decoration: none;
+    padding: 5px;
+    margin-left: 160px;
+}
+
+.how-to-index-link {
+    font-size: 26px;
+    width: 120px;
+    height: 50px;
+    display: block;
+    margin-top: 40px;
+    text-decoration: none;
+    padding: 5px;
+    text-align: center;
+    color: #00407E;
+    border-left-color: #FF9100;
+    border-left-style: solid;
+    border-left-width: 2px;
+}
+
+.how-to-index-link:hover {
+    text-decoration: none;
+    background: #2DA5E4;
+    color: #FFFFFF;
+}
+
+.how-to-index-link-item:hover {
+    text-decoration: none;
+    background: #2DA5E4;
+    color: #FFFFFF;
+}
+
+.how-to-index-item {
+    background: #003556;
+    border-radius: 10px;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
 }
 
 .anchor-button {
     font-size: 20pt;
     cursor: pointer;
+    width: 40%;
+}
+
+.anchor-button:hover {
+    background: #5FB6FF;
+    color: #fff;
 }
 
 .top-anchor-button {
     float: right;
-    font-size: 14pt;
-    padding-top: 20px;
+    font-size: 16pt;
+    padding-top: 14px;
     cursor: pointer;
 }
 
@@ -380,3 +440,45 @@ h4,h5,h6,.h4,.h5,.h6 {
     font-weight: bold;
 
 }
+
+.sticky {  
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 100;
+    border-top: 0;
+    display: block;
+    cursor: pointer;
+}
+
+
+.first-sticky {
+    margin-top: 110px;
+}
+
+.second-sticky {
+    margin-top: 170px;
+}
+
+.sticky-nav {
+  width: 220px;
+  height: 60px;
+  padding-right: 10px;
+}
+
+.sticky-nav:hover {
+  background: #5FB6FF;
+  color: #fff;
+}
+
+.how-to-step {
+  background: #2E9FDA;
+  color: #fff;
+  width: 25px;
+  display: inline-block;
+  text-align: center;
+  height: 25px;
+  margin-right: 18px;
+  font-size: 16pt;
+}
+

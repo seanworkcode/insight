@@ -31,7 +31,7 @@
                     })
                     .when('/how-to',
                     {
-                        templateUrl: 'app/partials/how-to-index.html'
+                        templateUrl: 'app/how-to/how-to-index.html'
                     })
                     .when('/how-to/axis',
                     {
@@ -434,7 +434,7 @@ function createLanguageChart(chartGroup, languages){
     'use strict';
 
     function HowToAxisController ($scope, $location, $anchorScroll, $timeout) {
-        $scope.$parent.title = 'How To Guides For An Axis';
+        $scope.$parent.title = 'How-to guides for an axis';
 
         $scope.scrollTo = function (id) {
             $location.hash(id);
@@ -455,12 +455,14 @@ function createLanguageChart(chartGroup, languages){
     'use strict';
 
     function ChartController ($scope, $location, $anchorScroll, $timeout) {
-        $scope.$parent.title = 'How To Guides For Charts';
-
+        $scope.$parent.title = 'How-to guides for charts';
+        
         $scope.scrollTo = function (id) {
-            $location.hash(id);
-            $anchorScroll();
+             $location.hash(id);
+             $anchorScroll();
         };
+
+        
 
         // to-do think of a better way - maybe find last loading element?
         $timeout(function(){
@@ -477,7 +479,7 @@ function createLanguageChart(chartGroup, languages){
     'use strict';
 
     function DataController ($scope, $location, $anchorScroll, $timeout) {
-        $scope.$parent.title = 'How To Guides For Chart Data';
+        $scope.$parent.title = 'How-to guides for chart data';
 
         $scope.scrollTo = function (id) {
             $location.hash(id);
@@ -498,7 +500,7 @@ function createLanguageChart(chartGroup, languages){
     'use strict';
 
     function HowToStyleController ($scope, $location, $anchorScroll, $timeout) {
-        $scope.$parent.title = 'How To Guides For Styling';
+        $scope.$parent.title = 'How-to guides for styling';
 
         $scope.scrollTo = function (id) {
             $location.hash(id);
