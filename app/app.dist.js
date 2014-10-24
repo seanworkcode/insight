@@ -21,7 +21,7 @@
                 $routeProvider.
                 when('/',
                     {
-                        templateUrl: 'app/partials/index.html',
+                        templateUrl: 'app/index/index.html',
                         controller: 'Index'
                     })
                     .when('/gettingStarted',
@@ -65,6 +65,168 @@
     //This file has been prefixed with underscore so that insightChartsControllers is concatenated in the correct order
     angular.module('insightChartsControllers', []);
 })();
+
+(function()
+{
+    'use strict';
+
+    function MainCtrl ($scope) {
+        $scope.title = "InsightJS";
+
+        // Fix to allow dropdown menu to function with a single click
+        $('.dropdown-toggle')
+            .click(function(e)
+            {
+                e.preventDefault();
+                e.stopPropagation();
+
+                return false;
+            });
+    }
+
+    angular.module('insightChartsControllers')
+        .controller('MainCtrl', ['$scope', MainCtrl]);
+
+}());
+
+(function() {
+    //This file has been prefixed with underscore so that insightChartsServices is concatenated in the correct order
+    angular.module('insightChartsServices', ['ngResource']);
+})();
+
+(function() {
+
+    'use strict';
+
+    /*
+     * Listens to elements that change content and highlights the syntax
+     */
+    function codeHighlightDirective() {
+        return function (scope) {
+            scope.$watch(function () {
+                Prism.highlightElement(angular.element('#codeItem')[0]);
+            });
+        };
+    }
+
+    angular.module('insightCharts').directive('codeHighlightRedraw', codeHighlightDirective);
+})();
+
+(function() {
+
+    'use strict';
+
+    /*
+     * Allows a controller to do something when the user presses the escape key.
+     */
+     function escapeKeyDirective($document) {
+        return function (scope, element, attrs) {
+
+            $document.keydown(function (event) {
+                if (event.which === 27) {
+                    scope.$apply(function () {
+                        scope.$eval(attrs.ngEscapeKey);
+                    });
+
+                    event.preventDefault();
+                }
+            });
+
+        };
+    }
+
+    angular.module('insightCharts').directive('ngEscapeKey', escapeKeyDirective);
+})();
+
+
+function createBubbleChart(chartGroup, bubbleData) {
+
+    var bubbleChart = new insight.Chart('Bubble Chart', '#bubble-chart')
+        .width(300)
+        .height(400);
+
+    var xAxis = new insight.Axis('Average Rating', insight.scales.linear)
+        .tickFrequency(1);
+
+    var yAxis = new insight.Axis('', insight.scales.linear)
+        .tickLabelFormat(insight.formatters.currencyFormatter);
+
+    bubbleChart
+        .xAxis(xAxis)
+        .yAxis(yAxis);
+
+    var bubbles = new insight.BubbleSeries('bubbles', bubbleData, xAxis, yAxis)
+        .keyFunction(function(d) {
+            return d.value.averageUserRating.mean;
+        })
+        .valueFunction(function(d) {
+            return d.value.price.mean;
+        })
+        .radiusFunction(function(d) {
+            return Math.sqrt(d.value.fileSizeBytes.mean);
+        })
+        .tooltipFunction(function(d) {
+            var fileSize = d.value.fileSizeBytes.mean / 1024 / 1024;
+            return d.key + ": " + Math.round(fileSize) + "MB";
+        });
+
+    bubbleChart.series([bubbles]);
+    chartGroup.add(bubbleChart);
+}
+
+
+
+function createGenreCountChart(chartGroup, genreData){
+
+    var chart = new insight.Chart('Genre Chart', "#genre-count")
+        .width(450)
+        .height(400);
+
+    var y = new insight.Axis('', insight.scales.ordinal)
+        .tickSize(0)
+        .tickPadding(5)
+        .isOrdered(true);
+
+    var x = new insight.Axis('', insight.scales.linear)
+        .hasReversedPosition(true)
+        .tickPadding(0)
+        .tickSize(0)
+        .lineWidth(0)
+        .lineColor('#fff');
+
+    chart.xAxis(x)
+        .yAxis(y);
+
+    var series = new insight.RowSeries('genre', genreData, x, y)
+        .valueFunction(function(d){ return d.value.count; });
+
+    chart.series([series]);
+    chartGroup.add(chart);
+}
+
+
+
+function createLanguageChart(chartGroup, languages){
+
+    var chart = new insight.Chart('Language Chart', '#languages')
+        .width(350)
+        .height(400);
+
+    var x = new insight.Axis('Language', insight.scales.ordinal)
+        .isOrdered(true);
+
+    var y = new insight.Axis('', insight.scales.linear);
+
+    chart.xAxis(x)
+        .yAxis(y);
+
+    var lSeries = new insight.ColumnSeries('languages', languages, x, y)
+        .top(10);
+
+    chart.series([lSeries]);
+    chartGroup.add(chart);
+}
+
 
 (function()
 {
@@ -165,171 +327,6 @@
     angular.module('insightChartsControllers').controller('Index', ['$scope', '$http', indexController]);
 }());
 
-(function()
-{
-    'use strict';
-
-    function MainCtrl ($scope) {
-        $scope.title = "InsightJS";
-
-        // Fix to allow dropdown menu to function with a single click
-        $('.dropdown-toggle')
-            .click(function(e)
-            {
-                e.preventDefault();
-                e.stopPropagation();
-
-                return false;
-            });
-    }
-
-    angular.module('insightChartsControllers')
-        .controller('MainCtrl', ['$scope', MainCtrl]);
-
-}());
-
-(function() {
-    //This file has been prefixed with underscore so that insightChartsServices is concatenated in the correct order
-    angular.module('insightChartsServices', ['ngResource']);
-})();
-
-(function() {
-
-    'use strict';
-
-    /*
-     * Listens to elements that change content and highlights the syntax
-     */
-    function codeHighlightDirective() {
-        return function (scope) {
-            scope.$watch(function () {
-                Prism.highlightElement(angular.element('#codeItem')[0]);
-            });
-        };
-    }
-
-    angular.module('insightCharts').directive('codeHighlightRedraw', codeHighlightDirective);
-})();
-
-(function() {
-
-    'use strict';
-
-    /*
-     * Allows a controller to do something when the user presses the escape key.
-     */
-     function escapeKeyDirective($document) {
-        return function (scope, element, attrs) {
-
-            $document.keydown(function (event) {
-                if (event.which === 27) {
-                    scope.$apply(function () {
-                        scope.$eval(attrs.ngEscapeKey);
-                    });
-
-                    event.preventDefault();
-                }
-            });
-
-        };
-    }
-
-    angular.module('insightCharts').directive('ngEscapeKey', escapeKeyDirective);
-})();
-
-
-function createBubbleChart(chartGroup, bubbleData) {
-
-    var bubbleChart = new insight.Chart('Bubble Chart', '#bubble-chart')
-        .width(300)
-        .height(400);
-
-    var xAxis = new insight.Axis('Average Rating', insight.scales.linear)
-        .tickFrequency(1);
-
-    var yAxis = new insight.Axis('', insight.scales.linear)
-        .tickLabelFormat(insight.formatters.currencyFormatter);
-
-    bubbleChart
-        .xAxis(xAxis)
-        .yAxis(yAxis)
-        .title('App price vs. rating vs. filesize (radius)');
-
-    var bubbles = new insight.BubbleSeries('bubbles', bubbleData, xAxis, yAxis)
-        .keyFunction(function(d) {
-            return d.value.averageUserRating.mean;
-        })
-        .valueFunction(function(d) {
-            return d.value.price.mean;
-        })
-        .radiusFunction(function(d) {
-            return Math.sqrt(d.value.fileSizeBytes.mean);
-        })
-        .tooltipFunction(function(d) {
-            var fileSize = d.value.fileSizeBytes.mean / 1024 / 1024;
-            return d.key + ": " + Math.round(fileSize) + "MB";
-        });
-
-    bubbleChart.series([bubbles]);
-    chartGroup.add(bubbleChart);
-}
-
-
-
-function createGenreCountChart(chartGroup, genreData){
-
-    var chart = new insight.Chart('Genre Chart', "#genre-count")
-        .width(450)
-        .height(400);
-
-    var y = new insight.Axis('', insight.scales.ordinal)
-        .tickSize(0)
-        .tickPadding(5)
-        .isOrdered(true);
-
-    var x = new insight.Axis('', insight.scales.linear)
-        .hasReversedPosition(true)
-        .tickPadding(0)
-        .tickSize(0)
-        .lineWidth(0)
-        .lineColor('#fff');
-
-    chart.xAxis(x)
-        .yAxis(y)
-        .title("Total number of Apps by genre");
-
-    var series = new insight.RowSeries('genre', genreData, x, y)
-        .valueFunction(function(d){ return d.value.count; });
-
-    chart.series([series]);
-    chartGroup.add(chart);
-}
-
-
-
-function createLanguageChart(chartGroup, languages){
-
-    var chart = new insight.Chart('Language Chart', '#languages')
-        .width(350)
-        .height(400);
-
-    var x = new insight.Axis('Language', insight.scales.ordinal)
-        .isOrdered(true);
-
-    var y = new insight.Axis('', insight.scales.linear);
-
-    chart.xAxis(x)
-        .yAxis(y)
-        .title("Total number of Apps by language");
-
-    var lSeries = new insight.ColumnSeries('languages', languages, x, y)
-        .top(10);
-
-    chart.series([lSeries]);
-    chartGroup.add(chart);
-}
-
-
 (function() {
 
     'use strict';
@@ -396,8 +393,7 @@ function createLanguageChart(chartGroup, languages){
 
         var chart = new insight.Chart('Ages', domSelector)
             .width(500)
-            .height(350)
-            .title('Ages of People');
+            .height(350);
 
         var x = new insight.Axis('Age', insight.scales.linear);
         var y = new insight.Axis('', insight.scales.ordinal);
@@ -465,6 +461,8 @@ function createLanguageChart(chartGroup, languages){
             $location.hash(id);
             $anchorScroll();
         };
+
+        
 
         // to-do think of a better way - maybe find last loading element?
         $timeout(function(){
@@ -541,8 +539,7 @@ function createLanguageChart(chartGroup, languages){
 
         var chart = new insight.Chart('Ages', domSelector)
             .width(500)
-            .height(350)
-            .title('Ages of People');
+            .height(350);
 
         var x = new insight.Axis('Age', insight.scales.linear);
         var y = new insight.Axis('', insight.scales.ordinal);
@@ -646,8 +643,7 @@ function createLanguageChart(chartGroup, languages){
 
         var chart = new insight.Chart('sin', '#interactive-chart')
             .width(450)
-            .height(250)
-            .title('y = sin(x) + 1');
+            .height(250);
 
         var x = new insight.Axis('x', insight.scales.linear);
         var y = new insight.Axis('y', insight.scales.linear);
@@ -1165,8 +1161,8 @@ function createLanguageChart(chartGroup, languages){
 
             var chart = new insight.Chart('Ages', elementId)
                 .width(500)
-                .height(350)
-                .title('Ages of People');
+                .height(350);
+
             var x = new insight.Axis('Age', insight.scales.linear);
             var y = new insight.Axis('', insight.scales.ordinal);
 
@@ -1191,13 +1187,7 @@ function createLanguageChart(chartGroup, languages){
         var defaultThemeChart = $scope.getNewChart('#theme-chart-default-theme');
         defaultThemeChart.draw();
 
-        var titleThemeChart = $scope.getNewChart('#theme-chart-title-theme');
-        titleThemeChart.titleFont('bold 11pt Helvetica');
-        titleThemeChart.draw();
-
         var fullThemeChart = $scope.getNewChart('#theme-chart-full-theme');
-        fullThemeChart.titleFont('bold 11pt Helvetica');
-        fullThemeChart.titleColor('#081717');
         fullThemeChart.seriesPalette(['#A60303', '#FFAD00', '#FF2F00', '#BD7217', '#873300']);
         fullThemeChart.draw();
 

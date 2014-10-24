@@ -18,8 +18,7 @@ function createGenreCountChart(chartGroup, genreData){
         .lineColor('#fff');
 
     chart.xAxis(x)
-        .yAxis(y)
-        .title("Total number of Apps by genre");
+        .yAxis(y);
 
     var series = new insight.RowSeries('genre', genreData, x, y)
         .valueFunction(function(d){ return d.value.count; });
