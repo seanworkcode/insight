@@ -13,7 +13,8 @@
         // Private variables ------------------------------------------------------------------------------------------
 
         var self = this,
-            filter = null;
+            filter = null,
+            title = name;
 
         var tooltipOffset = {
             x: 0,
@@ -407,6 +408,29 @@
             }
             self.topValues = topValues;
 
+            return self;
+        };
+
+        /**
+         * Gets the title of the series.
+         * @memberof! insight.Series
+         * @instance
+         * @returns {String} - The series' title.
+         *
+         * @also
+         *
+         * Sets the title of the series.
+         * @memberof! insight.Series
+         * @instance
+         * @param {String} seriesTitle The new title of the series.
+         * @returns {this}
+         */
+        self.title = function(seriesTitle) {
+            if (!arguments.length) {
+                return title;
+            }
+
+            title = seriesTitle;
             return self;
         };
 
