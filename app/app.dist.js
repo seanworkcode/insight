@@ -33,25 +33,45 @@
                     {
                         templateUrl: 'app/how-to/how-to-index.html'
                     })
-                    .when('/how-to/axis',
+                    .when('/how-to/axis/customisation',
                     {
-                        templateUrl: 'app/how-to/axis/axis.html',
-                        controller: 'HowToAxisController'
+                        templateUrl: 'app/how-to/axis/customisation.html',
+                        controller: 'HowToAxisCustomisationController'
                     })
-                    .when('/how-to/chart',
+                    .when('/how-to/chart/interactive',
                     {
-                        templateUrl: 'app/how-to/chart/chart.html',
-                        controller: 'HowToChartController'
+                        templateUrl: 'app/how-to/chart/interactive.html',
+                        controller: 'HowToInteractiveAxis'
                     })
-                    .when('/how-to/style',
+                    .when('/how-to/chart/legend',
                     {
-                        templateUrl: 'app/how-to/style/style.html',
-                        controller: 'HowToStyleController'
+                        templateUrl: 'app/how-to/chart/legend.html',
+                        controller: 'HowToLegend'
                     })
-                    .when('/how-to/data',
+                    .when('/how-to/chart/multipleseries',
                     {
-                        templateUrl: 'app/how-to/data/data.html',
-                        controller: 'HowToDataController'
+                        templateUrl: 'app/how-to/chart/multipleseries.html',
+                        controller: 'HowToMultipleSeries'
+                    })
+                    .when('/how-to/style/chart-style',
+                    {
+                        templateUrl: 'app/how-to/style/chart-style.html',
+                        controller: 'HowToStyleChartController'
+                    })
+                    .when('/how-to/data/correlation',
+                    {
+                        templateUrl: 'app/how-to/data/correlation.html',
+                        controller: 'HowToDataCorrelationController'
+                    })
+                    .when('/how-to/data/grouping',
+                    {
+                        templateUrl: 'app/how-to/data/grouping.html',
+                        controller: 'GettingStartedWithGroupings'
+                    })
+                    .when('/how-to/data/processing',
+                    {
+                        templateUrl: 'app/how-to/data/processing.html',
+                        controller: 'HowToDataProcessingController'
                     })
                     .otherwise(
                     {
@@ -429,93 +449,6 @@ function createLanguageChart(chartGroup, languages){
     angular.module('insightChartsControllers').controller('GettingStarted', ['$scope', '$http', gettingStartedController]);
 }());
 
-(function()
-{
-    'use strict';
-
-    function HowToAxisController ($scope, $location, $anchorScroll, $timeout) {
-        $scope.$parent.title = 'How To Guides For An Axis';
-
-        $scope.scrollTo = function (id) {
-            $location.hash(id);
-            $anchorScroll();
-        };
-
-        // to-do think of a better way - maybe find last loading element?
-        $timeout(function(){
-            Prism.highlightAll();
-        }, 200);
-    }
-
-    angular.module('insightChartsControllers').controller('HowToAxisController', ['$scope', '$location', '$anchorScroll', '$timeout', HowToAxisController]);
-}());
-
-(function()
-{
-    'use strict';
-
-    function ChartController ($scope, $location, $anchorScroll, $timeout) {
-        $scope.$parent.title = 'How To Guides For Charts';
-
-        $scope.scrollTo = function (id) {
-            $location.hash(id);
-            $anchorScroll();
-        };
-
-        
-
-        // to-do think of a better way - maybe find last loading element?
-        $timeout(function(){
-            Prism.highlightAll();
-        }, 200);
-    }
-
-
-    angular.module('insightChartsControllers').controller('HowToChartController', ['$scope', '$location', '$anchorScroll', '$timeout', ChartController]);
-}());
-
-(function()
-{
-    'use strict';
-
-    function DataController ($scope, $location, $anchorScroll, $timeout) {
-        $scope.$parent.title = 'How To Guides For Chart Data';
-
-        $scope.scrollTo = function (id) {
-            $location.hash(id);
-            $anchorScroll();
-        };
-
-        // to-do think of a better way - maybe find last loading element?
-        $timeout(function(){
-            Prism.highlightAll();
-        }, 200);
-    }
-
-    angular.module('insightChartsControllers').controller('HowToDataController', ['$scope', '$location', '$anchorScroll', '$timeout', DataController]);
-}());
-
-(function()
-{
-    'use strict';
-
-    function HowToStyleController ($scope, $location, $anchorScroll, $timeout) {
-        $scope.$parent.title = 'How To Guides For Styling';
-
-        $scope.scrollTo = function (id) {
-            $location.hash(id);
-            $anchorScroll();
-        };
-
-        // to-do think of a better way - maybe find last loading element?
-        $timeout(function(){
-            Prism.highlightAll();
-        }, 200);
-    }
-
-    angular.module('insightChartsControllers').controller('HowToStyleController', ['$scope', '$location', '$anchorScroll', '$timeout', HowToStyleController]);
-}());
-
 (function () {
     'use strict';
 
@@ -613,6 +546,8 @@ function createLanguageChart(chartGroup, languages){
         applyDataFormattingChanges(dataFormattingChart);
 
         dataFormattingChart.draw();
+
+        Prism.highlightAll();
     }
 
     angular.module('insightChartsControllers').controller('HowToAxisCustomisationController', ['$scope', howToAxisCustomisation]);
@@ -953,6 +888,8 @@ function createLanguageChart(chartGroup, languages){
 
         updateCorrelationLabel(dataset, series);
         chart.draw();
+
+        Prism.highlightAll();
     }
 
     angular.module('insightChartsControllers').controller('HowToDataCorrelationController', ['$scope', HowToDataCorrelationController]);
