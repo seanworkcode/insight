@@ -7,7 +7,7 @@
                 $routeProvider.
                 when('/',
                     {
-                        templateUrl: 'app/partials/index.html',
+                        templateUrl: 'app/index/index.html',
                         controller: 'Index'
                     })
                     .when('/gettingStarted',

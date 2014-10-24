@@ -21,8 +21,7 @@
 
         var chart = new insight.Chart('Ages', domSelector)
             .width(500)
-            .height(350)
-            .title('Ages of People');
+            .height(350);
 
         var x = new insight.Axis('Age', insight.scales.linear);
         var y = new insight.Axis('', insight.scales.ordinal);

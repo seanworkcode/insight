@@ -11,8 +11,7 @@ function createLanguageChart(chartGroup, languages){
     var y = new insight.Axis('', insight.scales.linear);
 
     chart.xAxis(x)
-        .yAxis(y)
-        .title("Total number of Apps by language");
+        .yAxis(y);
 
     var lSeries = new insight.ColumnSeries('languages', languages, x, y)
         .top(10);
