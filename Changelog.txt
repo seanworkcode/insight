@@ -7,6 +7,7 @@
     * Grouping.mean() stores mean in `value.propertyName.mean` rather than `value.propertyName.Average`
     * Grouping.sum() stores sum in `value.propertyName.sum` rather than `value.propertyName.Sum`
   * Removed insight.Chart.title
+  * Added insight.Series.title
 
 
 
