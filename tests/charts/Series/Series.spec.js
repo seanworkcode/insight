@@ -324,5 +324,25 @@ describe('Series', function(){
         var selectionClassName = series.itemClassName(seriesDataSet[0]);
         expect(selectionClassName).toBe(series.seriesClassName() + ' ' + insight.utils.keySelector('Watkins'));
     });
+
+    describe('Series.title', function() {
+        it('defaults to series name', function() {
+            //Given:
+            var series = new insight.Series('testTitle', seriesDataSet, xAxis, yAxis);
+
+            //Then:
+            expect(series.title()).toBe('testTitle');
+        });
+
+        it('can be set by Series.title() method', function() {
+            //Given:
+            var series = new insight.Series('testTitle', seriesDataSet, xAxis, yAxis)
+                .title('setTitle');
+
+            //Then:
+            expect(series.title()).toBe('setTitle');
+        });
+    });
+
     
 });
