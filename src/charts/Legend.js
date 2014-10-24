@@ -26,7 +26,7 @@
         }
 
         function textContent(item) {
-            return item.name;
+            return item.title();
         }
 
         // Internal functions -----------------------------------------------------------------------------------------
@@ -85,7 +85,7 @@
                 .attr("x", 20)
                 .attr("y", textPositionY)
                 .attr("width", function(item) {
-                    return ctx.measureText(item.name).width;
+                    return ctx.measureText(item.title()).width;
                 })
                 .attr("height", 20)
                 .text(textContent)
@@ -97,7 +97,7 @@
             var legendWidth = 0;
 
             for (var index = 0; index < series.length; index++) {
-                var seriesTextWidth = ctx.measureText(series[index].name)
+                var seriesTextWidth = ctx.measureText(series[index].title())
                     .width;
                 legendWidth = Math.max(legendWidth, seriesTextWidth + 25);
             }

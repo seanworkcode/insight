@@ -13,7 +13,8 @@
         // Private variables ------------------------------------------------------------------------------------------
 
         var self = this,
-            filter = null;
+            filter = null,
+            title = name;
 
         var tooltipOffset = {
             x: 0,
@@ -407,6 +408,15 @@
             }
             self.topValues = topValues;
 
+            return self;
+        };
+
+        self.title = function(seriesTitle) {
+            if (!arguments.length) {
+                return title;
+            }
+
+            title = seriesTitle;
             return self;
         };
 
