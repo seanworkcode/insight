@@ -3,12 +3,14 @@
     'use strict';
 
     function ChartController ($scope, $location, $anchorScroll, $timeout) {
-        $scope.$parent.title = 'How To Guides For Charts';
-
+        $scope.$parent.title = 'How-to guides for charts';
+        
         $scope.scrollTo = function (id) {
-            $location.hash(id);
-            $anchorScroll();
+             $location.hash(id);
+             $anchorScroll();
         };
+
+        
 
         // to-do think of a better way - maybe find last loading element?
         $timeout(function(){
