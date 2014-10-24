@@ -378,7 +378,7 @@ h4,h5,h6,.h4,.h5,.h6 {
     margin-left: 160px;
 }
 
-.how-to-index-link {
+.how-to-index-heading {
     font-size: 26px;
     width: 120px;
     height: 50px;
@@ -391,12 +391,6 @@ h4,h5,h6,.h4,.h5,.h6 {
     border-left-color: #FF9100;
     border-left-style: solid;
     border-left-width: 2px;
-}
-
-.how-to-index-link:hover {
-    text-decoration: none;
-    background: #2DA5E4;
-    color: #FFFFFF;
 }
 
 .how-to-index-link-item:hover {
@@ -439,36 +433,6 @@ h4,h5,h6,.h4,.h5,.h6 {
     text-align: center;
     font-weight: bold;
 
-}
-
-.sticky {  
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 100;
-    border-top: 0;
-    display: block;
-    cursor: pointer;
-}
-
-
-.first-sticky {
-    margin-top: 110px;
-}
-
-.second-sticky {
-    margin-top: 170px;
-}
-
-.sticky-nav {
-  width: 220px;
-  height: 60px;
-  padding-right: 10px;
-}
-
-.sticky-nav:hover {
-  background: #5FB6FF;
-  color: #fff;
 }
 
 .how-to-step {

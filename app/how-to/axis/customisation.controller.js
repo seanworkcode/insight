@@ -95,6 +95,8 @@
         applyDataFormattingChanges(dataFormattingChart);
 
         dataFormattingChart.draw();
+
+        Prism.highlightAll();
     }
 
     angular.module('insightChartsControllers').controller('HowToAxisCustomisationController', ['$scope', howToAxisCustomisation]);

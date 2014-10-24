@@ -107,6 +107,8 @@
 
         updateCorrelationLabel(dataset, series);
         chart.draw();
+
+        Prism.highlightAll();
     }
 
     angular.module('insightChartsControllers').controller('HowToDataCorrelationController', ['$scope', HowToDataCorrelationController]);
