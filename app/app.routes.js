@@ -10,6 +10,11 @@
                         templateUrl: 'app/index/index.html',
                         controller: 'Index'
                     })
+                    .when('/gallery',
+                    {
+                        templateUrl: 'app/gallery/gallery.html',
+                        controller: 'Gallery'
+                    })
                     .when('/gettingStarted',
                     {
                         templateUrl: 'app/getting-started/getting-started.html',

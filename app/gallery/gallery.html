@@ -1,0 +1,30 @@
+<section>
+    <div id="container-body" class="container min-scrollbar">
+        <h2>A gallery of insight.js charts</h2>
+        <div class="how-to-divider"></div>
+
+        <div ng-show="showGallery" ng-init="loadItems()">
+        	<div ng-repeat="item in items">
+        		<div class="gallery-item-header" ng-click="loadItem(item)">{{item.title}}</div>
+        		<div ng-click="loadItem(item)" class="gallery-item-thumb">
+                    <img ng-src="app/gallery/items/{{item.thumbnail}}">
+                </div>
+        	</div>
+        </div>
+
+        <div ng-show="!showGallery">
+            <div ng-click="closeItem()" class="gallery-item-header">Back to gallery</div>
+            <h2>{{currentItem.title}}</h2>
+            <p>{{currentItem.desc}}</p>
+            <div id="gallery-chart"></div>
+            <div class="how-to-divider"></div>
+            <h3>The code</h3>
+            <div id="gallery-code"></div>
+        </div>
+
+    </div>
+    <div id="footer" class="container">
+        <footer>Insight.js is an open source project created and maintained by <a target="_blank" href="//scottlogic.com">Scott Logic</a>
+        </footer>
+    </div>
+</section>
