@@ -438,7 +438,7 @@ h4,h5,h6,.h4,.h5,.h6 {
 .how-to-step {
   background: #2E9FDA;
   color: #fff;
-  width: 25px;
+  width: 26px;
   display: inline-block;
   text-align: center;
   height: 25px;
@@ -474,3 +474,12 @@ h4,h5,h6,.h4,.h5,.h6 {
     color: #FFFFFF;
 }
 
+.load-data-item {
+  font-weight: 400;
+  margin-left: 40px;
+  font-size: 12pt;
+}
+
+.orange-color {
+  color: #FF9100;
+}

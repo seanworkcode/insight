@@ -59,6 +59,11 @@
                         templateUrl: 'app/how-to/data/grouping.html',
                         controller: 'GettingStartedWithGroupings'
                     })
+                    .when('/how-to/data/loading',
+                    {
+                        templateUrl: 'app/how-to/data/loading.html',
+                        controller: 'LoadingDataController'
+                    })
                     .when('/how-to/data/processing',
                     {
                         templateUrl: 'app/how-to/data/processing.html',
