@@ -492,27 +492,6 @@
         // Internal functions -----------------------------------------------------------------------------------------
 
         /*
-         * Gets the function that will run after the map reduce stage of this Grouping's aggregation.This is an empty
-         * function by default, and can be overriden by the setter.
-         * @instance
-         * @memberof! insight.Grouping
-         * @returns {Function} - The function that will run after aggregation of this Grouping.
-         * @also
-         * Sets the function that will run after any aggregation has been performed on this Grouping.
-         * @instance
-         * @memberof! insight.Grouping
-         * @returns {this}
-         * @param {String[]} postAggregationFunc - A user defined function of the form function(grouping), that the Grouping will run post aggregation.
-         */
-        self.postAggregation = function(postAggregationFunc) {
-            if (!arguments.length) {
-                return postAggregation;
-            }
-            postAggregation = postAggregationFunc;
-            return self;
-        };
-
-        /*
          * Called when any post aggregation calculations need to be recalculated.
          * For example, calculating group percentages after totals have been created during map-reduce.
          * @memberof! insight.Grouping
@@ -873,6 +852,27 @@
 
             return data.slice(0);
 
+        };
+
+        /**
+         * Gets the function that will run after any aggregation has been performed on this Grouping.
+         * This is an empty function by default, and can be overriden.
+         * @instance
+         * @memberof! insight.Grouping
+         * @returns {Function} - The function that will run after aggregation of this Grouping.
+         * @also
+         * Sets the function that will run after any aggregation has been performed on this Grouping.
+         * @instance
+         * @memberof! insight.Grouping
+         * @returns {this}
+         * @param {Function} postAggregationFunc - A user defined function of the form function(grouping), that the Grouping will run post aggregation.
+         */
+        self.postAggregation = function(postAggregationFunc) {
+            if (!arguments.length) {
+                return postAggregation;
+            }
+            postAggregation = postAggregationFunc;
+            return self;
         };
 
     };
