@@ -47,11 +47,18 @@ describe('DataSet', function() {
             var dataSet = new insight.DataSet(data);
 
             // When:
-            var countries = dataSet.group('country', function(d){return d.Country;});
+            var grouping = dataSet.group('country', function(d){return d.Country;});
 
             // Then:
-            var countryData = countries.extractData();
-            expect(countryData.length).toBe(4);
+            var expectedData = [
+                { key : 'England', value : { count : 7 } },
+                { key : 'Northern Ireland', value : { count : 6 } },
+                { key : 'Scotland', value : { count : 3 } },
+                { key : 'Wales', value : { count : 4 } }
+            ];
+
+            var extractedData = grouping.extractData();
+            expect(extractedData).toEqual(expectedData);
         });
 
         it('creates a valid one-to-many group', function() {
@@ -60,12 +67,23 @@ describe('DataSet', function() {
             var dataSet = new insight.DataSet(data);
 
             // When:
-            var interests = dataSet.group('interests', function(d){ return d.Interests; }, true)
+            var grouping = dataSet.group('interests', function(d){ return d.Interests; }, true)
                 .count(['Interests']);
 
             // Then:
-            var interestsData = interests.extractData();
-            expect(interestsData.length).toBe(8);
+            var expectedData = [
+                { key : 'Music', value : 16 },
+                { key : 'Triathlon', value : 11 },
+                { key : 'Mountain Biking', value : 11 },
+                { key : 'Climbing', value : 5 },
+                { key : 'Football', value : 4 },
+                { key : 'Kayaking', value : 4 },
+                { key : 'Boxing', value : 4 },
+                { key : 'Ballet', value : 1 }
+            ];
+
+            var extractedData = grouping.extractData();
+            expect(extractedData).toEqual(expectedData);
         });
 
         it('can add a group with extra calculated values', function() {
@@ -74,15 +92,36 @@ describe('DataSet', function() {
             var dataSet = new insight.DataSet(data);
 
             // When:
-            var countries = dataSet.group('country', function(d){return d.Country;})
+            var grouping = dataSet.group('country', function(d){return d.Country;})
                 .mean(['Age']);
 
             // Then:
-            var countryData = countries.extractData();
-            var scotland = countryData.filter(function(d){return d.key=='Scotland';})[0];
+            var extractedData = grouping.extractData();
+            var scotland = extractedData.filter(function(d){return d.key=='Scotland';})[0];
 
-            expect(countryData.length).toBe(4);
-            expect(scotland.value.Age.mean).toBe(11);
+            extractedData.forEach(function(d) {
+                // Mitigate rounding differences across JavaScript engines
+                d.value.Age.mean = parseFloat(d.value.Age.mean.toFixed(3));
+            });
+
+            expect(extractedData).toEqual([
+                {
+                    key : 'England',
+                    value : { count : 7, Age : { sum : 97, count : 7, mean : 13.857 } }
+                },
+                {
+                    key : 'Northern Ireland',
+                    value : { count : 6, Age : { sum : 51, count : 6, mean : 8.5 } }
+                },
+                {
+                    key : 'Scotland',
+                    value : { count : 3, Age : { sum : 33, count : 3, mean : 11 } }
+                },
+                {
+                    key : 'Wales',
+                    value : { count : 4, Age : { sum : 24, count : 4, mean : 6 } }
+                }
+            ]);
         });
 
         it('creates a valid group when provided no data', function() {
@@ -92,11 +131,34 @@ describe('DataSet', function() {
             var dataSet = new insight.DataSet(emptyData);
 
             // When:
-            var countries = dataSet.group('country', function(d){return d.Country;});
+            var grouping = dataSet.group('country', function(d){return d.Country;});
 
             // Then:
-            var countryData = countries.extractData();
-            expect(countryData.length).toBe(0);
+            var extractedData = grouping.extractData();
+            expect(extractedData).toEqual([]);
+        });
+
+        it('respects any filter applied to the dataset', function() {
+
+            // Given:
+            var dataSet = new insight.DataSet(data);
+            dataSet.filterFunction(function(d) {
+                return d.IQ >= 70;
+            });
+
+            // When:
+            var grouping = dataSet.group('country', function(d){return d.Country;});
+
+            // Then:
+            var expectedData = [
+                { key : 'England', value : { count : 7 - 3 } },
+                { key : 'Northern Ireland', value : { count : 6 - 2 } },
+                { key : 'Scotland', value : { count : 3 - 1 } },
+                { key : 'Wales', value : { count : 4 - 1 } }
+            ];
+
+            var extractedData = grouping.extractData();
+            expect(extractedData).toEqual(expectedData);
         });
 
     });

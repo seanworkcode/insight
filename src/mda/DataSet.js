@@ -52,7 +52,7 @@
          */
         self.group = function(name, groupFunction, oneToMany) {
 
-            var arrayData = self.rawData();
+            var arrayData = self.extractData();
 
             self.crossfilterData = self.crossfilterData || crossfilter(arrayData);
 
