@@ -24,6 +24,11 @@
                         templateUrl: 'app/index/index.html',
                         controller: 'Index'
                     })
+                    .when('/gallery',
+                    {
+                        templateUrl: 'app/gallery/gallery.html',
+                        controller: 'Gallery'
+                    })
                     .when('/gettingStarted',
                     {
                         templateUrl: 'app/getting-started/getting-started.html',
@@ -67,6 +72,11 @@
                     {
                         templateUrl: 'app/how-to/data/grouping.html',
                         controller: 'GettingStartedWithGroupings'
+                    })
+                    .when('/how-to/data/loading',
+                    {
+                        templateUrl: 'app/how-to/data/loading.html',
+                        controller: 'LoadingDataController'
                     })
                     .when('/how-to/data/processing',
                     {
@@ -345,6 +355,90 @@ function createLanguageChart(chartGroup, languages){
     }
 
     angular.module('insightChartsControllers').controller('Index', ['$scope', '$http', indexController]);
+}());
+
+(function()
+{
+    'use strict';
+
+    function galleryController($scope, $http, $q)
+    {
+        $scope.$parent.title = 'InsightJS';
+     
+        $scope.showGallery = true;
+
+        $scope.currentItem = undefined;
+
+        $scope.loadItems = function() {
+            $scope.items = [
+                {
+                    title: 'Awesome bar chart!',
+                    thumbnail: 'barchart/thumbnail.png',
+                    dataPath: 'barchart/data.json',
+                    script: 'barchart/script.js',
+                    desc: 'As simple as it gets. A bar chart for viewing one data set against the other.'
+                },
+                {
+                    title: '~ Zooming chart ~',
+                    thumbnail: 'interactive/thumbnail.png',
+                    dataPath: 'interactive/data.json',
+                    script: 'interactive/script.js',
+                    desc: 'Interactive chart, try scrolling while the mouse is hovered over the chart to watch the scale change'
+                }
+            ];
+        };
+
+        $scope.loadItem = function(item) {
+            $scope.currentItem = item;
+            $scope.loadData(item.dataPath).then(function(data) {
+                $scope.loadCode(item.script).then(function(code) {
+                    $scope.displayChart(data, code);
+                    $scope.displayCode(code);
+                    $scope.showGallery = false;
+                });
+            });
+        };
+
+        $scope.loadData = function(dataPath) {
+            var deferred = $q.defer();
+            d3.json('app/gallery/items/' + dataPath, function(data) {
+                deferred.resolve(data);
+            });
+            return deferred.promise;
+        };
+
+        $scope.loadCode = function(filePath) {
+            var deferred = $q.defer();
+            $http({method: 'GET', url: 'app/gallery/items/' + filePath, cache: true}).
+                success(function(code) {
+                    deferred.resolve(code);
+                }
+            );
+            return deferred.promise;
+        };
+
+        $scope.displayChart = function(data, code) {
+            var script = document.createElement('script');
+            script.src = 'data:text/javascript,' + encodeURI(code);
+            document.body.appendChild(script);
+            script.onload = function() {
+                chartingFunction.call(this, data.data, '#gallery-chart');
+            };
+        };
+
+        $scope.displayCode = function(code) {
+            angular.element('#gallery-code').html('<code id="codeItem" class="language-javascript loading">' + code + '</code>');
+            Prism.highlightAll();
+        };
+
+        $scope.closeItem = function() {
+            $scope.showGallery = true;
+            angular.element('#gallery-chart').empty();
+            angular.element('#gallery-code').empty();
+        };
+    }
+
+    angular.module('insightChartsControllers').controller('Gallery', ['$scope', '$http', '$q', galleryController]);
 }());
 
 (function() {
@@ -957,6 +1051,73 @@ function createLanguageChart(chartGroup, languages){
             chart.draw();
         }
     ]);
+}());
+
+(function()
+{
+    'use strict';
+
+    function loadingDataController($scope, $http) {
+        $scope.$parent.title = 'How To : Load Data - InsightJS';
+
+        var chartData = function(data, chartElementId) {
+            var dataset = new insight.DataSet(data);
+
+            var chart = new insight.Chart('Ages', chartElementId)
+                .width(500)
+                .height(350);
+
+            var x = new insight.Axis('Age', insight.scales.linear);
+            var y = new insight.Axis('', insight.scales.ordinal);
+
+            chart.xAxis(x);
+            chart.yAxis(y);
+
+
+            var rows = new insight.RowSeries('rows', dataset, x, y)
+                .keyFunction(function (person) {
+                    return person.name;
+                })
+                .valueFunction(function (person) {
+                    return person.age;
+                });
+
+
+            chart.series([rows]);
+
+            chart.draw();
+        };
+
+        var staticData = [
+            { "name": "Michelle Hopper", "age": 26, "eyeColor": "green" },
+            { "name": "Cochran Mcfadden", "age": 22, "eyeColor": "green" },
+            { "name": "Jessie Mckinney", "age": 23, "eyeColor": "brown" },
+            { "name": "Rhoda Reyes", "age": 40, "eyeColor": "brown" },
+            { "name": "Hawkins Wolf", "age": 26, "eyeColor": "green" },
+            { "name": "Lynne O'neill", "age": 39, "eyeColor": "green" },
+            { "name": "Twila Melendez", "age": 26, "eyeColor": "blue" },
+            { "name": "Courtney Diaz", "age": 20, "eyeColor": "brown" },
+            { "name": "Burton Beasley", "age": 36, "eyeColor": "green" },
+            { "name": "Mccoy Gray", "age": 25, "eyeColor": "brown" },
+            { "name": "Janie Benson", "age": 30, "eyeColor": "green" },
+            { "name": "Cherie Wilder", "age": 30, "eyeColor": "green" }
+        ];
+
+        chartData(staticData, '#static-chart');
+
+        d3.json('datasets/eye_color.json', function(data) {
+            chartData(data, '#d3-chart');
+        });
+
+        $http.get('datasets/eye_color.json')
+            .then(function(response){
+                chartData(response.data, '#angular-chart');
+            });
+
+        Prism.highlightAll();
+    }
+
+    angular.module('insightChartsControllers').controller('LoadingDataController', ['$scope', '$http', loadingDataController]);
 }());
 
 (function () {
