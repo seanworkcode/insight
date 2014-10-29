@@ -138,6 +138,29 @@ describe('DataSet', function() {
             expect(extractedData).toEqual([]);
         });
 
+        it('respects any filter applied to the dataset', function() {
+
+            // Given:
+            var dataSet = new insight.DataSet(data);
+            dataSet.filterFunction(function(d) {
+                return d.IQ >= 70;
+            });
+
+            // When:
+            var grouping = dataSet.group('country', function(d){return d.Country;});
+
+            // Then:
+            var expectedData = [
+                { key : 'England', value : { count : 7 - 3 } },
+                { key : 'Northern Ireland', value : { count : 6 - 2 } },
+                { key : 'Scotland', value : { count : 3 - 1 } },
+                { key : 'Wales', value : { count : 4 - 1 } }
+            ];
+
+            var extractedData = grouping.extractData();
+            expect(extractedData).toEqual(expectedData);
+        });
+
     });
 });
 
