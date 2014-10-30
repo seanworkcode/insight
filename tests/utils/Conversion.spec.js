@@ -16,7 +16,7 @@ describe("Conversion for", function() {
             
         });
 
-        it("convert arff file, include carraige returns", function() {
+        it("convert arff file, include carriage returns", function() {
             //Given:
             var arff = "@RELATION iris\n\n@ATTRIBUTE foo NUMERIC\n\n@ATTRIBUTE bar REAL\n\n@ATTRIBUTE see STRING\n\n@DATA\n1,3.5,do\n\n";
             insight.conversion.arffToJson(arff, function(errors, json) {
