@@ -23,7 +23,7 @@ insight.conversion = (function() {
         /** Convert arff data into JSON data
          * @memberof! insight.conversion
          * @param {Object} data The data to be converted.
-         * @returns {Object} - The converted data.
+         * @param {Function} callback with signature function(errorArray, json). json is the data and errorArray contains an array of Error
          */
         arffToJson: function(data, callback) {
 
@@ -36,7 +36,7 @@ insight.conversion = (function() {
 
             var currentState;
 
-            var errors = [];
+            var errorArray = [];
 
             var states = {
                 relation: function(string) {
@@ -75,11 +75,11 @@ insight.conversion = (function() {
                 try {
                     currentState(line);
                 } catch (err) {
-                    errors.push(err);
+                    errorArray.push(err);
                 }
             });
 
-            callback(jdata, errors);
+            callback(errorArray, jdata);
         }
 
     };
