@@ -9,6 +9,7 @@
   * Removed insight.Chart.title
   * Added insight.Series.title
   * Updated library to work with crossfilter to 1.3.11
+  * Added utility, insight.conversion, for converting arff data to json data
 
 
 
