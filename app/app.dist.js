@@ -747,7 +747,7 @@ function createLanguageChart(chartGroup, languages){
             })
             .valueFunction(function (person) {
                 return person.age;
-            });
+            }).title('bell end');
 
 
         chart.series([rows]);
