@@ -6,18 +6,14 @@ insight.conversion = (function() {
 
     function getValue(type, value) {
         var returnValue = value;
-        try {
-            if (type.toUpperCase() === 'NUMERIC' || type.toUpperCase() === 'INTEGER') {
-                returnValue = parseInt(value, 10);
-            }
-            if (type.toUpperCase() === 'REAL') {
-                returnValue = parseFloat(value);
-            }
-            if (type.toUpperCase() === 'STRING') {
-                returnValue = value;
-            }
-        } catch (err) {
-            console.error('error parsing type in arff to json conversion', err);
+        if (type.toUpperCase() === 'NUMERIC' || type.toUpperCase() === 'INTEGER') {
+            returnValue = parseInt(value, 10);
+        }
+        if (type.toUpperCase() === 'REAL') {
+            returnValue = parseFloat(value);
+        }
+        if (type.toUpperCase() === 'STRING') {
+            returnValue = value;
         }
         return returnValue;
     }
@@ -29,7 +25,7 @@ insight.conversion = (function() {
          * @param {Object} data The data to be converted.
          * @returns {Object} - The converted data.
          */
-        arffToJson: function(data) {
+        arffToJson: function(data, callback) {
 
             var jdata = [];
             var lines = data.replace(/\t/g, ' ').replace(/\'/g, '').split(/\r?\n|\r/g).filter(function(line) {
@@ -40,10 +36,11 @@ insight.conversion = (function() {
 
             var currentState;
 
+            var errors = [];
+
             var states = {
                 relation: function(string) {
                     if (string.match(/\@relation/i)) {
-                        jdata.title = string.split(' ')[1];
                         currentState = states.attribute;
                     }
                 },
@@ -56,14 +53,13 @@ insight.conversion = (function() {
                         });
                     }
                     if (string.match(/\@data/i)) {
-                        console.log('Parsed attributes were ', attributes);
                         currentState = states.data;
                     }
                 },
                 data: function(string) {
                     var values = string.split(',');
                     if (values.length !== attributes.length) {
-                        throw 'data missing, not enough values to fill expected attributes';
+                        throw new Error('data missing, not enough values to fill expected attributes');
                     }
                     var item = {};
                     attributes.forEach(function(attr, index) {
@@ -79,11 +75,11 @@ insight.conversion = (function() {
                 try {
                     currentState(line);
                 } catch (err) {
-                    console.error('failed to convert a line in arff to json converter, skipping', err);
+                    errors.push(err);
                 }
             });
 
-            return jdata;
+            callback(jdata, errors);
         }
 
     };
