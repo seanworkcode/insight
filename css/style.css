@@ -483,3 +483,12 @@ h4,h5,h6,.h4,.h5,.h6 {
 .orange-color {
   color: #FF9100;
 }
+
+.gallery-item {
+  float: left;
+  width: 300px;
+}
+
+.gallery-items-container {
+  height: 300px;
+}
