@@ -31,6 +31,11 @@
                     index: 'interactive/index.html',
                     title: '~ Zooming chart ~',
                     thumbnail: 'interactive/thumbnail.png'
+                },
+                {
+                    index: 'appstore/index.html',
+                    title: 'Appstore data',
+                    thumbnail: 'interactive/thumbnail.png'
                 }
             ];
             $scope.setTemplate($scope.items[0]);
