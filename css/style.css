@@ -334,7 +334,7 @@ h4,h5,h6,.h4,.h5,.h6 {
 
 /* How To Styles */
 
-.how-to-divider {
+.section-divider {
     background: -webkit-linear-gradient(left, #ddd, white); /* For Safari 5.1 to 6.0 */
     background: -o-linear-gradient(right, #ddd, white); /* For Opera 11.1 to 12.0 */
     background: -moz-linear-gradient(right, #ddd, white); /* For Firefox 3.6 to 15 */
@@ -482,4 +482,13 @@ h4,h5,h6,.h4,.h5,.h6 {
 
 .orange-color {
   color: #FF9100;
+}
+
+.gallery-item {
+  float: left;
+  width: 300px;
+}
+
+.gallery-items-container {
+  height: 300px;
 }

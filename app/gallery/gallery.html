@@ -1,25 +1,29 @@
 <section>
     <div id="container-body" class="container min-scrollbar">
-        <h2>A gallery of insight.js charts</h2>
-        <div class="how-to-divider"></div>
-
-        <div ng-show="showGallery" ng-init="loadItems()">
+        <h2>Chart gallery</h2>
+        <div class="section-divider"></div>
+        
+        <div ng-init="loadItems()" class="gallery-items-container">
         	<div ng-repeat="item in items">
-        		<div class="gallery-item-header" ng-click="loadItem(item)">{{item.title}}</div>
-        		<div ng-click="loadItem(item)" class="gallery-item-thumb">
-                    <img ng-src="app/gallery/items/{{item.thumbnail}}">
+                <div class="gallery-item">
+            		<div class="gallery-item-header" ng-click="setTemplate(item)">{{item.title}}</div>
+            		<div ng-click="setTemplate(item)" class="gallery-item-thumb">
+                        <img ng-src="app/gallery/items/{{item.thumbnail}}">
+                    </div>
                 </div>
         	</div>
         </div>
+        <div class="section-divider"></div>
 
-        <div ng-show="!showGallery">
-            <div ng-click="closeItem()" class="gallery-item-header">Back to gallery</div>
+        <div ng-if="template !== undefined" ng-include="template"></div>
+
+        <div >
             <h2>{{currentItem.title}}</h2>
             <p>{{currentItem.desc}}</p>
             <div id="gallery-chart"></div>
-            <div class="how-to-divider"></div>
-            <h3>The code</h3>
-            <div id="gallery-code"></div>
+            <div class="section-divider"></div>
+            <h3>Index.html</h3>
+            <code id="gallery-code" id="codeItem" class="language-javascript loading"></code>
         </div>
 
     </div>
