@@ -1,10 +1,7 @@
 <section>
     <div id="container-body" class="container min-scrollbar">
-        <h2>A gallery of insight.js charts</h2>
-        <div class="how-to-divider"></div>
-
-
-
+        <h2>Chart gallery</h2>
+        <div class="section-divider"></div>
         
         <div ng-init="loadItems()" class="gallery-items-container">
         	<div ng-repeat="item in items">
@@ -16,7 +13,7 @@
                 </div>
         	</div>
         </div>
-        <div class="how-to-divider"></div>
+        <div class="section-divider"></div>
 
         <div ng-if="template !== undefined" ng-include="template"></div>
 
@@ -24,7 +21,7 @@
             <h2>{{currentItem.title}}</h2>
             <p>{{currentItem.desc}}</p>
             <div id="gallery-chart"></div>
-            <div class="how-to-divider"></div>
+            <div class="section-divider"></div>
             <h3>Index.html</h3>
             <code id="gallery-code" id="codeItem" class="language-javascript loading"></code>
         </div>

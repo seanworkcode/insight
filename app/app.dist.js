@@ -370,9 +370,9 @@ function createLanguageChart(chartGroup, languages){
         $scope.currentItem = undefined;
 
         $scope.setTemplate = function(item) {
-            var oldTemplate = $scope.template;
+            var currentTemplate = $scope.template;
             $scope.template = 'app/gallery/items/' + item.index;
-            if (oldTemplate !== $scope.template) {
+            if ($scope.template !== currentTemplate) {
                 $scope.loadCode(item.index).then(function(code) {
                     $scope.displayCode(code);
                 });
