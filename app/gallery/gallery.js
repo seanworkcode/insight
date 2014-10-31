@@ -18,6 +18,7 @@
                     $scope.displayCode(code);
                 });
             }
+            $scope.currentItem = item;
         };
 
         $scope.loadItems = function() {
@@ -34,8 +35,8 @@
                 },
                 {
                     index: 'appstore/index.html',
-                    title: 'Appstore data',
-                    thumbnail: 'interactive/thumbnail.png'
+                    title: 'Dynamic Charts',
+                    thumbnail: 'appstore/thumbnail.png'
                 }
             ];
             $scope.setTemplate($scope.items[0]);
