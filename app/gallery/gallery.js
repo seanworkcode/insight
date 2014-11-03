@@ -18,6 +18,7 @@
                     $scope.displayCode(code);
                 });
             }
+            $scope.currentItem = item;
         };
 
         $scope.loadItems = function() {
@@ -31,6 +32,11 @@
                     index: 'interactive/index.html',
                     title: '~ Zooming chart ~',
                     thumbnail: 'interactive/thumbnail.png'
+                },
+                {
+                    index: 'appstore/index.html',
+                    title: 'Dynamic Charts',
+                    thumbnail: 'appstore/thumbnail.png'
                 }
             ];
             $scope.setTemplate($scope.items[0]);

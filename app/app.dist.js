@@ -377,6 +377,7 @@ function createLanguageChart(chartGroup, languages){
                     $scope.displayCode(code);
                 });
             }
+            $scope.currentItem = item;
         };
 
         $scope.loadItems = function() {
@@ -390,6 +391,11 @@ function createLanguageChart(chartGroup, languages){
                     index: 'interactive/index.html',
                     title: '~ Zooming chart ~',
                     thumbnail: 'interactive/thumbnail.png'
+                },
+                {
+                    index: 'appstore/index.html',
+                    title: 'Dynamic Charts',
+                    thumbnail: 'appstore/thumbnail.png'
                 }
             ];
             $scope.setTemplate($scope.items[0]);
