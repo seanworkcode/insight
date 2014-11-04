@@ -1,4 +1,4 @@
-=== Version X.X.X (XX-XXX-2014) ===
+=== Version 1.2.1 (04-Nov-2014) ===
 
 * Library changes:
   * Improved documentation for working with groupings.
