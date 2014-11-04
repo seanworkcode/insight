@@ -44,7 +44,7 @@
             })
             .valueFunction(function (person) {
                 return person.age;
-            });
+            }).title('Ages');
 
 
         chart.series([rows]);

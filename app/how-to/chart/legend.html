@@ -3,7 +3,7 @@
         <h2>How to 
             <span class="how-to-arrow">&#10132;</span> Add a legend
         </h2>
-        <div class="how-to-divider"></div>
+        <div class="section-divider"></div>
 
         <h4 class="how-to-header">Prerequisites</h4>
         <ul>
@@ -14,25 +14,28 @@
 
         <h4 class="how-to-header">What is a legend</h4>
         <p class="how-to-indent">
-            A Legend shows the name and color of each series in a chart.
+            A Legend shows the title and color of each series in a chart.
         </p>
 
         <h4 class="how-to-header">How to add a legend</h4>
         <p class="how-to-indent">
-            Create a new instance of Legend and add it to the chart
+            Create a new instance of Legend and add it to the chart. You can also add the title that the
+            legend will display for each series. If we don't provide a title then the legend will display the series
+            name by default.
         </p>
 
         <div class="how-to-indent">
             <code class="language-javascript">
                 chart.legend(new insight.Legend());
+                rows.title('Ages');
             </code>
         </div>
 
         <h4 class="how-to-header">Example</h4>
 
         <p class="how-to-indent">
-            Here is the example chart from the <a href="#/gettingStarted">Getting Started</a> guide with just the additional call to <code>chart.legend(new insight.Legend())</code>.
-            Notice the Legend in the top right corner with the name of the series and it's color.
+            Here is the example chart from the <a href="#/gettingStarted">Getting Started</a> guide with just the code above added.
+            Notice the Legend in the top right corner with the title of the series and its color.
         </p>
 
         <div id="legend-chart" class="chart-centre"></div>

@@ -18,6 +18,7 @@ module.exports = function(grunt) {
                   'app/directives/*.js',
                   'app/snippets/*.js',
                   'app/index/*.js',
+                  'app/gallery/*.js',
                   'app/components/*.js',
                   'app/getting-started/*.js',
                   'app/how-to/*/*.js',

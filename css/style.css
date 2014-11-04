@@ -334,7 +334,7 @@ h4,h5,h6,.h4,.h5,.h6 {
 
 /* How To Styles */
 
-.how-to-divider {
+.section-divider {
     background: -webkit-linear-gradient(left, #ddd, white); /* For Safari 5.1 to 6.0 */
     background: -o-linear-gradient(right, #ddd, white); /* For Opera 11.1 to 12.0 */
     background: -moz-linear-gradient(right, #ddd, white); /* For Firefox 3.6 to 15 */
@@ -438,11 +438,66 @@ h4,h5,h6,.h4,.h5,.h6 {
 .how-to-step {
   background: #2E9FDA;
   color: #fff;
-  width: 25px;
+  width: 26px;
   display: inline-block;
   text-align: center;
   height: 25px;
   margin-right: 18px;
   font-size: 16pt;
 }
+
+.gallery-item-thumb {
+  width: 200px;
+  height: 150px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1px;
+}
+
+.min-scrollbar {
+  min-height: 2000px;
+}
+
+
+.gallery-item-header {
+  font-size: 25px;
+  font-weight: 400;
+  width: 300px;
+  height: 50px;
+  display: block;
+  margin-top: 4px;
+  text-decoration: none;
+  padding: 5px 0px 0px 20px;
+  text-align: center;
+}
+
+.load-data-item {
+  font-weight: 400;
+  margin-left: 40px;
+  font-size: 12pt;
+}
+
+.orange-color {
+  color: #FF9100;
+}
+
+.gallery-item {
+  float: left;
+  width: 300px;
+  border-color: #FF9400;
+  border-style: solid;
+  border-width: 1px;
+  margin: 5px;
+}
+
+.gallery-item:hover {
+  text-decoration: none;
+  background: #2DA5E4;
+  color: #FFFFFF;
+}
+
+.gallery-items-container {
+  height: 300px;
+}
+
 
