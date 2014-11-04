@@ -128,10 +128,10 @@ describe('ChartGroup', function() {
             chart.yAxis(y);
 
             var series = new insight.ColumnSeries('columns', countries, x, y)
-                .valueFunction(function(d){return d.value.Count;});
+                .valueFunction(function(d){return d.value.count;});
 
             var series2 = new insight.ColumnSeries('columns2', countries, x, y)
-                .valueFunction(function(d){return d.value.Count + 1;});
+                .valueFunction(function(d){return d.value.count + 1;});
 
             chart.series([series, series2]);
 
@@ -291,7 +291,7 @@ describe('ChartGroup', function() {
             chart.yAxis(y);
 
             series = new insight.ColumnSeries('columns', countries, x, y)
-                .valueFunction(function(d){return d.value.Count;});
+                .valueFunction(function(d){return d.value.count;});
 
             chart.series([series]);
 
@@ -305,7 +305,7 @@ describe('ChartGroup', function() {
             chart2.yAxis(y2);
 
             series2 = new insight.ColumnSeries('columns', countries, x2, y2)
-                .valueFunction(function(d){return d.value.Count;});
+                .valueFunction(function(d){return d.value.count;});
 
             chart2.series([series2]);
 
@@ -399,7 +399,7 @@ describe('ChartGroup', function() {
             chart.yAxis(valueAxis);
 
             var series = new insight.ColumnSeries('columns', group, keyAxis, valueAxis)
-                .valueFunction(function(d){return d.value.Count;});
+                .valueFunction(function(d){return d.value.count;});
 
             chart.series([series]);
 

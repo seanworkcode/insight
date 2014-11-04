@@ -51,8 +51,8 @@ describe('BubbleSeries', function() {
         series = new insight.BubbleSeries('testBubbleSeries', dataset, xAxis, yAxis);
         chart.series([series]);
 
-        xAxis.updateAxisBounds(chart);
-        yAxis.updateAxisBounds(chart);
+        xAxis.bounds = chart.calculatePlotAreaSize();
+        yAxis.bounds = chart.calculatePlotAreaSize();
 
     });
 

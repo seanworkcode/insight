@@ -3,7 +3,7 @@
     /*
      * An axis strategy representing time and date scales.
      */
-    insight.DateAxis = function DateAxis() {
+    insight.DateAxisStrategy = function DateAxisStrategy() {
 
         insight.AxisStrategy.call(this);
 
@@ -111,7 +111,7 @@
 
     };
 
-    insight.DateAxis.prototype = Object.create(insight.AxisStrategy.prototype);
-    insight.DateAxis.prototype.constructor = insight.DateAxis;
+    insight.DateAxisStrategy.prototype = Object.create(insight.AxisStrategy.prototype);
+    insight.DateAxisStrategy.prototype.constructor = insight.DateAxisStrategy;
 
 })(insight);

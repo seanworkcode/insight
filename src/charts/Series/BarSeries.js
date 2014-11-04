@@ -123,7 +123,8 @@
                 .attr('y', yPosition)
                 .attr('height', height)
                 .attr('width', width)
-                .style('opacity', opacity);
+                .style('opacity', opacity)
+                .style('fill', self.color);
 
             groups.exit().remove();
 

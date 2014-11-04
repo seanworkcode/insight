@@ -12,7 +12,7 @@ insight.helpers.functions = (function() {
          * a property with that name.
          * @memberof! insight.helpers.functions
          * @param {String} propertyName - A string of the property to search, can include sub-properties using a dot notation.
-         * Eg. 'value.Revenue.Sum', which cannot be indexed directly in Javascript.
+         * Eg. 'value.Revenue.sum', which cannot be indexed directly in Javascript.
          * @returns {Function} - True if the provided array contains the provided value
          * @example // Creates a forenameAccessor function
          * var anObject = {

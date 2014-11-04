@@ -124,8 +124,8 @@ describe('Grouping', function() {
             var england = findByKey(data, 'England');
 
             // Then
-            expect(scotland.value.IQ.Sum).toBe(268);
-            expect(england.value.IQ.Sum).toBe(589);
+            expect(scotland.value.IQ.sum).toBe(268);
+            expect(england.value.IQ.sum).toBe(589);
         });
 
         it('will correctly sum an optional property', function() {
@@ -143,8 +143,8 @@ describe('Grouping', function() {
             var england = findByKey(data, 'England');
 
             // Then
-            expect(scotland.value.IQ.Sum).toBe(196);
-            expect(england.value.IQ.Sum).toBe(0);
+            expect(scotland.value.IQ.sum).toBe(196);
+            expect(england.value.IQ.sum).toBe(0);
         });
     });
 
@@ -164,8 +164,8 @@ describe('Grouping', function() {
             var scotland = findByKey(data, 'Scotland');
 
             // Then
-            expect(scotland.value.IQ.Average).toBe(268/3);
-            expect(scotland.value.IQ.Sum).toBe(268);
+            expect(scotland.value.IQ.mean).toBe(268/3);
+            expect(scotland.value.IQ.sum).toBe(268);
         });
 
         it('will correctly average a property after a filter event', function() {
@@ -191,9 +191,9 @@ describe('Grouping', function() {
             var england = findByKey(data, 'England');
 
             // Then
-            expect(scotland.value.IQ.Average).toBe(199/2);
-            expect(england.value.IQ.Average).toBe(278/4);
-            expect(scotland.value.Count).toBe(2);
+            expect(scotland.value.IQ.mean).toBe(199/2);
+            expect(england.value.IQ.mean).toBe(278/4);
+            expect(scotland.value.count).toBe(2);
         });
 
         it('will correctly average an optional property', function() {
@@ -211,10 +211,10 @@ describe('Grouping', function() {
             var england = findByKey(data, 'England');
 
             // Then
-            expect(scotland.value.IQ.Average).toBe(196/2);
-            expect(scotland.value.IQ.Sum).toBe(196);
-            expect(england.value.IQ.Average).not.toBeDefined();
-            expect(england.value.IQ.Sum).toBe(0);
+            expect(scotland.value.IQ.mean).toBe(196/2);
+            expect(scotland.value.IQ.sum).toBe(196);
+            expect(england.value.IQ.mean).not.toBeDefined();
+            expect(england.value.IQ.sum).toBe(0);
         });
 
         it('will correctly average an optional property after a filter event', function() {
@@ -241,10 +241,10 @@ describe('Grouping', function() {
 
             // Then
 
-            expect(scotland.value.IQ.Average).toBe(103);
-            expect(scotland.value.IQ.Sum).toBe(103);
-            expect(england.value.IQ.Average).not.toBeDefined();
-            expect(england.value.IQ.Sum).toBe(0);
+            expect(scotland.value.IQ.mean).toBe(103);
+            expect(scotland.value.IQ.sum).toBe(103);
+            expect(england.value.IQ.mean).not.toBeDefined();
+            expect(england.value.IQ.sum).toBe(0);
         });
     });
 
@@ -257,9 +257,7 @@ describe('Grouping', function() {
             var group = new insight.Grouping(dimension);
 
             // When
-            group.isOrdered(true);
-
-            var data = group.extractData(function(a,b){return b.value.Count - a.value.Count;});
+            var data = group.extractData(function(a,b){return b.value.count - a.value.count;});
 
             // Then
             expect(data[0].key).toBe('England');
@@ -274,9 +272,7 @@ describe('Grouping', function() {
             var group = new insight.Grouping(dimension);
 
             // When
-            group.isOrdered(true);
-
-            var data = group.extractData(function(a,b){return b.value.Count - a.value.Count;});
+            var data = group.extractData(function(a,b){return b.value.count - a.value.count;});
 
             // Then
             expect(data[0].key).toBe('England');
@@ -294,12 +290,12 @@ describe('Grouping', function() {
 
             // When
             group.mean(['IQ'])
-                .cumulative(['IQ.Sum','IQ.Average']);
+                .cumulative(['IQ.sum','IQ.mean']);
 
             var data = group.extractData();
 
             // Then
-            expect(data[data.length-1].value.IQ.SumCumulative).toBe(1616);
+            expect(data[data.length-1].value.IQ.sumCumulative).toBe(1616);
         });
     });
 
@@ -362,7 +358,7 @@ describe('Grouping', function() {
             // Then
             expect(scotland.value.Interests.Ballet).toBe(1);
             expect(scotland.value.Interests.Music).toBe(3);
-            expect(scotland.value.Interests.Total).toBe(9);
+            expect(scotland.value.Interests.totalCount).toBe(9);
 
         });
 
@@ -383,9 +379,9 @@ describe('Grouping', function() {
             // Then
             expect(scotland.value.Interests.Boxing).toBe(1);
             expect(scotland.value.Interests.Music).toBe(2);
-            expect(scotland.value.Interests.Total).toBe(6);
+            expect(scotland.value.Interests.totalCount).toBe(6);
             expect(england.value.Interests.Music).not.toBeDefined();
-            expect(england.value.Interests.Total).toBe(0);
+            expect(england.value.Interests.totalCount).toBe(0);
 
         });
 
@@ -408,7 +404,7 @@ describe('Grouping', function() {
             expect(scotland.value.Gender.Female).toBe(1);
             expect(scotland.value.Interests.Ballet).toBe(1);
             expect(scotland.value.Interests.Music).toBe(3);
-            expect(scotland.value.Interests.Total).toBe(9);
+            expect(scotland.value.Interests.totalCount).toBe(9);
 
             //filter age by people older than 10, to remove an entry from the scotland group and hopefully trigger a recalculation of the property counts
             ageDimension.crossfilterDimension.filter(function(d){
@@ -423,7 +419,7 @@ describe('Grouping', function() {
             expect(scotland.value.Gender.Female).toBe(1);
             expect(scotland.value.Interests.Triathlon).toBe(1);
             expect(scotland.value.Interests.Music).toBe(2);
-            expect(scotland.value.Interests.Total).toBe(6);
+            expect(scotland.value.Interests.totalCount).toBe(6);
         });
 
 
@@ -522,7 +518,7 @@ describe('Grouping', function() {
                 groupEntry.extractData()
                     .forEach(function(d)
                     {
-                        d.value.IQ.PlusOne = d.value.IQ.Sum + 1;
+                        d.value.IQ.PlusOne = d.value.IQ.sum + 1;
                     });
             };
 
@@ -534,7 +530,7 @@ describe('Grouping', function() {
 
             // Then
 
-            var actualData = dataArray.map(function(entry){ return entry.value.IQ.Sum; });
+            var actualData = dataArray.map(function(entry){ return entry.value.IQ.sum; });
             var plusOneData = dataArray.map(function(entry){ return entry.value.IQ.PlusOne; });
 
             var expectedData = [589, 418, 268, 341];
@@ -557,7 +553,7 @@ describe('Grouping', function() {
                 groupEntry.extractData()
                     .forEach(function(d)
                     {
-                        d.value.IQ.PlusOne = d.value.IQ.Sum + 1;
+                        d.value.IQ.PlusOne = d.value.IQ.sum + 1;
                     });
             };
 

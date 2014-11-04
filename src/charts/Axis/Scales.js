@@ -14,7 +14,7 @@
      * properties, such as {@link insight.scales.linear}.
      * @param {Object} scale A [D3 scale]{@link https://github.com/mbostock/d3/wiki/Scales}.
      */
-    insight.scales.Scale = function Scale(name, scale) {
+    insight.scales.Scale = function Scale(strategy, scale) {
 
         // Private variables ------------------------------------------------------------------------------------------
 
@@ -23,12 +23,12 @@
         // Public variables -------------------------------------------------------------------------------------------
 
         /**
-         * The name of the scale.
+         * The strategy of the scale.
          * @memberof! insight.scales.Scale
          * @instance
-         * @type {String}
+         * @type {Object}
          */
-        self.name = name;
+        self.strategy = strategy;
 
         /**
          * A [D3 scale]{@link https://github.com/mbostock/d3/wiki/Scales}.
@@ -37,21 +37,20 @@
          * @type {Object}
          */
         self.scale = scale;
-
     };
 
     /**
      * An ordinal scale, which uses a set of distinct values, such as genders or countries.
      * @type {insight.scales.Scale}
      */
-    insight.scales.ordinal = new insight.scales.Scale('ordinal', d3.scale.ordinal);
+    insight.scales.ordinal = new insight.scales.Scale(new insight.OrdinalAxisStrategy(), d3.scale.ordinal);
 
     /**
      * A linear scale, which has a continuous domain where any value from an input range can be mapped to an
      * output domain.
      * @type {insight.scales.Scale}
      */
-    insight.scales.linear = new insight.scales.Scale('linear', d3.scale.linear);
+    insight.scales.linear = new insight.scales.Scale(new insight.LinearAxisStrategy(), d3.scale.linear);
 
     /**
      * A time scale, which is similar to a linear scale, but the values are represented as
@@ -59,6 +58,6 @@
      * rather than numbers.
      * @type {insight.scales.Scale}
      */
-    insight.scales.time = new insight.scales.Scale('time', d3.time.scale);
+    insight.scales.time = new insight.scales.Scale(new insight.DateAxisStrategy(), d3.time.scale);
 
 }(insight, d3));

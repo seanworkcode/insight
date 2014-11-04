@@ -36,6 +36,8 @@ Using InsightJS requires the following libraries:
 - [d3.js](https://github.com/mbostock/d3)
 - [crossfilter](https://github.com/square/crossfilter/)
 
+InsightJS is also compatible with [RequireJS](http://requirejs.org/).
+
 Include the required libraries and InsightJS.
 
 
@@ -54,26 +56,25 @@ d3.json('appstore.json', function(data)
   {
     var dataset = new insight.DataSet(data);
     
-    var country = dataset.group('genre', function(d)
+    var genreGroup = dataset.group('genre', function(d)
     {
         return d.primaryGenreName;
-    }).mean(['price'];
+    });
     
     var chart = new insight.Chart('AppGenres', '#chart')
         .width(400)
         .height(350)
-        .title('Genres')
-        .autoMargin(true);
+        .title('Genres');
 
-    var x = new insight.Axis('Genre', insight.scales.ordinal)
-             .tickOrientation('tb');
+    var x = new insight.Axis('Genre', insight.Scales.Ordinal)
+             .tickLabelOrientation('tb');
 
-    var y = new insight.Axis('#Apps', insight.scales.linear);
+    var y = new insight.Axis('No. Apps', insight.Scales.Linear);
     
-    chart.xAxis(x);
     chart.yAxis(y);
+    chart.xAxis(x);
 
-    var columns = new insight.ColumnSeries('columns', dataset, x, y)
+    var columns = new insight.ColumnSeries('columns', genreGroup , x, y)
                              .valueFunction(function(d){
                                     return d.value.Count;
                                 });
@@ -81,8 +82,8 @@ d3.json('appstore.json', function(data)
     
     chart.draw();
 });
-
 ```
+
 ### Information
 
 - View some examples at [InsightJS](http://scottlogic.github.io/insight/)

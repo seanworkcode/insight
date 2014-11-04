@@ -340,7 +340,7 @@
             var axes = xAxes.concat(yAxes);
 
             axes.forEach(function(axis) {
-                axis.draw(self, isDragging);
+                axis.draw(self.calculatePlotAreaSize(), self.plotArea, self.container, isDragging);
             });
 
             self.series()

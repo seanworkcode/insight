@@ -82,7 +82,7 @@ describe('DataSet', function() {
             var scotland = countryData.filter(function(d){return d.key=='Scotland';})[0];
 
             expect(countryData.length).toBe(4);
-            expect(scotland.value.Age.Average).toBe(11);
+            expect(scotland.value.Age.mean).toBe(11);
         });
 
         it('creates a valid group when provided no data', function() {
