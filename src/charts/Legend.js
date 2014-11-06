@@ -18,7 +18,7 @@
         }
 
         function blobFillColor(item) {
-            return item.color();
+            return item.colorClass();
         }
 
         function textPositionY(item, index) {
@@ -71,12 +71,12 @@
                 .attr("y", blobPositionY)
                 .attr("width", 10)
                 .attr("height", 10)
-                .style("fill", blobFillColor);
+                .attr('class', blobFillColor);
 
             chart.legendItems.selectAll('rect')
                 .data(series)
                 .transition()
-                .style('fill', blobFillColor);
+                .attr('class', blobFillColor);
 
             chart.legendItems.selectAll('text')
                 .data(series)

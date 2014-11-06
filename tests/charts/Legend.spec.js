@@ -169,7 +169,7 @@ describe('Legend', function() {
     it('legend blobs contain series colours', function() {
 
         //Given:
-        lineSeries.color = d3.functor(d3.rgb(128, 0, 128));
+        lineSeries.colorClass = d3.functor('series-0');
         chart.series([lineSeries, lineSeries, lineSeries]);
         var legend = new insight.Legend();
         chart.legend(legend);
@@ -180,10 +180,10 @@ describe('Legend', function() {
         //Then:
         var allTextElements = chart.legendItems.selectAll('rect')[0];
         var allTexts = allTextElements.map(function(item) {
-            return d3.rgb(item["style"]["fill"]);
+            return item['className']['baseVal'];
         });
 
-        expect(allTexts).toEqual([d3.rgb(128, 0, 128), d3.rgb(128, 0, 128), d3.rgb(128, 0, 128)]);
+        expect(allTexts).toEqual(['series-0', 'series-0', 'series-0']);
     });
 
     it('legend items contain series names by default', function() {

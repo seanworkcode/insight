@@ -226,10 +226,10 @@ describe('ColumnSeries', function() {
         // Then
         var actualData = series.dataset().map(function(data){ return series.itemClassName(data); });
         var expectedData = [
-                            'countryColumnclass ' + insight.constants.ColClass + ' in_England',
-                            'countryColumnclass ' + insight.constants.ColClass + ' in_Northern_Ireland',
-                            'countryColumnclass ' + insight.constants.ColClass + ' in_Scotland',
-                            'countryColumnclass ' + insight.constants.ColClass + ' in_Wales'
+                            'countryColumnclass ' + insight.constants.ColClass + ' in_England series-0',
+                            'countryColumnclass ' + insight.constants.ColClass + ' in_Northern_Ireland series-0',
+                            'countryColumnclass ' + insight.constants.ColClass + ' in_Scotland series-0',
+                            'countryColumnclass ' + insight.constants.ColClass + ' in_Wales series-0'
                             ];
 
         expect(actualData).toEqual(expectedData);

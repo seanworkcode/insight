@@ -322,7 +322,7 @@ describe('Series', function(){
 
         //Then:
         var selectionClassName = series.itemClassName(seriesDataSet[0]);
-        expect(selectionClassName).toBe(series.seriesClassName() + ' ' + insight.utils.keySelector('Watkins'));
+        expect(selectionClassName).toBe(series.seriesClassName() + ' ' + insight.utils.keySelector('Watkins') + ' series-0');
     });
 
     describe('Series.title', function() {

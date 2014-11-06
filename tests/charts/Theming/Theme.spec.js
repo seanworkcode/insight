@@ -35,15 +35,10 @@ describe("Theme", function(){
             },
 
             chartStyle: {
-                seriesPalette: ['#eee', '#aaa', '#a42'],
+                seriesPalette: ['series-0', 'series-1', 'series-2'],
                 fillColor: '#24a',
                 titleFont: 'Sans serif 71pt',
                 titleColor: '#cab'
-            },
-
-            seriesStyle : {
-                shouldShowPoints: true,
-                lineStyle: 'cardinal'
             },
 
             tableStyle : {
@@ -106,24 +101,6 @@ describe("Theme", function(){
             expect(chart.yAxis().lineColor()()).toBe('#345');
         });
 
-        it("Line width to be set by theme", function() {
-            //Then:
-            expect(chart.xAxis().lineWidth()).toBe(12.5);
-            expect(chart.yAxis().lineWidth()).toBe(12.5);
-        });
-
-        it("Tick color to be set by theme", function() {
-            //Then:
-            expect(chart.xAxis().tickColor()()).toBe('#543');
-            expect(chart.yAxis().tickColor()()).toBe('#543');
-        });
-
-        it("Tick width to be set by theme", function() {
-            //Then:
-            expect(chart.xAxis().tickWidth()).toBe(9.3);
-            expect(chart.yAxis().tickWidth()).toBe(9.3);
-        });
-
         it("Gridline color to be set by theme", function() {
             //Then:
             expect(chart.xAxis().gridlines.lineColor()).toBe('#204');
@@ -140,31 +117,6 @@ describe("Theme", function(){
             //Then:
             expect(chart.xAxis().shouldShowGridlines()).toBe(true);
             expect(chart.yAxis().shouldShowGridlines()).toBe(true);
-        });
-    });
-
-    describe("Chart", function() {
-        it("Series palette to be set by theme", function() {
-            //When:
-            chartGroup.draw();
-
-            //Then:
-            var seriesColours = chart.series().map(function(d) {
-                return d.color();
-            });
-            expect(seriesColours).toEqual(['#eee', '#aaa', '#a42', '#eee']);
-        });
-    });
-
-    describe("Series", function() {
-        it("Line style to be set by theme", function() {
-            //Then:
-            expect(lineSeries.lineType()).toBe('cardinal');
-        });
-
-        it("Line point visibility to be set by theme", function() {
-            //Then:
-            expect(lineSeries.shouldShowPoints()).toBe(true);
         });
     });
 
@@ -317,18 +269,4 @@ describe("Theme", function(){
         });
     });
 
-    it("Chart handles empty colour palette", function() {
-        //Given:
-        dummyTheme.chartStyle.seriesPalette = [];
-
-        //When:
-        chart.applyTheme(dummyTheme);
-
-        //Then:
-        var seriesColours = chart.series().map(function(d) {
-            return d.color();
-        });
-        //Expect default series colour palette
-        expect(seriesColours).toEqual(['lightblue', 'lightblue', 'lightblue', 'lightblue']);
-    });
 });

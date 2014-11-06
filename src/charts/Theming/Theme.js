@@ -59,22 +59,6 @@
         };
 
         /**
-         * The styles to apply to a chart.
-         * @memberof! insight.Theme
-         * @instance
-         * @type {Object}
-         *
-         * @property {Array<Color>} seriesPalette   The ordered array of colors to use for each successive series within a chart.
-         * @property {Color}        fillColor       The color to use for the chart's background.
-         * @property {Font}         titleFont       The font to use for the chart's title.
-         * @property {Color}        titleColor      The color to use for the chart's title.
-         */
-        self.chartStyle = {
-            seriesPalette: undefined,
-            fillColor: undefined
-        };
-
-        /**
          * The styles to apply to a series
          * @memberof! insight.Theme
          * @instance

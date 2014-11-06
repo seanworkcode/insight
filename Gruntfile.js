@@ -100,12 +100,10 @@ module.exports = function(grunt) {
         }
     },
     cssmin: {
-      minify: {
-        expand: true,
-        cwd: 'themes/',
-        src: ['*.css', '!*.min.css'],
-        dest: 'dist/',
-        ext: '.min.css'
+      combine: {
+        files: {
+          'dist/insight.min.css': ['themes/lightTheme.css', 'themes/insight.css']
+        }
       }
     },
     connect: {

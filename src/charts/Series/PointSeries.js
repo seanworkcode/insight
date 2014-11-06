@@ -87,8 +87,7 @@
                 .attr('r', rad)
                 .attr('cx', self.xPosition)
                 .attr('cy', self.yPosition)
-                .attr('opacity', self.pointOpacity())
-                .style('fill', self.color);
+                .attr('opacity', self.pointOpacity());
 
             //Remove any data which is no longer displayed
             points.exit().remove();

@@ -87,8 +87,7 @@
 
             if (!self.rangeExists(rangeElement)) {
                 chart.plotArea.append("path")
-                    .attr("class", classValue)
-                    .style("stroke", self.color)
+                    .attr("class", classValue + ' ' + self.colorClass() + ' line-series')
                     .attr("fill", "none")
                     .attr("clip-path", "url(#" + chart.clipPath() + ")")
                     .on('mouseover', lineOver)
@@ -110,12 +109,14 @@
             pointClassName = insight.utils.alphaNumericString(pointClassName);
 
             if (displayPoints) {
-                var circles = chart.plotArea.selectAll("circle." + pointClassName)
+                var circles = chart.plotArea.selectAll("circle")
                     .data(self.dataset());
+
+                console.log(circles);
 
                 circles.enter()
                     .append('circle')
-                    .attr('class', pointClassName)
+                    .attr('class', self.colorClass())
                     .attr("clip-path", "url(#" + chart.clipPath() + ")")
                     .attr("cx", self.rangeX)
                     .attr("cy", chart.height() - chart.margin().bottom - chart.margin().top)
@@ -125,7 +126,7 @@
             }
 
             var colorFunc = (displayPoints) ? self.color : d3.functor(undefined);
-            var allCircles = chart.plotArea.selectAll("circle." + pointClassName);
+            var allCircles = chart.plotArea.selectAll("circle");
 
             allCircles
                 .transition()
@@ -133,7 +134,6 @@
                 .attr("cx", self.rangeX)
                 .attr("cy", self.rangeY)
                 .attr("r", pointRadius)
-                .style("fill", colorFunc)
                 .style("stroke-width", 0);
         };
 

@@ -39,29 +39,12 @@
 
 /*Axis Styles*/
 
-.in-axis
-{
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 13px;
-}
-
 .in-axis path
 {
     stroke: #666;
     stroke-width: 1;
     shape-rendering: crispEdges;
     fill: none;
-}
-
-.in-axis text
-{
-    fill: #666;
-    stroke: none;
-}
-
-.axis-text {
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: 13px;
 }
 
 /* Table Styles */
@@ -92,9 +75,8 @@
 
 /*Dynamic Styles*/
 
-.active
-{
-    fill: #34495e;
+.active {
+    opacity: 0.5;
 }
 
 /* Bar Styles*/
@@ -110,3 +92,6 @@ path.in-line
 {
     stroke-width: 3;
 }
+
+
+

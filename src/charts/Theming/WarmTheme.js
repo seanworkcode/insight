@@ -23,14 +23,10 @@
         self.axisStyle.axisLineColor = '#081717';
         self.axisStyle.tickLineWidth = 2;
         self.axisStyle.tickLineColor = '#081717';
-        self.axisStyle.tickLabelFont = '11pt Helvetica';
+        self.axisStyle.tickLabelFont = '11pt Arial';
         self.axisStyle.tickLabelColor = '#081717';
-        self.axisStyle.axisTitleFont = '12pt Helvetica';
+        self.axisStyle.axisTitleFont = '12pt Arial';
         self.axisStyle.axisTitleColor = '#081717';
-
-        //Configure for chart
-        self.chartStyle.seriesPalette = ['#A60303', '#FFAD00', '#FF2F00', '#BD7217', '#873300'];
-        self.chartStyle.fillColor = '#fff';
 
         //Configure series
         self.seriesStyle.shouldShowPoints = true;

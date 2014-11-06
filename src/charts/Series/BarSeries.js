@@ -45,7 +45,7 @@
 
         function seriesSpecificClassName(d) {
 
-            var additionalClass = ' ' + self.name + 'class';
+            var additionalClass = ' ' + self.name + 'class series';
             var baseClassName = self.itemClassName(d);
             var itemClassName = baseClassName + additionalClass;
 
@@ -96,7 +96,6 @@
             newGroups.append('rect')
                 .attr('class', self.itemClassName)
                 .attr('in_series', self.name)
-                .attr('fill', self.color)
                 .attr('clip-path', 'url(#' + chart.clipPath() + ')')
                 .on('mouseover', self.mouseOver)
                 .on('mouseout', self.mouseOut)
@@ -123,8 +122,7 @@
                 .attr('y', yPosition)
                 .attr('height', height)
                 .attr('width', width)
-                .style('opacity', opacity)
-                .style('fill', self.color);
+                .style('opacity', opacity);
 
             groups.exit().remove();
 

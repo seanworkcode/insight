@@ -27,7 +27,7 @@
         self.x = x;
         self.y = y;
         self.name = name;
-        self.color = d3.functor('lightblue'); // Redefined by the theme in applyTheme()
+        self.colorClass = d3.functor('series-0');
         self.animationDuration = 300;
         self.topValues = null;
         self.classValues = [];
@@ -117,7 +117,7 @@
 
             var keySelector = insight.utils.keySelector(groupKeyFunction(dataItem));
             var selected = selectedClassName(self.selectedItems, keySelector);
-            var value = self.seriesClassName() + ' ' + keySelector + selected;
+            var value = self.seriesClassName() + ' ' + keySelector + selected + ' ' + self.colorClass();
 
             return value;
         };

@@ -20,29 +20,25 @@
         self.axisStyle.tickPadding = 10;
 
         self.axisStyle.axisLineWidth = 1;
-        self.axisStyle.axisLineColor = '#777';
+        self.axisStyle.axisLineColor = '#333';
         self.axisStyle.tickLineWidth = 1;
-        self.axisStyle.tickLineColor = '#777';
-        self.axisStyle.tickLabelFont = '11pt Helvetica Neue';
-        self.axisStyle.tickLabelColor = '#777';
-        self.axisStyle.axisTitleFont = '12pt Helvetica Neue';
-        self.axisStyle.axisTitleColor = '#777';
-
-        //Configure for chart
-        self.chartStyle.seriesPalette = ['#3182bd', '#c6dbed', '#6baed6', '#08519c', '#9ecae1'];
-        self.chartStyle.fillColor = '#fff';
+        self.axisStyle.tickLineColor = '#333';
+        self.axisStyle.tickLabelFont = '11pt Arial';
+        self.axisStyle.tickLabelColor = '#333';
+        self.axisStyle.axisTitleFont = '12pt Arial';
+        self.axisStyle.axisTitleColor = '#333';
 
         //Configure series
-        self.seriesStyle.shouldShowPoints = false;
+        self.seriesStyle.shouldShowPoints = true;
         self.seriesStyle.lineStyle = 'linear';
         self.seriesStyle.pointRadius = 3;
 
         //Configure table
-        self.tableStyle.headerFont = 'bold 14pt Helvetica Neue';
+        self.tableStyle.headerFont = 'bold 14pt Arial';
         self.tableStyle.headerTextColor = '#084594';
-        self.tableStyle.rowHeaderFont = 'bold 12pt Helvetica Neue';
+        self.tableStyle.rowHeaderFont = 'bold 12pt Arial';
         self.tableStyle.rowHeaderTextColor = '#2171b5';
-        self.tableStyle.cellFont = '12pt Helvetica Neue';
+        self.tableStyle.cellFont = '12pt Arial';
         self.tableStyle.cellTextColor = '#888';
 
         self.tableStyle.headerDivider = '1px solid #084594';

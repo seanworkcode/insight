@@ -1,0 +1,48 @@
+.series-0 {
+  fill: #3182bd;
+}
+
+.series-0.line-series {
+  fill: none;
+  stroke: #3182bd;
+}
+
+.series-1 {
+  fill: #c6dbed;
+}
+
+.series-1.line-series {
+  fill: none;
+  stroke: #c6dbed;
+}
+
+.series-2 {
+  fill: #6baed6;
+}
+
+.series-2.line-series {
+  fill: none;
+  stroke: #6baed6;
+}
+
+.series-3 {
+  fill: #6baed6;
+}
+
+.series-3.line-series {
+  fill: none;
+  stroke: #6baed6;
+}
+
+.series-4 {
+  fill: #6baed6;
+}
+
+.series-4.line-series {
+  fill: none;
+  stroke: #6baed6;
+}
+
+text {
+  stroke: none;
+}

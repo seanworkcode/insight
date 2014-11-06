@@ -326,7 +326,7 @@
 
             self.series()
                 .forEach(function(series, index) {
-                    series.color = d3.functor(seriesPalette[index % seriesPalette.length]);
+                    series.colorClass = d3.functor('series-' + index); //d3.functor(seriesPalette[index % seriesPalette.length]);
                     series.draw(self, isDragging);
                 });
 
@@ -777,12 +777,12 @@
             axis.applyTheme(theme);
         });
 
-        this.seriesPalette(theme.chartStyle.seriesPalette);
+        //this.seriesPalette(theme.chartStyle.seriesPalette);
 
-        this.series()
-            .forEach(function(series) {
-                series.applyTheme(theme);
-            });
+        // this.series()
+        //     .forEach(function(series) {
+        //         series.applyTheme(theme);
+        //     });
 
         return this;
     };

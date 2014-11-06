@@ -172,10 +172,10 @@ describe('BubbleSeries', function() {
         // Then
         var actualData = testSeries.dataset().map(function(data){ return testSeries.itemClassName(data); });
         var expectedData = [
-                            'testBubbleSeriesclass bubble in_England',
-                            'testBubbleSeriesclass bubble in_Northern_Ireland',
-                            'testBubbleSeriesclass bubble in_Scotland',
-                            'testBubbleSeriesclass bubble in_Wales'
+                            'testBubbleSeriesclass bubble in_England series-0',
+                            'testBubbleSeriesclass bubble in_Northern_Ireland series-0',
+                            'testBubbleSeriesclass bubble in_Scotland series-0',
+                            'testBubbleSeriesclass bubble in_Wales series-0'
                             ];
 
         expect(actualData).toEqual(expectedData);
