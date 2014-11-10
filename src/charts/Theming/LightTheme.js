@@ -29,7 +29,7 @@
         self.axisStyle.axisTitleColor = '#333';
 
         //Configure series
-        self.seriesStyle.shouldShowPoints = true;
+        self.seriesStyle.shouldShowPoints = false;
         self.seriesStyle.lineStyle = 'linear';
         self.seriesStyle.pointRadius = 3;
 
